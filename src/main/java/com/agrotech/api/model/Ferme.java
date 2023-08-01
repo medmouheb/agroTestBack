@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,7 +31,11 @@ public class Ferme extends BaseEntity {
 	private String nom;
 	private Etat statuss;
 	private String stage;
-	private String grouwout;
+	private String costcenter;
+	private String warehousecode;
+	private String vendorcode;
+	private String growoutcode;
+
 	@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
 	@Size(max = 250, message = ValidationMessages.TYPE_TOO_LONG)
 	private String type;
@@ -38,8 +44,8 @@ public class Ferme extends BaseEntity {
 	@Size(max = 250)
 	private String status_Construction;
 	@Size(max = 250)
-	private String num_Client;
-	@NotBlank(message = ValidationMessages.CODE_MANAGER_REQUIRED)
+		private String num_Client;
+		@NotBlank(message = ValidationMessages.CODE_MANAGER_REQUIRED)
 	@Size(max = 250)
 	private String manager_Code;
 	@NotBlank(message = ValidationMessages.NAME_MANGER_REQUIRED)
@@ -87,15 +93,78 @@ public class Ferme extends BaseEntity {
 	@Size(max = 250)
 	private String longitude;
 	private Boolean isDeleted=false;
-
+//
 	@DBRef
-	private String cost_Center ;
+	private CostCenter cost_Center ;
 	@DBRef
 	private Warehouse warehouse;
 	@DBRef
 	private Fournisseur vendor;
+	@DBRef
+	private Growout growout;
+	private String product;
+	private String land;
+	private String planning;
+	private String logistic;
+	private String feedMillcode;
+	private String primaryMarket;
+	private String liveProductday;
+	private String maxturckcapacity;
+	private String payee;
 
-	// private String customerCode ;
-	// private String customerName ;
+
+	//projection
+	private String projectwarehouse;
+	private String projectligistic;
+
+	//distance
+	private String distnfarmlogi;
+	private String distnfarmMarket;
+
+
+	//Visitors Logs
+	private String VisitDate;
+	private String FirstNameVisit;
+	private String LastNameVisit;
+	private String IDNumberVisit;
+	private String TimeinVisit;
+	private String TimeoutVisit;
+	private String Purposeofthevisit;
+
+	//cezrtiff
+	private String Certifications;
+
+	//Contract Farms
+	private String ContractNumber;
+	private String contratPay;
+	private LocalDate startDateFarms;
+	private LocalDate endDateFarms;
+	private LocalDate renewalDateFarms;
+
+	//Paiement information
+	private String PaymentType;//Checking, saving or paycheck 
+	private String	AccountNumber;
+	private String	BankName;
+	private String	BankCode;
+	private String	Bankaddress;
+	private String	DirectDepositflag;
+	private String	typepayment ;//auto or not
+	private LocalDate OperationDate; //satesystem
+	private String	amounttransferred;
+	//Resource Information
+	private String ressourceInformation;
+	private String statutInformation;
+	private String adressInformation;
+	private String FirstNameInformation;
+	private String LastNameInformation;
+	private String phoneInformation;
+	private LocalDate startDateInformation;
+	private LocalDate endDateInformation;
+
+
+
+//
+//	// private String customerCode ;
+//	// private String customerName ;
 
 }

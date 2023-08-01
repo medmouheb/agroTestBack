@@ -22,4 +22,10 @@ public interface CurrencyService extends BaseService<CurrencyDto, String> {
 	public Page<Currency> findPage1(int pageSize, int pageNumber, String filter);
 	public Page<Currency> findArchivedPage1(int pageSize, int pageNumber, String filter);
 
+	Currency findByname(String name)throws NotFoundException;
+
+
+
+
+
 }

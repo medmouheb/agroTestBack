@@ -15,5 +15,5 @@ public interface DivisionRepository extends MongoRepository<Division, String> {
     Optional<Division> findByCode(String code);
     Page<Division> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Division> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
-
+    Division findByName(String name);
 }

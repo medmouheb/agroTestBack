@@ -152,6 +152,11 @@ public class FermeServiceImpl implements FermeService {
         return result;
     }
 
+    @Override
+    public Ferme findByname(String name) throws NotFoundException {
+        return fermeRepository.findByNom(name);
+    }
+
 //    @Override
 //    public Page<FermeDto> findArchivedPage(int pageSize, int pageNumber, String filter) {
 //        Pageable pageable = PageRequest.of(

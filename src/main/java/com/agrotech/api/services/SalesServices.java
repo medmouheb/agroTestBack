@@ -31,7 +31,7 @@ public interface  SalesServices extends BaseService<SalesDto, String>{
 
     public Page<Sales> findPage1(int pageSize, int pageNumber, String filter);
     public Page<Sales> findArchivedPage1(int pageSize, int pageNumber, String filter);
-
+    Sales findByname(String name)throws NotFoundException;
 }
 
 

@@ -111,6 +111,11 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
+    public Fournisseur findByname(String name) throws NotFoundException {
+        return fournisseurRepository.findByName(name);
+    }
+
+    @Override
     public void delete(String id) throws NotFoundException {
         if(!fournisseurRepository.existsById(id)){
             throw new NotFoundException("Fournisseur not found");
@@ -179,7 +184,7 @@ public class FournisseurServiceImpl implements FournisseurService {
         fournisseur.setEmail(record.get("email"));
         fournisseur.setPhone(record.get("phone"));
         fournisseur.setType(record.get("type"));
-        fournisseur.setCurrencycode(record.get("currencycode"));
+        fournisseur.setCurrency(record.get("currencyCode"));
         fournisseur.setPaymentTerm(record.get("paymentTerm"));
         fournisseur.setAddress(record.get("address"));
         fournisseur.setCodeCity(record.get("codeCity"));

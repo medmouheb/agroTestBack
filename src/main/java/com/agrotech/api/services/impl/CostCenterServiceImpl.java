@@ -166,6 +166,11 @@ public class CostCenterServiceImpl implements CostCenterService {
 	}
 
 	@Override
+	public CostCenter findByname(String name) throws NotFoundException {
+		return costCenterRepository.findByName(name);
+	}
+
+	@Override
 	public Page<CostCenterDto> findArchivedPage(int pageSize, int pageNumber, String filter) {
 		Pageable pageable = PageRequest.of(
 				pageNumber,

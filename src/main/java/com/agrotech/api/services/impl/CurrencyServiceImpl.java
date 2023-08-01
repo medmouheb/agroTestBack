@@ -87,6 +87,11 @@ public class CurrencyServiceImpl implements CurrencyService {
 	}
 
 	@Override
+	public Currency findByname(String name) throws NotFoundException {
+		return currencyRepository.findByName(name);
+	}
+
+	@Override
 	public Page<CurrencyDto> findPage(int pageSize, int pageNumber, String filter) {
 		Pageable pageable = PageRequest.of(
 				pageNumber,

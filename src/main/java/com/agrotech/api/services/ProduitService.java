@@ -18,7 +18,7 @@ public interface ProduitService extends BaseService<ProduitDto, String> {
     ProduitDto findByCode(String code) throws NotFoundException;
     List<ProduitDto> findAllByCategoryId(String idCategory);
     void importCSV(List<CSVRecord> records);
-
+    Produit findByname(String name)throws NotFoundException;
     public void archive(String id) throws NotFoundException;
 
     public Page<ProduitDto> findPage(int pageSize, int pageNumber, String filter);

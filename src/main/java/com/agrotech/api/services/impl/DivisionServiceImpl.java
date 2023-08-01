@@ -50,6 +50,12 @@ public class DivisionServiceImpl implements DivisionService {
 		return result;
 		// return new PageImpl<>(result);
 	}
+
+	@Override
+	public Division findByname(String name) throws NotFoundException {
+		return divisionRepository.findByName(name);
+	}
+
 	@Override
 	public DivisionDTO create(DivisionDTO dto) {
 

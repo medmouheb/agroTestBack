@@ -39,7 +39,11 @@ public class CampanyController {
 	}
 
 	
-
+@GetMapping("/getbyname/{name}")
+public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException{
+		Campany response=campanyService.findByname(name);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+}
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,@RequestBody CampanyDto campany) throws NotFoundException {
 		CampanyDto response = campanyService.update(id, campany);

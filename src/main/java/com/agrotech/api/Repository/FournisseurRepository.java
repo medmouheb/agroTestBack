@@ -18,7 +18,7 @@ public interface FournisseurRepository extends MongoRepository<Fournisseur, Stri
 
     Optional<Fournisseur> findByCode(String code);
     Page<Fournisseur> findByIsDeleted(Boolean isDeleted,  Pageable pageable);
-
+    Fournisseur findByName(String name);
     Page<Fournisseur> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
 
 }

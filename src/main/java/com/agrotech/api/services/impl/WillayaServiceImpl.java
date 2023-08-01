@@ -81,6 +81,11 @@ public class WillayaServiceImpl implements WilayaService {
     }
 
     @Override
+    public Willaya findByname(String name) throws NotFoundException {
+        return willayaRepository.findByName(name);
+    }
+
+    @Override
     public WillayaDto findById(String id) throws NotFoundException {
         Optional<Willaya> willayaOptional = willayaRepository.findById(id);
         if(willayaOptional.isEmpty()) {

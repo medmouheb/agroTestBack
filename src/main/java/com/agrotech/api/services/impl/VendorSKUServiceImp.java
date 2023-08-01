@@ -86,6 +86,11 @@ public class VendorSKUServiceImp implements VendorSKUService {
     }
 
     @Override
+    public VendorSKU findByname(String name) throws NotFoundException {
+        return vendorSKURepository.findByName(name);
+    }
+
+    @Override
     public Page<VendorSKUDto> findPage(int pageSize, int pageNumber, String filter) {
 
         // Pageable pageable = PageRequest.of(

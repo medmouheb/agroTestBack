@@ -96,6 +96,11 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
+    public Warehouse findByname(String name) throws NotFoundException {
+        return warehouseRepository.findByName(name);
+    }
+
+    @Override
     public Page<WarehouseDto> findPage(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(
                 pageNumber,

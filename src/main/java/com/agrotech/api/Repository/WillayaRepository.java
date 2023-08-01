@@ -16,6 +16,6 @@ public interface WillayaRepository extends MongoRepository<Willaya, String> {
     Optional<Willaya> findByCode(String code);
     Page<Willaya> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Willaya> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String vendorSKUName, Pageable pageable);
-
+    Willaya findByName(String name);
 
 }

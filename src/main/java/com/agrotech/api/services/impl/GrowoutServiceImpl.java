@@ -128,6 +128,11 @@ public class GrowoutServiceImpl  implements GrowoutService{
 	}
 
 	@Override
+	public Growout findByname(String name) throws NotFoundException {
+		return growoutrepository.findByName(name);
+	}
+
+	@Override
 	public void setNotArchive(String id) throws NotFoundException {
 		Optional<Growout> groOptional =  growoutrepository.findById(id);
 		if(groOptional.isEmpty()) {

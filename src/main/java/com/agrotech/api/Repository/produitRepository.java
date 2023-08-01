@@ -17,7 +17,7 @@ public interface produitRepository extends MongoRepository<Produit, String>{
 	Optional<Produit> findByCode(String code);
     List<Produit> findByCategory_Id(String categoryId);
     Page<Produit> findByNameContainingIgnoreCase(String name, Pageable pageable);
-
+    Produit findByName(String name);
     Page<Produit> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
 
 

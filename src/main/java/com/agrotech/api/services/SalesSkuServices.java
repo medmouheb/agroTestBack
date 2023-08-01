@@ -19,5 +19,5 @@ public interface SalesSkuServices extends BaseService<SalesSkuDto, String>{
     public Page<SalesSkuDto> findArchivedPage(int pageSize, int pageNumber, String filter);
     public Page<SalesSKU> findPage1(int pageSize, int pageNumber, String filter);
     public Page<SalesSKU> findArchivedPage1(int pageSize, int pageNumber, String filter);
-
+ SalesSKU findByname(String name)throws NotFoundException;
 }

@@ -57,6 +57,11 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
+    public Produit findByname(String name) throws NotFoundException {
+        return produitRepository.findByName(name);
+    }
+
+    @Override
     public ProduitDto update(String id, ProduitDto dto) throws NotFoundException {
         Optional<Produit> optional = produitRepository.findById(id);
         if (optional.isEmpty()) {

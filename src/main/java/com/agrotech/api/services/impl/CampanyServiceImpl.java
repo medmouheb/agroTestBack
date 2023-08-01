@@ -17,7 +17,6 @@ import org.springframework.data.domain.Sort;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.CampanyMapper;
 import com.agrotech.api.model.Campany;
-import com.agrotech.api.model.Growout;
 import com.agrotech.api.services.CampanyService;
 
 import lombok.RequiredArgsConstructor;
@@ -171,6 +170,11 @@ public class CampanyServiceImpl implements CampanyService{
 		groExisting.setIsDeleted(false);
 		campanyRepository.save(groExisting);
 
+	}
+
+	@Override
+	public Campany findByname(String name) throws NotFoundException {
+		return campanyRepository.findByName(name);
 	}
 
 	@Override

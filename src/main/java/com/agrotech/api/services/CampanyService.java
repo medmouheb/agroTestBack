@@ -4,7 +4,6 @@ import com.agrotech.api.model.Campany;
 import org.springframework.data.domain.Page;
 
 import com.agrotech.api.dto.CampanyDto;
-import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
 public interface CampanyService extends BaseService<CampanyDto, String> {
@@ -19,6 +18,7 @@ public interface CampanyService extends BaseService<CampanyDto, String> {
 	// Page<CampanyDto> findPage(int pageSize, int pageNumber, String filter);
 
 	public void setNotArchive(String id) throws NotFoundException;
+	  Campany findByname(String name)throws NotFoundException;
 	public Page<CampanyDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
 	public Page<CampanyDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 }

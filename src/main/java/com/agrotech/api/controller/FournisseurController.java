@@ -99,7 +99,7 @@ public class FournisseurController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/desarchiver/{id}")
+    @PutMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         fournisseurService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);

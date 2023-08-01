@@ -18,7 +18,7 @@ public interface FermeService extends BaseService<FermeDto, String> {
 
 	public void setNotArchive(String id) throws NotFoundException;
 	public Page<Ferme> findArchivedPage1(int pageSize, int pageNumber, String filter);
-
+	Ferme findByname(String name)throws NotFoundException;
 	public Page<Ferme> findPage1(int pageSize, int pageNumber, String filter);
 //	public Page<FermeDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 }

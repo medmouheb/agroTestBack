@@ -31,8 +31,8 @@ public class FournisseurDto extends BaseDto {
 		@Size(max = 20, message = ValidationMessages.PAYMENT_TERM_LONG)
 		private String paymentTerm;
 //		@NotBlank(message = ValidationMessages.CURRENCY_REQUIRED)
-		@Size(max = 255, message = ValidationMessages.CURRENCY_LONG)
-		private String currencycode;
+		@Size(max = 3, message = ValidationMessages.CURRENCY_LONG)
+		private String currency;
 
 		// optional
 		@Size(max = 500)
@@ -52,10 +52,6 @@ public class FournisseurDto extends BaseDto {
 		@Size(max = 10)
 		private String zipCode;
 
-
-	private String vendorSKUcode;
-	private String vendorSKUname;
-	private String currencyname;
 
 		@DBRef
 		private VendorSKU vendorSKU;

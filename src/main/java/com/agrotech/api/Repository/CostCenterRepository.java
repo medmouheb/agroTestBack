@@ -12,7 +12,7 @@ import com.agrotech.api.model.Growout;
 
 @Repository
 public interface CostCenterRepository extends MongoRepository<CostCenter, String>{
-	
+	CostCenter findByName(String name);
 	Optional<CostCenter> findByCode(String code);
 	Page<CostCenter> findByNameContainingIgnoreCase(String name, Pageable pageable);
 	Page<CostCenter> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);

@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.CostCenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,11 @@ public class CostCenterController {
 		CostCenterDto response = costCenterService.create(cost);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-
+	@GetMapping("/getbyname/{name}")
+	public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException{
+		CostCenter response=costCenterService.findByname(name);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
 	
 
 	@PutMapping("/{id}")

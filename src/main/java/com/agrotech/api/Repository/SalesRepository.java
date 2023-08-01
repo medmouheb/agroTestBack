@@ -12,11 +12,13 @@ import org.springframework.stereotype.Repository;
 import com.agrotech.api.model.Sales;
 
 @Repository
-public interface SalesRepository extends MongoRepository<Sales, String>{
-	
-	  Optional<Sales> findByCode(String code);
+public interface SalesRepository extends MongoRepository<Sales, String> {
+
+	Optional<Sales> findByCode(String code);
+
 	Page<Sales> findByNameContainingIgnoreCase(String name, Pageable pageable);
+
 	Page<Sales> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
 
-
+	Sales findByName(String name);
 }

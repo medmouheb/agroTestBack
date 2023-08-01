@@ -16,7 +16,7 @@ public interface GrowoutService extends BaseService<GrowoutDto, String> {
 //    public Page<GrowoutDto> findPage(int pageSize, int pageNumber, String filter);
     public void archive(String id) throws NotFoundException;
     public Page<Growout> findArchivedPage1(int pageSize, int pageNumber, String filter);
-
+    Growout findByname(String name)throws NotFoundException;
     public void setNotArchive(String id) throws NotFoundException;
 
     public Page<GrowoutDto> findArchivedPage(int pageSize, int pageNumber, String filter);

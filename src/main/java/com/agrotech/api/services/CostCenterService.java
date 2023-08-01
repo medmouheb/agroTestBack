@@ -13,7 +13,7 @@ public interface CostCenterService extends BaseService<CostCenterDto, String>{
 	public void archive(String id) throws NotFoundException;
 
 	public void setNotArchive(String id) throws NotFoundException;
-
+	CostCenter  findByname(String name)throws NotFoundException;
 	public Page<CostCenterDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 	public Page<CostCenter> findPage1(int pageSize, int pageNumber, String filter);
 	public Page<CostCenter> findArchivedPage1(int pageSize, int pageNumber, String filter);

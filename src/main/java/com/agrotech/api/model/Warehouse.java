@@ -4,7 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.agrotech.api.enums.CostCenterType;
@@ -27,15 +26,16 @@ public class Warehouse extends BaseEntity {
     @Indexed(unique = true)
     @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)    
 	private String name;
-
+//	@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
     private String type;
-
-
+    private CostCenterType costCenterType;
+    @Size(max = 50)
     private LocalDate startingDate;
     private Boolean isPrimary;
     @Size(max = 500)
-    private String address;
-//
+    private String address1;
+    @Size(max = 500)
+    private String address2;
     @Size(max = 10)
     private String cityCode;
     @Size(max = 100)
@@ -57,13 +57,15 @@ public class Warehouse extends BaseEntity {
     @Size(max = 250)
     private double longitude;
     private Boolean isDeleted=false;
-
-    private String vendor;
-
-    private String costCenterCode;
-
-     private String costCenterName;
-
+    
+    // @NotBlank(message = "Cost center code is required")
+    // private String costCenterCode;
+    // @NotBlank(message = "Cost center name is required")
+    // private String costCenterName;
+    //  private String divisionCode;
+    //  private String divisionName;
+    //  private String vendor;
+    //Active
     
 
 }

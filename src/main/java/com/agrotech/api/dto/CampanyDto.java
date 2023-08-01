@@ -23,6 +23,7 @@ public class CampanyDto extends BaseDto{
 	private String code ; 
     @NotBlank(message = ValidationMessages.NAME_REQUIRED)
     @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
+    @Indexed(unique = true)
 	private String name="" ;
     //optional
     @Size(max = 500)

@@ -4,6 +4,7 @@ package com.agrotech.api.utils;
 public final  class ValidationMessages {
 	
 	    public static final String CODE_REQUIRED = " le code est obligatoire " ;
+	    public static final String CODE_UNIQUE = " le code est unique " ;
 	    public static final String CODE_TOO_LONG = "Respecter taille maximale de code ";
 	    
 	    public static final String NAME_REQUIRED = "Le nom est obligatoire";

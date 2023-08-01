@@ -130,6 +130,11 @@ public class SalesSkuServiceImpl implements SalesSkuServices {
     }
 
     @Override
+    public SalesSKU findByname(String name) throws NotFoundException {
+        return salesSkuRepository.findByName(name);
+    }
+
+    @Override
     public void archive(String id) throws NotFoundException {
         Optional<SalesSKU> groOptional =  salesSkuRepository.findById(id);
         if(groOptional.isEmpty()) {

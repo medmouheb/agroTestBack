@@ -79,6 +79,11 @@ public class SalesServiceImpl implements SalesServices {
     }
 
     @Override
+    public Sales findByname(String name) throws NotFoundException {
+        return salesRepository.findByName(name);
+    }
+
+    @Override
     public SalesDto findById(String id) throws NotFoundException {
         Optional<Sales> sales = salesRepository.findById(id);
 
