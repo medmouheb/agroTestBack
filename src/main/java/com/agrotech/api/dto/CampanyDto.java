@@ -43,7 +43,5 @@ public class CampanyDto extends BaseDto{
     @Size(max = 150)
 	private String email ;
     private Boolean isDeleted=false;
-    
-
 
 }
