@@ -52,7 +52,7 @@ public class DeliveryInstructionController {
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "") String filter
     ) {
-        Page<DeliveryInstruction> response = deliveryInstructionService.getpages(pageSize, pageNumber, filter);
+        Page<DeliveryInstructionDto> response = deliveryInstructionService.findPage1(pageSize, pageNumber, filter);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -92,7 +92,7 @@ public class DeliveryInstructionController {
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "") String filter
     ) {
-        Page<DeliveryInstruction> response = deliveryInstructionService.getpagesarchive(pageSize, pageNumber, filter);
+        Page<DeliveryInstructionDto> response = deliveryInstructionService.findArchivedPage1(pageSize, pageNumber, filter);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
