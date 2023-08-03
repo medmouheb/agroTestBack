@@ -16,7 +16,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/shipmethod")
+@RequestMapping("/shipmethods")
 @RequiredArgsConstructor
 public class ShipMethodController {
 

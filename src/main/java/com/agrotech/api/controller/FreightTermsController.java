@@ -1,10 +1,11 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.FreightTermsDto;
 import com.agrotech.api.exceptions.NotFoundException;
+
 import com.agrotech.api.model.FreightTerms;
 import com.agrotech.api.services.FreightTermsService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,24 +21,21 @@ import java.util.List;
 public class FreightTermsController {
       private final FreightTermsService freightTermsService ;
 
-
-
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody FreightTermsDto freightTerms) {
-        System.out.println(freightTerms.toString());
-        FreightTermsDto response = freightTermsService.create(freightTerms);
+    public ResponseEntity<?> create( @RequestBody FreightTermsDto campany) {
+        FreightTermsDto response = freightTermsService.create(campany);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/getbyfreighttermname/{freighttermname}")
-    public ResponseEntity<?> findbyfreighttermname (@PathVariable String freighttermname ) throws NotFoundException {
-        FreightTerms response=freightTermsService.findByfreighttermname(freighttermname );
+    @GetMapping("/getbyname/{name}")
+    public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException{
+        FreightTerms response=freightTermsService.findByfreighttermname(name);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id,@RequestBody FreightTermsDto freightTerms) throws NotFoundException {
-        FreightTermsDto response = freightTermsService.update(id, freightTerms);
+    public ResponseEntity<?> update(@PathVariable String id,@RequestBody FreightTermsDto campany) throws NotFoundException {
+        FreightTermsDto response = freightTermsService.update(id, campany);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -63,9 +61,9 @@ public class FreightTermsController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/by-freighttermcode/{freighttermcode}")
-    public ResponseEntity<?> findByfreighttermcode (@PathVariable String freighttermcode ) throws NotFoundException {
-        FreightTermsDto response = freightTermsService.findByfreighttermcode(freighttermcode);
+    @GetMapping("/by-code/{code}")
+    public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
+        FreightTermsDto response = freightTermsService.findByfreighttermcode(code);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

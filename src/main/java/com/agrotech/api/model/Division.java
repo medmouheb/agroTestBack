@@ -55,6 +55,7 @@ public class Division extends BaseEntity {
 	private String email;
 	@Size(max = 10)
 	private String zipCode;
+	private String divisiontype;
 	private Boolean isDeleted=false;
 
 //	@DBRef

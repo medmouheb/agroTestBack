@@ -1,9 +1,11 @@
 package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.FreighTermsRepository;
+import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.FreightTermsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.FreightTermsMapper;
+import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.FreightTerms;
 import com.agrotech.api.services.FreightTermsService;
 
@@ -33,133 +35,134 @@ public class FreightTermsImpl implements FreightTermsService {
 
     @Override
     public FreightTermsDto create(FreightTermsDto dto) {
-
-            return freightTermsMapper.toDto(save(freightTermsMapper.toEntity(dto)));
+        return freightTermsMapper.toDto(save(freightTermsMapper.toEntity(dto)));
 
     }
 
     @Override
-    public FreightTermsDto update(String s, FreightTermsDto dto) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findById(s);
-        if(freightTermsOptional.isEmpty()) {
-            throw new NotFoundException("FreightTerms not found ");
+    public FreightTermsDto update(String id, FreightTermsDto dto) throws NotFoundException {
+        Optional<FreightTerms> camOptional =  freighTermsRepository.findById(id);
+        if(camOptional.isEmpty()) {
+            throw new NotFoundException("freight Term not found ");
         }
 
-        FreightTerms freightTermsExisting = freightTermsOptional.get();
-        freightTermsMapper.partialUpdate(freightTermsExisting, dto);
+        FreightTerms campanyExisting = camOptional.get();
+        freightTermsMapper.partialUpdate(campanyExisting, dto);
 
-        return freightTermsMapper.toDto(save(freightTermsExisting));    }
+        return freightTermsMapper.toDto(save(campanyExisting));
+    }
 
     @Override
-    public FreightTermsDto findById(String s) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findById(s);
-        if(freightTermsOptional.isEmpty()) {
-            throw new NotFoundException("FreightTerms not found ");
-        }
-        return freightTermsMapper.toDto(freightTermsOptional.get());
+    public FreightTermsDto findById(String id) throws NotFoundException {
+
+            Optional<FreightTerms> campOptional = freighTermsRepository.findById(id);
+            if(campOptional.isEmpty()) {
+                throw new NotFoundException("Freight Terms not found ");
+            }
+            return freightTermsMapper.toDto(campOptional.get());
+
     }
 
     @Override
     public List<FreightTermsDto> findAll() {
-        return freighTermsRepository.findAll().stream().map(freightTermsMapper::toDto).collect(Collectors.toList());
+        return freighTermsRepository.findAll().stream()
+                .map(freightTermsMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
     public Page<FreightTermsDto> findPage(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("freighttermname").ascending());
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
-        List<FreightTermsDto> freightTermsDtos = freightTermsPage.getContent().stream().map(freightTermsMapper::toDto).collect(Collectors.toList());
-        return new PageImpl<>(freightTermsDtos, pageable, freightTermsPage.getTotalElements());
-
+        return null;
     }
 
     @Override
-    public void delete(String s) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findById(s);
-        if(freightTermsOptional.isEmpty()) {
-            throw new NotFoundException("FreightTerms not found ");
+    public void delete(String id) throws NotFoundException {
+        if(!freighTermsRepository.existsById(id)) {
+            throw new NotFoundException("Campany not found ");
         }
-        freighTermsRepository.delete(freightTermsOptional.get());
 
+        freighTermsRepository.deleteById(id);
 
     }
 
     @Override
     public FreightTermsDto findByfreighttermcode(String freighttermcode) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findByFreighttermcode(freighttermcode);
-        if(freightTermsOptional.isEmpty()) {
-            throw new NotFoundException("FreightTerms not found ");
+        Optional<FreightTerms> campOptional = freighTermsRepository.findByFreighttermcode(freighttermcode);
+        if(campOptional.isEmpty()) {
+            throw new NotFoundException("Campany not found ");
         }
-        return freightTermsMapper.toDto(freightTermsOptional.get());
+        return freightTermsMapper.toDto(campOptional.get());
     }
 
     @Override
     public Page<FreightTermsDto> findPage1(int pageSize, int pageNumber, String filter) {
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
-        List<FreightTermsDto> freightTermsDtos = freightTermsPage.getContent().stream().map(freightTermsMapper::toDto).collect(Collectors.toList());
-        return new PageImpl<>(freightTermsDtos, pageable, freightTermsPage.getTotalElements());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        List<FreightTermsDto> result =  freighTermsRepository.findByIsDeletedAndFreighttermnameContainingIgnoreCase(false,filter, pageable)
+                .stream()
+////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
+                .map(freightTermsMapper::toDto)
+                .collect(Collectors.toList());
+        //return result;
+        return new PageImpl<>(result);
     }
 
     @Override
     public Page<FreightTerms> getpages(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
-        return freightTermsPage;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        Page<FreightTerms> result =  freighTermsRepository.findByIsDeleted(false, pageable);
+
+        return result;
     }
 
     @Override
     public Page<FreightTerms> getpagesarchive(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
-        return freightTermsPage;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        Page<FreightTerms> result =  freighTermsRepository.findByIsDeleted(true, pageable);
 
+        return result;
     }
 
     @Override
     public void archive(String id) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findById(id);
-        if(freightTermsOptional.isEmpty()) {
-            throw new NotFoundException("FreightTerms not found ");
+        Optional<FreightTerms> groOptional =  freighTermsRepository.findById(id);
+        if(groOptional.isEmpty()) {
+            throw new NotFoundException("Campany not found ");
         }
-        FreightTerms freightTerms = freightTermsOptional.get();
-        freighTermsRepository.save(freightTerms);
-
+        FreightTerms groExisting = groOptional.get();
+        groExisting.setIsDeleted(true);
+        freighTermsRepository.save(groExisting);
     }
 
     @Override
     public void setNotArchive(String id) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findById(id);
-        if(freightTermsOptional.isEmpty()) {
-            throw new NotFoundException("FreightTerms not found ");
+        Optional<FreightTerms> groOptional =  freighTermsRepository.findById(id);
+        if(groOptional.isEmpty()) {
+            throw new NotFoundException("Campany not found ");
         }
-        FreightTerms freightTerms = freightTermsOptional.get();
-        freighTermsRepository.save(freightTerms);
-
-
+        FreightTerms groExisting = groOptional.get();
+        groExisting.setIsDeleted(false);
+        freighTermsRepository.save(groExisting);
     }
 
     @Override
     public FreightTerms findByfreighttermname(String freighttermname) throws NotFoundException {
         return freighTermsRepository.findByFreighttermname(freighttermname);
-
     }
+
     @Override
     public Page<FreightTermsDto> findArchivedPage1(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
-        List<FreightTermsDto> freightTermsDtos = freightTermsPage.getContent().stream().map(freightTermsMapper::toDto).collect(Collectors.toList());
-        return new PageImpl<>(freightTermsDtos, pageable, freightTermsPage.getTotalElements());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        List<FreightTermsDto>  result = freighTermsRepository.findByIsDeletedAndFreighttermnameContainingIgnoreCase(true,filter, pageable)
+                .stream()
+                //                //.filter(g->g.getIsDeleted()!=null && g.getIsDeleted())
+                .map(freightTermsMapper::toDto)
+                .collect(Collectors.toList());
 
+        return new PageImpl<>(result);
     }
 
     @Override
     public Page<FreightTermsDto> findArchivedPage(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
-        List<FreightTermsDto> freightTermsDtos = freightTermsPage.getContent().stream().map(freightTermsMapper::toDto).collect(Collectors.toList());
-        return new PageImpl<>(freightTermsDtos, pageable, freightTermsPage.getTotalElements());
-
+        return null;
     }
 }

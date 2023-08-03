@@ -54,6 +54,7 @@ public class DivisionDTO extends BaseDto{
 	private String email;
 	@Size(max = 10)
 	private String zipCode;
+	private String divisiontype;
 	private Boolean isDeleted=false;
 	
 //	@DBRef

@@ -26,14 +26,8 @@ public class FreightTermsDto extends  BaseDto {
 
     @Size(max = 200)
     private String notes;
+    private Boolean isDeleted=false;
 
-    @Override
-    public String toString() {
-        return "FreightTermsDto{" +
-                "freighttermcode='" + freighttermcode + '\'' +
-                ", freighttermname='" + freighttermname + '\'' +
-                ", Active=" + Active +
-                ", notes='" + notes + '\'' +
-                '}';
-    }
+
+
 }
