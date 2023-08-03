@@ -33,12 +33,6 @@ public class FreightTerms extends BaseEntity {
     private Boolean isDeleted=false;
 
     // Add getter and setter methods for 'isDeleted'
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
 
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
 
 }
