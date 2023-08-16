@@ -2,19 +2,16 @@ package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.CampanyRepository;
 import com.agrotech.api.Repository.DeliveryInstructionRepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.DeliveryInstructionDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.CampanyMapper;
 import com.agrotech.api.mapper.DeliveryInstructionMapper;
 import com.agrotech.api.model.Campany;
-import com.agrotech.api.model.Currency;
 import com.agrotech.api.model.DeliveryInstruction;
-import com.agrotech.api.model.Division;
 import com.agrotech.api.services.DeliveryInstructionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +32,6 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
         return deliveryInstructionRepository.save(dto);
 
     }
-
     @Override
     public DeliveryInstructionDto create(DeliveryInstructionDto dto) {
         return deliveryInstructionMapper.toDto(save(deliveryInstructionMapper.toEntity(dto)));
@@ -43,24 +39,18 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
 
     @Override
     public DeliveryInstructionDto update(String id, DeliveryInstructionDto dto) throws NotFoundException {
-        Optional<DeliveryInstruction> camOptional =  deliveryInstructionRepository.findById(id);
-        if(camOptional.isEmpty()) {
-            throw new NotFoundException("Campany not found ");
+        Optional<DeliveryInstruction>delvoptional=deliveryInstructionRepository.findById(id);
+        if (delvoptional.isEmpty()){
+            throw new NotFoundException("Delivery Instruction not found ");
         }
 
-        DeliveryInstruction campanyExisting = camOptional.get();
-        deliveryInstructionMapper.partialUpdate(campanyExisting, dto);
 
-        return deliveryInstructionMapper.toDto(save(campanyExisting));
+        return null;
     }
 
     @Override
-    public DeliveryInstructionDto findById(String id) throws NotFoundException {
-        Optional<DeliveryInstruction> campOptional = deliveryInstructionRepository.findById(id);
-        if(campOptional.isEmpty()) {
-            throw new NotFoundException("Campany not found ");
-        }
-        return deliveryInstructionMapper.toDto(campOptional.get());
+    public DeliveryInstructionDto findById(String s) throws NotFoundException {
+        return null;
     }
 
     @Override
@@ -76,84 +66,43 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
     }
 
     @Override
-    public void delete(String id) throws NotFoundException {
-        if(!deliveryInstructionRepository.existsById(id)) {
-            throw new NotFoundException("Campany not found ");
-        }
+    public void delete(String s) throws NotFoundException {
 
-        deliveryInstructionRepository.deleteById(id);
     }
 
     @Override
     public DeliveryInstructionDto findBytypeproduct(String producttype) throws NotFoundException {
-        Optional<DeliveryInstruction> campOptional = deliveryInstructionRepository.findByProductType(producttype);
-        if(campOptional.isEmpty()) {
-            throw new NotFoundException("Campany not found ");
-        }
-        return deliveryInstructionMapper.toDto(campOptional.get());
+        return null;
     }
 
     @Override
     public Page<DeliveryInstructionDto> findPage1(int pageSize, int pageNumber, String filter) {
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndProductTypeContainingIgnoreCase(false,filter, pageable)
-                .stream()
-////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
-                .map(deliveryInstructionMapper::toDto)
-                .collect(Collectors.toList());
-        //return result;
-        return new PageImpl<>(result);
+        return null;
     }
 
     @Override
     public Page<DeliveryInstruction> getpages(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<DeliveryInstruction> result =  deliveryInstructionRepository.findByIsDeleted(false, pageable);
-
-        return result;
+        return null;
     }
 
     @Override
     public Page<DeliveryInstruction> getpagesarchive(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<DeliveryInstruction> result =  deliveryInstructionRepository.findByIsDeleted(true, pageable);
-
-        return result;
+        return null;
     }
 
     @Override
     public void archive(String id) throws NotFoundException {
-        Optional<DeliveryInstruction> groOptional =  deliveryInstructionRepository.findById(id);
-        if(groOptional.isEmpty()) {
-            throw new NotFoundException("Campany not found ");
-        }
-        DeliveryInstruction groExisting = groOptional.get();
-        groExisting.setIsDeleted(true);
-        deliveryInstructionRepository.save(groExisting);
+
     }
 
     @Override
     public void setNotArchive(String id) throws NotFoundException {
-        Optional<DeliveryInstruction> groOptional =  deliveryInstructionRepository.findById(id);
-        if(groOptional.isEmpty()) {
-            throw new NotFoundException("Campany not found ");
-        }
-        DeliveryInstruction groExisting = groOptional.get();
-        groExisting.setIsDeleted(false);
-        deliveryInstructionRepository.save(groExisting);
+
     }
 
     @Override
     public Page<DeliveryInstructionDto> findArchivedPage1(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndProductTypeContainingIgnoreCase(true,filter, pageable)
-                .stream()
-////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
-                .map(deliveryInstructionMapper::toDto)
-                .collect(Collectors.toList());
-        //return result;
-        return new PageImpl<>(result);
+        return null;
     }
 
     @Override

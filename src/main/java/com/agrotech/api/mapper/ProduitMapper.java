@@ -17,9 +17,7 @@ import java.math.BigDecimal;
 
 public interface ProduitMapper extends BaseMapper<ProduitDto, Produit> {
   
-    @Mapping(target = "prixUnitaireHt", source = ".", qualifiedByName = "toPrixTTC")
-    @Override
-    ProduitDto toDto(Produit entity);
+    @Mapping(target = "prefixUnitaireHt", source = ".", qualifiedByName = "toPrixTTC")
 
 
     @Named("toPrixTTC")

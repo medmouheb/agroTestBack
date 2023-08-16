@@ -20,6 +20,8 @@ import java.time.LocalDate;
 public class Vehicule extends BaseEntity {
 
     private String vehiculeType;
+
+
     @NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)
     @Size(max = 50, message = ValidationMessages.CODE_TOO_LONG)

@@ -99,7 +99,7 @@ public class VehiculeServiceImpl implements VehiculeService {
     }
 
     public Page<Vehicule> getpages(int pageSize, int pageNumber, String filter) {
-        return vehiculeRepository.findAll(PageRequest.of(pageNumber, pageSize));
+        return vehiculeRepository.findByIsDeletedAndVehiculeNameContainingIgnoreCase(false,filter,PageRequest.of(pageNumber, pageSize));
     }
 
     public Page<Vehicule> getpagesarchive(int pageSize, int pageNumber, String filter) {

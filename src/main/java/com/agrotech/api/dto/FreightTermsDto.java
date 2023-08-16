@@ -15,19 +15,27 @@ import org.springframework.data.mongodb.core.index.Indexed;
 public class FreightTermsDto extends  BaseDto {
     @Indexed(unique = true)
     @NotBlank(message = ValidationMessages.TYPE_REQUIRED)
-    @Size(max = 50,message = ValidationMessages.CODE_TOO_LONG)
+    @Size(max = 50)
     private String  freighttermcode ;
 
     @NotBlank(message = ValidationMessages.TYPE_REQUIRED)
-    @Size(max = 50,message = ValidationMessages.CODE_TOO_LONG)
+    @Size(max = 50)
     private String  freighttermname ;
 
     private Boolean Active;
 
     @Size(max = 200)
     private String notes;
+
     private Boolean isDeleted=false;
 
-
-
+    @Override
+    public String toString() {
+        return "FreightTermsDto{" +
+                "freighttermcode='" + freighttermcode + '\'' +
+                ", freighttermname='" + freighttermname + '\'' +
+                ", Active=" + Active +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
 }

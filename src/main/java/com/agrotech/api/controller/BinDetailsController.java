@@ -1,12 +1,9 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.dto.BinDetailsDto;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.BinDetails;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.services.BinDetailsService;
-import com.agrotech.api.services.CampanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -22,6 +19,7 @@ import java.util.List;
 public class BinDetailsController {
 
     private final BinDetailsService binDetailsService;
+
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody BinDetailsDto binDetails) {
         BinDetailsDto response = binDetailsService.create(binDetails);

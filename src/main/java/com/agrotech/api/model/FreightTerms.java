@@ -35,4 +35,14 @@ public class FreightTerms extends BaseEntity {
     // Add getter and setter methods for 'isDeleted'
 
 
+    @Override
+    public String toString() {
+        return "FreightTerms{" +
+                "freighttermcode='" + freighttermcode + '\'' +
+                ", freighttermname='" + freighttermname + '\'' +
+                ", Active=" + Active +
+                ", notes='" + notes + '\'' +
+                ", isDeleted=" + isDeleted +
+                '}';
+    }
 }
