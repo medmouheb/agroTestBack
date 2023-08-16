@@ -53,8 +53,8 @@ public class Fournisseur extends BaseEntity {
 	private String email;
 	@Size(max = 10)
 	private String zipCode;
-	@DBRef
-	private VendorSKU vendorSKU;
+
+	private String vendorSKU;
 	private Boolean isDeleted=false;
 
 }

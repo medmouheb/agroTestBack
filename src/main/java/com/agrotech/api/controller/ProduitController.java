@@ -16,7 +16,6 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.dto.ProduitDto;
 import com.agrotech.api.exceptions.CSVReaderException;
 import com.agrotech.api.exceptions.EmptyFileException;
@@ -83,11 +82,6 @@ public class ProduitController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/by-category/{categoryId}")
-	public ResponseEntity<?> findByCategoryId(@PathVariable String categoryId) throws NotFoundException {
-		List<ProduitDto> response = produitService.findAllByCategoryId(categoryId);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {

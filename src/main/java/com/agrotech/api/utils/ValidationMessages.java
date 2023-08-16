@@ -55,11 +55,30 @@ public final  class ValidationMessages {
 
 	    public static final String QUANTITE_REQUIRED = "Quantity est obligatoire " ;
 	    public static final String PRIX_UNITAIRE_REQUIRED = "Prix unitaire est obligatoire " ;
+	public static final String COUNT_REQUIRED = "Nombre de paiement est obligatoire " ;
+	public static final String SCHEDULE_REQUIRED = "Schedule  est obligatoire " ;
+	public static final String  PAYMENT_RATE_REQUIRED = "Payment Rate est obligatoire " ;
+	public static final String  DAYS_AFTER_REQUIRED = " Jours après le mois courant est obligatoire " ;
+
+	public static final String DATE_inv_REQUIRED  = " Date de facturation est obligatoire " ;
+
+	public static final String  DATE_ship_REQUIRED = "Date de livraison  est obligatoire " ;
+
+	public static final String  DATE_rec_REQUIRED = " Date de réception est obligatoire " ;
+
+	public static final String DATE_exp_REQUIRED  = " Date d'expédition est obligatoire " ;
+	public static final String DATE_SOLD_REQUIRED  = " Date de vente est obligatoire " ;
+
+	public static final String CHARGECALCULATIONTYPE_REQUIRED  = " Charge calculation est obligatoire " ;
+	public static final String VENDORCALCULATIONTYPE_REQUIRED  = " Fournisseur calculation est obligatoire " ;
 
 
 
 
-	    private ValidationMessages() {
+	private ValidationMessages() {
+
+
+
 	    }
 
 }

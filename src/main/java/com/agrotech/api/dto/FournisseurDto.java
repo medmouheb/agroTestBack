@@ -3,7 +3,6 @@ package com.agrotech.api.dto;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.utils.ValidationMessages;
 
 import jakarta.validation.constraints.NotBlank;
@@ -26,8 +25,9 @@ public class FournisseurDto extends BaseDto {
 		@NotBlank(message = ValidationMessages.NAME_REQUIRED)
 		@Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
 		private String name;
-		@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
-		private String type;@NotBlank(message = ValidationMessages.PAYMENT_TERM_REQUIRED)
+		//@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
+		private String type;
+	//	@NotBlank(message = ValidationMessages.PAYMENT_TERM_REQUIRED)
 		@Size(max = 20, message = ValidationMessages.PAYMENT_TERM_LONG)
 		private String paymentTerm;
 //		@NotBlank(message = ValidationMessages.CURRENCY_REQUIRED)
@@ -53,8 +53,8 @@ public class FournisseurDto extends BaseDto {
 		private String zipCode;
 
 
-		@DBRef
-		private VendorSKU vendorSKU;
+
+		private String vendorSKU;
 
 		private Boolean isDeleted=false;
 

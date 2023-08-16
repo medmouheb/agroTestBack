@@ -55,19 +55,11 @@ public class Produit extends BaseEntity {
 	private BigDecimal prixUnitaireTtc;
 	private Boolean isDeleted=false;
 
-	@DBRef
-	private ProductUsage methodeutilisation;
-	@DBRef
-	private Category category;
-	@DBRef
+
+	private String methodeutilisation;
+
+	private String category;
+
 	private Fournisseur fournisseur;
-	@DBRef
-	private Set<LigneVente> ligneVentes = new HashSet<>();
-	@DBRef
-	private Set<LigneCommandeFournisseur> ligneCommandeFournisseurs = new HashSet<>();
-	@DBRef
-	private Set<MvtStk> mvtStks = new HashSet<>();
-	private VendorSKU vendorSKU;
-	private SalesSKU salesSKU;
 
 }

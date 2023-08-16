@@ -1,11 +1,9 @@
 package com.agrotech.api.services;
 
-import com.agrotech.api.model.Currency;
 import com.agrotech.api.model.Fournisseur;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.data.domain.Page;
 
-import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.dto.FournisseurDto;
 import com.agrotech.api.exceptions.NotFoundException;
 

@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.agrotech.api.model.Campany;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.csv.CSVRecord;
@@ -16,11 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.agrotech.api.Repository.FournisseurRepository;
-import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.dto.FournisseurDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.FournisseurMapper;
-import com.agrotech.api.model.Ferme;
 import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.services.FournisseurService;
 
