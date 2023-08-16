@@ -1,5 +1,6 @@
 package com.agrotech.api.config;
 
+import org.modelmapper.ModelMapper;
 
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -31,8 +32,11 @@ public class SwaggerConfiguration {
         .paths(PathSelectors.any())
         .build();
   }
-  
 
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
 
 
