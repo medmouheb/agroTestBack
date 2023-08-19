@@ -27,6 +27,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/fournisseur")
 @RequiredArgsConstructor
 public class FournisseurController {
@@ -98,7 +99,7 @@ public class FournisseurController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("/desarchiver/{id}")
+    @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         fournisseurService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);

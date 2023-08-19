@@ -4,7 +4,8 @@ import com.agrotech.api.dto.FreightTermsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.FreightTerms;
 import com.agrotech.api.services.FreightTermsService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,8 @@ public class FreightTermsController {
 
 
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody FreightTermsDto freightTerms) {
+    public ResponseEntity<?> create(@RequestBody @Valid FreightTermsDto freightTerms) {
+        System.out.println("tad");
         System.out.println(freightTerms.toString());
         FreightTermsDto response = freightTermsService.create(freightTerms);
         return new ResponseEntity<>(response, HttpStatus.CREATED);

@@ -29,6 +29,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/charge")
 @RequiredArgsConstructor
 public class ChargeController {

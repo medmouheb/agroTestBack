@@ -4,7 +4,9 @@ import com.agrotech.api.Repository.FreighTermsRepository;
 import com.agrotech.api.dto.FreightTermsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.FreightTermsMapper;
+import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.FreightTerms;
+import com.agrotech.api.model.VehicleType;
 import com.agrotech.api.services.FreightTermsService;
 
 import lombok.RequiredArgsConstructor;
@@ -105,38 +107,41 @@ public class FreightTermsImpl implements FreightTermsService {
     @Override
     public Page<FreightTerms> getpages(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
+        Page<FreightTerms> freightTermsPage = freighTermsRepository.findByIsDeleted(false,pageable);
         return freightTermsPage;
     }
 
     @Override
     public Page<FreightTerms> getpagesarchive(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findAll(pageable);
+        Page<FreightTerms> freightTermsPage = freighTermsRepository.findByIsDeleted(true,pageable);
         return freightTermsPage;
 
     }
 
     @Override
     public void archive(String id) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findById(id);
-        if(freightTermsOptional.isEmpty()) {
-            throw new NotFoundException("FreightTerms not found ");
-        }
-        FreightTerms freightTerms = freightTermsOptional.get();
-        freighTermsRepository.save(freightTerms);
 
+
+        Optional<FreightTerms> groOptional =  freighTermsRepository.findById(id);
+        if(groOptional.isEmpty()) {
+            throw new NotFoundException("Campany not found ");
+        }
+        FreightTerms groExisting = groOptional.get();
+        groExisting.setIsDeleted(true);
+        freighTermsRepository.save(groExisting);
     }
 
     @Override
     public void setNotArchive(String id) throws NotFoundException {
-        Optional<FreightTerms> freightTermsOptional =  freighTermsRepository.findById(id);
-        if(freightTermsOptional.isEmpty()) {
+
+        Optional<FreightTerms> groOptional =  freighTermsRepository.findById(id);
+        if(groOptional.isEmpty()) {
             throw new NotFoundException("FreightTerms not found ");
         }
-        FreightTerms freightTerms = freightTermsOptional.get();
-        freighTermsRepository.save(freightTerms);
-
+        FreightTerms groExisting = groOptional.get();
+        groExisting.setIsDeleted(false);
+        freighTermsRepository.save(groExisting);
 
     }
 

@@ -2,16 +2,18 @@ package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.CampanyRepository;
 import com.agrotech.api.Repository.DeliveryInstructionRepository;
+import com.agrotech.api.dto.BreedCodeDto;
 import com.agrotech.api.dto.DeliveryInstructionDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.CampanyMapper;
 import com.agrotech.api.mapper.DeliveryInstructionMapper;
+import com.agrotech.api.model.BreedCode;
 import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.DeliveryInstruction;
 import com.agrotech.api.services.DeliveryInstructionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -67,7 +69,11 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
 
     @Override
     public void delete(String s) throws NotFoundException {
+        if(!deliveryInstructionRepository.existsById(s)) {
+            throw new NotFoundException("BreedCode not found ");
+        }
 
+        deliveryInstructionRepository.deleteById(s);
     }
 
     @Override
@@ -77,7 +83,15 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
 
     @Override
     public Page<DeliveryInstructionDto> findPage1(int pageSize, int pageNumber, String filter) {
-        return null;
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BreedCodeName").ascending());
+        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndProductTypeContainingIgnoreCase(false,filter, pageable)
+                .stream()
+////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
+                .map(deliveryInstructionMapper::toDto)
+                .collect(Collectors.toList());
+        //return result;
+        return new PageImpl<>(result);
     }
 
     @Override
@@ -92,17 +106,37 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
 
     @Override
     public void archive(String id) throws NotFoundException {
-
+        Optional<DeliveryInstruction> groOptional =  deliveryInstructionRepository.findById(id);
+        if(groOptional.isEmpty()) {
+            throw new NotFoundException("BreedCode not found ");
+        }
+        DeliveryInstruction groExisting = groOptional.get();
+        groExisting.setIsDeleted(true);
+        deliveryInstructionRepository.save(groExisting);
     }
 
     @Override
     public void setNotArchive(String id) throws NotFoundException {
-
+        Optional<DeliveryInstruction> groOptional =  deliveryInstructionRepository.findById(id);
+        if(groOptional.isEmpty()) {
+            throw new NotFoundException("BreedCode not found ");
+        }
+        DeliveryInstruction groExisting = groOptional.get();
+        groExisting.setIsDeleted(false);
+        deliveryInstructionRepository.save(groExisting);
     }
 
     @Override
     public Page<DeliveryInstructionDto> findArchivedPage1(int pageSize, int pageNumber, String filter) {
-        return null;
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BreedCodeName").ascending());
+        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndProductTypeContainingIgnoreCase(true,filter, pageable)
+                .stream()
+////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
+                .map(deliveryInstructionMapper::toDto)
+                .collect(Collectors.toList());
+        //return result;
+        return new PageImpl<>(result);
+
     }
 
     @Override
