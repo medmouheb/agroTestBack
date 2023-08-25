@@ -193,6 +193,14 @@ public class CampanyServiceImpl implements CampanyService{
 
 		return new PageImpl<>(result);
 	}
+
+	@Override
+	public List<Campany> findBynamee() throws NotFoundException {
+		return campanyRepository.findAll();
+
+
+	}
+
 	@Override
 	public Page<CampanyDto> findArchivedPage1(int pageSize, int pageNumber, String filter) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());

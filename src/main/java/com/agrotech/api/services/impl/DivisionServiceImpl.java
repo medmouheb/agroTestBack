@@ -57,6 +57,16 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
+	public List<Division> findBynamee() throws NotFoundException {
+		return divisionRepository.findAll();
+	}
+
+	@Override
+	public List<Division> findByCompanyName() throws NotFoundException {
+		return divisionRepository.findAll();
+	}
+
+	@Override
 	public DivisionDTO create(DivisionDTO dto) {
 
 //		return divisionMapper.toDto(save(divisionMapper.toEntity(dto)));

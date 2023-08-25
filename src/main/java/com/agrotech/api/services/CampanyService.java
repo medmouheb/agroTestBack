@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
+import java.util.List;
+
 public interface CampanyService extends BaseService<CampanyDto, String> {
 
 	CampanyDto findByCode(String code) throws NotFoundException;
@@ -21,4 +23,6 @@ public interface CampanyService extends BaseService<CampanyDto, String> {
 	  Campany findByname(String name)throws NotFoundException;
 	public Page<CampanyDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
 	public Page<CampanyDto> findArchivedPage(int pageSize, int pageNumber, String filter);
+
+	List<Campany> findBynamee()throws NotFoundException;
 }

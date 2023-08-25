@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import com.agrotech.api.dto.DivisionDTO;
 import com.agrotech.api.exceptions.NotFoundException;
 
+import java.util.List;
+
 public interface DivisionService extends BaseService<DivisionDTO, String> {
 
 	DivisionDTO findByCode(String code) throws NotFoundException;
@@ -24,7 +26,9 @@ public interface DivisionService extends BaseService<DivisionDTO, String> {
 	public Page<Division> findPage1(int pageSize, int pageNumber, String filter);
 	Division findByname(String name)throws NotFoundException;
 
+	List<Division> findBynamee()throws NotFoundException;
 
+	List<Division> findByCompanyName()throws  NotFoundException;
 
 
 
