@@ -56,6 +56,18 @@ public class Vehicule extends BaseEntity {
     @Size(max = 200, message = ValidationMessages.CODE_TOO_LONG)
     private String notes;
 
+    private String facilityID;
+
+    private String facilityName;
+
+    private String primary;
+
+    private String alternative;
+
+    private Number bin;
+
+    private Double capacity2;
+
 
     private Boolean isDeleted = false;
 }
