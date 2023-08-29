@@ -13,7 +13,6 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.agrotech.api.Repository.SalesRepository;
-import com.agrotech.api.Repository.produitRepository;
 import com.agrotech.api.dto.SalesDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.ProduitMapper;

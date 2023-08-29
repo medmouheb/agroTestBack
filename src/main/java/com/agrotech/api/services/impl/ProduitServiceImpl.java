@@ -13,10 +13,14 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.agrotech.api.Repository.produitRepository;
+import com.agrotech.api.Repository.ProduitRepository;
+import com.agrotech.api.dto.FournisseurDto;
+import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.dto.ProduitDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.ProduitMapper;
+import com.agrotech.api.model.Category;
+import com.agrotech.api.model.Growout;
 import com.agrotech.api.model.Produit;
 import com.agrotech.api.services.ProduitService;
 
@@ -25,7 +29,7 @@ import com.agrotech.api.services.ProduitService;
 public class ProduitServiceImpl implements ProduitService {
 
 	@Autowired
-    private final produitRepository produitRepository;
+    private final ProduitRepository produitRepository;
 	@Autowired
     private final ProduitMapper produitMapper;
 
@@ -138,7 +142,19 @@ public class ProduitServiceImpl implements ProduitService {
         return result;
     }
 
+    @Override
+    public List<Produit> findAllByType(String type) {
 
+        return produitRepository.findAll();
+    }
+
+    @Override
+    public List<ProduitDto> findAllByCategoryId(String idCategory) {
+        return produitRepository.findByCategory(idCategory)
+                .stream()
+                .map(produitMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void archive(String id) throws NotFoundException {

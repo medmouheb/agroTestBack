@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 import com.agrotech.api.Repository.CommandeFournisseurRepository;
 import com.agrotech.api.Repository.FournisseurRepository;
 import com.agrotech.api.Repository.LigneCommandeFournisseurRepository;
-import com.agrotech.api.Repository.produitRepository;
+import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.dto.CommandeFournisseurDto;
 import com.agrotech.api.dto.LigneCommandeFournisseurDto;
 import com.agrotech.api.enums.EtatCommande;
@@ -47,7 +47,7 @@ public class CommandeFournisseurServiceImpl implements CommandeFournisseurServic
 	@Autowired
 	private LigneCommandeFournisseurMapper ligneCommandeFournisseurMapper;
 	@Autowired
-	private produitRepository produitRepository;
+	private ProduitRepository produitRepository;
 	
 
 	public CommandeFournisseur save(CommandeFournisseur entity) {
