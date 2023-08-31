@@ -31,4 +31,5 @@ public interface ProduitService extends BaseService<ProduitDto, String> {
     public Page<Produit> findArchivedPage1(int pageSize, int pageNumber, String filter);
 
     public List<Produit> findAllByType(String type);
+
 }

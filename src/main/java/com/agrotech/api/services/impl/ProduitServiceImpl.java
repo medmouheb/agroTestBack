@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.agrotech.api.Repository.ProduitRepository;
-
 import com.agrotech.api.dto.FournisseurDto;
 import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.dto.ProduitDto;
@@ -152,7 +151,6 @@ public class ProduitServiceImpl implements ProduitService {
     @Override
     public List<ProduitDto> findAllByCategoryId(String idCategory) {
         return produitRepository.findByCategory(idCategory)
-
                 .stream()
                 .map(produitMapper::toDto)
                 .collect(Collectors.toList());
