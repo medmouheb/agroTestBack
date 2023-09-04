@@ -104,7 +104,7 @@ public class ProduitController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PutMapping("/desarchiver/{id}")
+	@GetMapping("/desarchiver/{id}")
 	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
 		produitService.setNotArchive(id);
 		return new ResponseEntity<>(HttpStatus.OK);

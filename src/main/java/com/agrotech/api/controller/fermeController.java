@@ -102,7 +102,7 @@ public class fermeController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PutMapping("/desarchiver/{id}")
+	@GetMapping("/desarchiver/{id}")
 	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
 		fermeService.setNotArchive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
