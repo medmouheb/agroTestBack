@@ -41,18 +41,24 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
 
     @Override
     public DeliveryInstructionDto update(String id, DeliveryInstructionDto dto) throws NotFoundException {
-        Optional<DeliveryInstruction>delvoptional=deliveryInstructionRepository.findById(id);
-        if (delvoptional.isEmpty()){
-            throw new NotFoundException("Delivery Instruction not found ");
+        Optional<DeliveryInstruction> camOptional =  deliveryInstructionRepository.findById(id);
+        if(camOptional.isEmpty()) {
+            throw new NotFoundException("Campany not found ");
         }
 
+        DeliveryInstruction campanyExisting = camOptional.get();
+        deliveryInstructionMapper.partialUpdate(campanyExisting, dto);
 
-        return null;
+        return deliveryInstructionMapper.toDto(save(campanyExisting));
     }
 
     @Override
     public DeliveryInstructionDto findById(String s) throws NotFoundException {
-        return null;
+        Optional<DeliveryInstruction> campOptional = deliveryInstructionRepository.findById(s);
+        if(campOptional.isEmpty()) {
+            throw new NotFoundException("Campany not found ");
+        }
+        return deliveryInstructionMapper.toDto(campOptional.get());
     }
 
     @Override

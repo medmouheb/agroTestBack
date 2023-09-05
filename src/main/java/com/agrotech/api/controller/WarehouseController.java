@@ -6,13 +6,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 
 import com.agrotech.api.dto.WarehouseDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.WarehouseService;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -87,6 +92,16 @@ public class WarehouseController {
     ) {
         Page<Warehouse> response = warehouseService.findArchivedPage1(pageSize, pageNumber, filter);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    @GetMapping(value = "/csv-template")
+    public ResponseEntity<?> downloadCSVTemplate() throws IOException {
+        File file = ResourceUtils.getFile("classpath:csv/warehouse.csv");
+        byte[] resource = Files.readAllBytes(file.toPath());
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(resource);
     }
 
 }
