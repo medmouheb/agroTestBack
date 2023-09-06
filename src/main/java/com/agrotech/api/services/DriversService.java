@@ -7,6 +7,8 @@ import com.agrotech.api.model.Drivers;
 import com.agrotech.api.model.LogisticUnit;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface DriversService extends BaseService<DriversDto, String>{
 
     DriversDto findByCodeEmploye(String codeEmploye) throws NotFoundException;
@@ -22,6 +24,7 @@ public interface DriversService extends BaseService<DriversDto, String>{
     Drivers findByNomDuChauffeur(String nomDuChauffeur)throws NotFoundException;
     public Page<DriversDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
     public Page<DriversDto> findArchivedPage(int pageSize, int pageNumber, String filter);
+    List<Drivers> findByNomDuChauffeurs()throws NotFoundException;
 
 
 }

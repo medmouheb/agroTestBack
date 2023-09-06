@@ -193,4 +193,8 @@ public class DriversServiceImpl implements DriversService {
 
         return new PageImpl<>(result);
     }
+
+    @Override
+    public List<Drivers> findByNomDuChauffeurs() throws NotFoundException {
+        return driversRepository.findAll();    }
 }
