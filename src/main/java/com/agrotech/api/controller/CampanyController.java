@@ -3,7 +3,6 @@ package com.agrotech.api.controller;
 import java.util.List;
 
 import com.agrotech.api.model.Campany;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agrotech.api.dto.CampanyDto;
-import com.agrotech.api.dto.GrowoutDto;
-import com.agrotech.api.dto.ProduitDto;
+
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.CampanyService;
 

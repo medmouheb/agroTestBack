@@ -17,16 +17,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Document(collection = "warehouse")
 public class Warehouse extends BaseEntity {
-   
-	@NotBlank(message = ValidationMessages.CODE_REQUIRED)
+
+    @NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)
     @Size(max = 50, message = ValidationMessages.CODE_TOO_LONG)
     private String code;
-	@NotBlank(message = ValidationMessages.NAME_REQUIRED)
+    @NotBlank(message = ValidationMessages.NAME_REQUIRED)
     @Indexed(unique = true)
-    @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)    
-	private String name;
-//	@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
+    @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
+    private String name;
+    //	@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
     private String type;
     private CostCenterType costCenterType;
     @Size(max = 50)
@@ -57,8 +57,13 @@ public class Warehouse extends BaseEntity {
     @Size(max = 250)
     private double longitude;
     private Boolean isDeleted=false;
-    
-    // @NotBlank(message = "Cost center code is required")
+    private String costCenterCode;
+    //    @NotBlank(message = "Cost center name is required")
+    private String costCenterName;
+
+    // @NotBlank(message     private String costCenterCode;
+    ////    @NotBlank(message = "Cost center name is required")
+    //    private String costCenterName;= "Cost center code is required")
     // private String costCenterCode;
     // @NotBlank(message = "Cost center name is required")
     // private String costCenterName;
@@ -66,6 +71,6 @@ public class Warehouse extends BaseEntity {
     //  private String divisionName;
     //  private String vendor;
     //Active
-    
+
 
 }
