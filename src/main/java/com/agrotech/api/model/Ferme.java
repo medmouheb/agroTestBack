@@ -29,7 +29,7 @@ public class Ferme extends BaseEntity {
 	@NotBlank(message = ValidationMessages.NAME_REQUIRED)
 	@Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
 	private String nom;
-	private Etat statuss;
+	private Boolean statuss;
 	private String stage;
 	private String costcenter;
 	private String warehousecode;
@@ -64,6 +64,8 @@ public class Ferme extends BaseEntity {
 	private String owner_Name;
 	@Size(max = 250)
 	private String attachments;
+	@Size(max = 250)
+	private String comments;
 	@Size(max = 250)
 	private String address1;
 	@Size(max = 250)

@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.VehiclesRepository;
 import com.agrotech.api.dto.LogisticUnitDto;
 import com.agrotech.api.dto.VehiclesDto;
 import com.agrotech.api.dto.VehiculeDto;
@@ -27,6 +28,7 @@ public class VehiclesController {
 
     private final VehiclesService vehiclesService ;
     private final LogisticUnitService logisticUnitService;
+    private final VehiclesRepository vehiclesRepository;
 
 
     @PostMapping("")
@@ -40,6 +42,11 @@ public class VehiclesController {
         Vehicles response=vehiclesService.findByNomDuVehicule(name);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+    /*@GetMapping("/getallListeDesOperationsEffectuees")
+    public List<String> getallListeDesOperationsEffectuees() throws NotFoundException {
+        return vehiclesRepository.findAllListeDesOperationsEffectuees();
+    }*/
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id,@RequestBody VehiclesDto campany) throws NotFoundException {
         VehiclesDto response = vehiclesService.update(id, campany);

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,5 +17,8 @@ public interface VehiclesRepository extends MongoRepository<Vehicles,String> {
     Page<Vehicles> findByIsDeletedAndNomDuVehiculeContainingIgnoreCase(Boolean isDeleted, String LogisticName, Pageable pageable);
     Page<Vehicles> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Vehicles findByNomDuVehicule(String nomDuVehicule);
+
+
+//    List<String> findAllListeDesOperationsEffectuees();
 
 }

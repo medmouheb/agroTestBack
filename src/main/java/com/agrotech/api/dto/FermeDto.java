@@ -29,7 +29,7 @@ public class FermeDto extends BaseDto {
 	@NotBlank(message = ValidationMessages.NAME_REQUIRED)
 	@Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
 	private String nom;
-	private Etat statuss;
+	private Boolean statuss;
 	private String stage;
 	private String costcenter;
 	private String warehousecode;
@@ -63,6 +63,8 @@ public class FermeDto extends BaseDto {
 	private String owner_Name;
 	@Size(max = 250)
 	private String attachments;
+	@Size(max = 250)
+	private String comments;
 	@Size(max = 250)
 	private String address1;
 	@Size(max = 250)
