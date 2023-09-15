@@ -29,9 +29,11 @@ public class InventaireInitialDto extends BaseDto{
 
     private String nomDuProduit;
 
-    private String uniteDinventaire;
+    private Double uniteDinventaire;
 
     private Double  prixUnitaire;
+
+    private Double price;
 
     @Indexed(unique = true)
     private Number codeDeLot;

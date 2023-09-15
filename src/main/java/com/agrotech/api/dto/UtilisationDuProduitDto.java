@@ -29,6 +29,8 @@ public class UtilisationDuProduitDto extends BaseDto{
 
     private String numeroDeLot;
 
+    private String location;
+
     private Number quantite;
 
     private Double montant;
@@ -36,6 +38,8 @@ public class UtilisationDuProduitDto extends BaseDto{
     private String nDeReference;
 
     private String commentaire;
+
+    private Boolean Void;
 
     private Boolean isDeleted=false;
 }
