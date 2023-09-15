@@ -47,5 +47,4 @@ public class UtilisationDuProduit extends BaseEntity{
 
     private Boolean isDeleted=false;
 
-
 }
