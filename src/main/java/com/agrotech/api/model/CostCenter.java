@@ -26,6 +26,11 @@ public class CostCenter extends BaseEntity {
     @Size(max = 50, message = ValidationMessages.NAME_TOO_LONG)
 	private String name ;
 
+
+    @NotBlank(message = ValidationMessages.NAME_REQUIRED)
+    @Size(max = 50, message = ValidationMessages.NAME_TOO_LONG)
+    private String typecost ;
+
     private Boolean isDeleted=false;
 
     @Size(max = 5)

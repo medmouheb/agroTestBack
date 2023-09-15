@@ -28,7 +28,7 @@ public class Warehouse extends BaseEntity {
 	private String name;
 //	@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
     private String type;
-    private CostCenterType costCenterType;
+    private String facilityType;
     @Size(max = 50)
     private LocalDate startingDate;
     private Boolean isPrimary;
@@ -57,7 +57,13 @@ public class Warehouse extends BaseEntity {
     @Size(max = 250)
     private double longitude;
     private Boolean isDeleted=false;
-    
+
+
+    private String costCenterName;
+    private String costCenterCode;
+    private String vendor;
+
+
     // @NotBlank(message = "Cost center code is required")
     // private String costCenterCode;
     // @NotBlank(message = "Cost center name is required")

@@ -118,7 +118,7 @@ public class CampanyServiceImpl implements CampanyService{
 
 
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Campany> result =  campanyRepository.findByIsDeleted(false, pageable);
+		Page<Campany> result =  campanyRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
 
 		return result;
 	}

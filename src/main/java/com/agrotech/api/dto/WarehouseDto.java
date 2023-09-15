@@ -23,7 +23,7 @@ public class WarehouseDto extends BaseDto {
     private String costCenterCode;
 //    @NotBlank(message = "Cost center name is required")
     private String costCenterName;
-    private CostCenterType costCenterType;
+    private String facilityType;
     private String divisionCode;
     private String divisionName;
     private LocalDate startingDate;

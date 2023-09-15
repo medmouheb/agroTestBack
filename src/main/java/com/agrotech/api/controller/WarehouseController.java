@@ -136,7 +136,7 @@ public class WarehouseController {
                 "name",
                 "type",
 
-                "costCenterType",
+                "facilityType",
 
                 "startingDate",
                 "isPrimary",
@@ -163,7 +163,7 @@ public class WarehouseController {
                     String.valueOf(entity.getName()),
                     String.valueOf(entity.getType()),
 
-                    String.valueOf(entity.getCostCenterType()),
+                    String.valueOf(entity.getFacilityType()),
 
                     String.valueOf(entity.getStartingDate()),
                     String.valueOf(entity.getIsPrimary()),
@@ -204,11 +204,10 @@ public class WarehouseController {
                 w.setCode(data[0]);
                 w.setName(data[1]);
                 w.setType(data[2]);
-                List<String> stringList = Arrays.asList("ADMIN", "INTERNAL", "EXTERNAL");
-                if(stringList.contains(data[3])){
-                    w.setCostCenterType(CostCenterType.valueOf(data[3]) );
-                }else{
-                    w.setCostCenterType(null);
+                try{
+                    w.setFacilityType(data[3]);
+                }catch(Exception e) {
+                    System.out.println(e);
                 }
                 try {
                     w.setStartingDate(LocalDate.parse(data[4]));

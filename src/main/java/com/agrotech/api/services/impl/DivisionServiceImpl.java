@@ -82,7 +82,7 @@ public class DivisionServiceImpl implements DivisionService {
 
 		Division division = divOptional.get();
 		divisionMapper.partialUpdate(division, dto);
-		return divisionMapper.toDto(division);
+		return divisionMapper.toDto(save(division));
 	}
 
 	@Override
