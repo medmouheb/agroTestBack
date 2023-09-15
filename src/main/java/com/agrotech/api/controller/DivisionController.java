@@ -43,12 +43,16 @@ public class DivisionController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
+//	@PutMapping("/{id}")
+//	public ResponseEntity<?> update(@PathVariable String id,@RequestBody DivisionDTO div) throws NotFoundException {
+//		DivisionDTO response = divisionService.update(id, div);
+//		return new ResponseEntity<>(response, HttpStatus.OK);
+//	}
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,@RequestBody DivisionDTO div) throws NotFoundException {
 		DivisionDTO response = divisionService.update(id, div);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		DivisionDTO response = divisionService.findById(id);
