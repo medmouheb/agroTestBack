@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VehicleTypeRepository;
+import com.agrotech.api.Repository.VehiculeRepository;
 import com.agrotech.api.dto.VehiculeDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Vehicule;
@@ -20,6 +22,11 @@ public class VehiculeController  {
 
     private final VehiculeService vehiculeService ;
 
+    private  final VehiculeRepository vehiculeRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vehiculeRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VehiculeDto vehicule) {
         VehiculeDto response = vehiculeService.create(vehicule);

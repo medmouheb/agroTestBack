@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.SalesRepository;
 import com.agrotech.api.dto.SalesSkuDto;
 import com.agrotech.api.model.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,11 @@ public class SalesController {
 	
 	@Autowired
 	private final SalesServices salesServices ;
-	
+	private  final SalesRepository salesRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		salesRepository.deleteAll();
+	}
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody SalesDto sales){
 		SalesDto response = salesServices.create(sales);

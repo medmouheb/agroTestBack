@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.HousseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -34,8 +35,12 @@ public class HousseController {
 	
 	@Autowired
 	private HousseService housseService ;
-	
-	
+
+	private  final HousseRepository housseRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		housseRepository.deleteAll();
+	}
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody HousseDto housse){
 		HousseDto response = housseService.create(housse);

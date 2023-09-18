@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.ChargeRepository;
 import com.agrotech.api.dto.ChargeDto;
 
 import com.agrotech.api.model.Charge;
@@ -37,7 +38,11 @@ public class ChargeController {
 
     @Autowired
     private final  ChargeService chargeService;
-
+    private  final ChargeRepository chargeRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        chargeRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid ChargeDto charge) {
         ChargeDto response = chargeService.create(charge);

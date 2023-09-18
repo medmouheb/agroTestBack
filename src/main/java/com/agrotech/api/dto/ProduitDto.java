@@ -43,8 +43,7 @@ public class ProduitDto extends BaseDto {
 	private String currency;
 	@Size(max = 250)
 	private String Inventaire;
-	@Size(max = 250)
-	private String Medicamenteux;
+	private Boolean Medicamenteux;
 	@Size(max = 250)
 	private String Fabricant;
 	@Size(max = 250)
@@ -57,8 +56,17 @@ public class ProduitDto extends BaseDto {
 	private BigDecimal tauxTva;
 	@Size(max = 250)
 	private BigDecimal prixUnitaireTtc;
-	private Boolean isDeleted=false;;
-	
+	private Boolean isDeleted=false;
+
+	private Fournisseur fournisseur;
+	private String category;
+
+	private String transactionDate;
+	private String farmCode;
+	private String houseCode ;
+	private VendorSKU vendorSKU;
+	private SalesSKU salesSKU;
+
 	/*
 	@Size(max = 250)
 	private String num;

@@ -2,6 +2,8 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.FacilityDetailsRepository;
+import com.agrotech.api.Repository.FermeRepository;
 import com.agrotech.api.model.Ferme;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +43,12 @@ import lombok.RequiredArgsConstructor;
 public class fermeController {
 
 	@Autowired
-	private final FermeService fermeService ; 
-	
+	private final FermeService fermeService ;
+	private  final FermeRepository fermeRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		fermeRepository.deleteAll();
+	}
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody FermeDto ferme) {
 		FermeDto response = fermeService.create(ferme);

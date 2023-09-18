@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorTypeDetailsRepository;
 import com.agrotech.api.dto.VendorTypeDetailsDto;
 import com.agrotech.api.dto.VendorTypesDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -18,6 +19,13 @@ import java.util.List;
 @RequestMapping("/vendorTypeDetail")
 @RequiredArgsConstructor
 public class VendorTypeDetailController {
+
+
+    private  final VendorTypeDetailsRepository vendorTypeDetailsRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorTypeDetailsRepository.deleteAll();
+    }
 
 
     private final VendorTypeDetailsService vendorTypeDetailsService;

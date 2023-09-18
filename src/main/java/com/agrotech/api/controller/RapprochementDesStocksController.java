@@ -1,6 +1,8 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.ProduitRepository;
+import com.agrotech.api.Repository.RapprochementDesStocksRepository;
 import com.agrotech.api.dto.RapprochementDesStocksDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.RapprochementDesStocks;
@@ -22,7 +24,11 @@ public class RapprochementDesStocksController {
 
     @Autowired
     private final RapprochementDesStocksService rapprochementDesStocksService;
-
+    private  final RapprochementDesStocksRepository rapprochementDesStocksRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        rapprochementDesStocksRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody RapprochementDesStocksDto rapprochementDesStocks) {

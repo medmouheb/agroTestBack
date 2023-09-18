@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.FacilityDetailsRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.FacilityDetailsDto;
 import com.agrotech.api.dto.FreightTermsDto;
@@ -24,7 +25,11 @@ import java.util.List;
 public class FacilityDetailsController {
 
     private final FacilityDetailsService facilityDetailsService;
-
+    private  final FacilityDetailsRepository facilityDetailsRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        facilityDetailsRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody FacilityDetailsDto FacilityDetails) {
         System.out.println(FacilityDetails.toString());

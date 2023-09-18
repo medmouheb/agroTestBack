@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
 
+import com.agrotech.api.Repository.ProduitRepository;
+import com.agrotech.api.model.ProductCategory;
 import com.agrotech.api.model.Produit;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
@@ -31,7 +33,11 @@ public class ProduitController {
 
 	@Autowired
 	private final ProduitService produitService;
-
+	private  final ProduitRepository produitRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		produitRepository.deleteAll();
+	}
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody ProduitDto produit) {
 		ProduitDto response = produitService.create(produit);

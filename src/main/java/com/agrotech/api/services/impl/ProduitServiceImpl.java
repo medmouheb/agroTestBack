@@ -202,7 +202,7 @@ public class ProduitServiceImpl implements ProduitService {
         produit.setType(record.get("type"));
         produit.setStatus(Boolean.valueOf(record.get("status")));
         produit.setInventaire(record.get("inventory"));
-        produit.setMedicamenteux(record.get("medicated"));
+        produit.setMedicamenteux( Boolean.valueOf(record.get("medicated"))  );
         produit.setFabricant(record.get("manufacturer"));
         produit.setMaxdepasse(record.get("maxOver"));
         produit.setCouleur(record.get("color"));

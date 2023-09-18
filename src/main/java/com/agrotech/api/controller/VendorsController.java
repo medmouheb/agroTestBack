@@ -34,6 +34,11 @@ public class VendorsController {
     private final VendorsService vendorsService ;
     private final VendorsRepository vendorsRepository;
 
+
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorsRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorsDto vendors) {
         VendorsDto response = vendorsService.create(vendors);

@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorTypeHistoryIReceivingRepository;
+import com.agrotech.api.Repository.VendorTypePODetailsRepository;
 import com.agrotech.api.dto.VendorTypePODetailsDto;
 import com.agrotech.api.dto.VendorsDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -23,6 +25,11 @@ public class VendorTypePODetailsController {
     private final VendorTypePODetailsService vendorTypePODetailsService ;
 
 
+    private  final VendorTypePODetailsRepository vendorTypePODetailsRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorTypePODetailsRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorTypePODetailsDto vendorTypePODetails) {
         VendorTypePODetailsDto response = vendorTypePODetailsService.create(vendorTypePODetails);

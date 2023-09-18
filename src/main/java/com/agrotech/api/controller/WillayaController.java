@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.WillayaRepository;
 import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Willaya;
@@ -21,6 +22,13 @@ public class WillayaController {
 
     @Autowired
     private final WilayaService willayaService ;
+
+    private  final WillayaRepository willayaRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        willayaRepository.deleteAll();
+    }
+
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody WillayaDto div) {

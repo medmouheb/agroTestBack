@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.VendorsRemitRepository;
 import com.agrotech.api.dto.VendorsRemitDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorsRemit;
@@ -21,6 +22,11 @@ public class VendorsRemitController {
 
     private final VendorsRemitService vendorsRemitService ;
 
+    private  final VendorsRemitRepository vendorsRemitRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorsRemitRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorsRemitDto vendorSku) {
         VendorsRemitDto response = vendorsRemitService.create(vendorSku);

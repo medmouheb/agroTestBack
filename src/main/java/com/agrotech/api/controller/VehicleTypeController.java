@@ -1,6 +1,8 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.VehicleTypeRepository;
+import com.agrotech.api.Repository.VehiclesRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VehicleTypeDto;
 import com.agrotech.api.dto.VendorSKUDto;
@@ -23,6 +25,11 @@ import java.util.List;
 public class VehicleTypeController {
     private final VehicleTypeService vehicleTypeService;
 
+    private  final VehicleTypeRepository vehicleTypeRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vehicleTypeRepository.deleteAll();
+    }
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody VehicleTypeDto vehicleType) {
         System.out.println(vehicleType.toString());

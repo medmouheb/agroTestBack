@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 import java.util.List;
 
+import com.agrotech.api.Repository.Growoutrepository;
 import com.agrotech.api.model.Growout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,11 @@ public class GrowoutController {
 	
 	@Autowired
 	private GrowoutService growoutService ;
-	
+	private  final Growoutrepository growoutrepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		growoutrepository.deleteAll();
+	}
 	
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody GrowoutDto growout) {

@@ -2,6 +2,8 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.CommandeFournisseurRepository;
+import com.agrotech.api.Repository.CostCenterRepository;
 import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.CostCenter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,11 @@ public class CostCenterController {
 	
 	@Autowired
 	private final CostCenterService costCenterService ;
-	
+	private  final CostCenterRepository costCenterRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		costCenterRepository.deleteAll();
+	}
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody CostCenterDto cost) {
 		CostCenterDto response = costCenterService.create(cost);

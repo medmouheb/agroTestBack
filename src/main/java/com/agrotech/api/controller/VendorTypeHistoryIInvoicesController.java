@@ -1,7 +1,10 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorTypeFreightRepository;
+import com.agrotech.api.Repository.VendorTypeHistoryIInvoicesRepository;
 import com.agrotech.api.dto.VendorTypeHistoryIInvoicesDto;
 import com.agrotech.api.dto.WarehouseDto;
+import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.VendorTypeHistoryIInvoicesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,12 @@ public class VendorTypeHistoryIInvoicesController {
 
     private final VendorTypeHistoryIInvoicesService vendorTypeHistoryIInvoicesService ;
 
+
+    private  final VendorTypeHistoryIInvoicesRepository vendorTypeHistoryIInvoicesRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorTypeHistoryIInvoicesRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid VendorTypeHistoryIInvoicesDto warehouse) {

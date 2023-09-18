@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.AirportRepo;
+import com.agrotech.api.Repository.BinDetailsRepository;
 import com.agrotech.api.dto.BinDetailsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.BinDetails;
@@ -19,6 +21,14 @@ import java.util.List;
 public class BinDetailsController {
 
     private final BinDetailsService binDetailsService;
+    private final BinDetailsRepository binDetailsRepository;
+
+
+
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        binDetailsRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody BinDetailsDto binDetails) {

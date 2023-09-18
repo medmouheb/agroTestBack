@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.FreighTermsRepository;
 import com.agrotech.api.dto.FreightTermsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.FreightTerms;
@@ -21,7 +22,11 @@ import java.util.List;
 public class FreightTermsController {
       private final FreightTermsService freightTermsService ;
 
-
+    private  final FreighTermsRepository freighTermsRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        freighTermsRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid FreightTermsDto freightTerms) {

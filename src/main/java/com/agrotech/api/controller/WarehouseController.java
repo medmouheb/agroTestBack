@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorTypeReceivingRepository;
 import com.agrotech.api.Repository.WarehouseRepository;
 import com.agrotech.api.enums.CostCenterType;
 import com.agrotech.api.model.Warehouse;
@@ -43,6 +44,12 @@ public class WarehouseController {
 
     @Autowired
     private final WarehouseRepository warehouseRepository;
+
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        warehouseRepository.deleteAll();
+    }
+
 
 
     @PostMapping("")

@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.BuyersRepository;
 import com.agrotech.api.dto.BuyersDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Buyers;
@@ -21,7 +22,11 @@ public class BuyersController {
 
     private final BuyersService buyersService;
 
-
+    private  final BuyersRepository buyersRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        buyersRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody BuyersDto buyers) {
         BuyersDto response = buyersService.create(buyers);

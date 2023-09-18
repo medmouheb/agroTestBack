@@ -162,4 +162,10 @@ public class FermeDto extends BaseDto {
 	private String phoneInformation;
 	private LocalDate startDateInformation;
 	private LocalDate endDateInformation;
+
+	private String customerCode ;
+	private String customerName ;
+
+	private String  warehouseprimary ;
+	private String  warehousesecondry ;
 }

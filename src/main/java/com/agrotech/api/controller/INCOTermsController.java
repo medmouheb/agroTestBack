@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.INCOTermsRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.INCOTermsDto;
 import com.agrotech.api.dto.ProduitDto;
@@ -23,7 +24,11 @@ public class INCOTermsController {
 
 
     private final INCOTermsService INCOTermsService;
-
+    private  final INCOTermsRepository incoTermsRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        incoTermsRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody INCOTermsDto iNCOTerms) {

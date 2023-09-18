@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.BreedCodeRepository;
 import com.agrotech.api.dto.BreedCodeDto;
 import com.agrotech.api.model.BreedCode;
 import com.agrotech.api.services.BreedCodeService;
@@ -20,6 +21,12 @@ import com.agrotech.api.exceptions.NotFoundException;
 public class BreedCodeController {
 
     private final BreedCodeService breedCodeService;
+
+    private  final BreedCodeRepository breedCodeRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        breedCodeRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody BreedCodeDto breedCode) {

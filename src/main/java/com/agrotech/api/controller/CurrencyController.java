@@ -2,6 +2,8 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.CostCenterRepository;
+import com.agrotech.api.Repository.CurrencyRepository;
 import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,11 @@ public class CurrencyController {
 
 	@Autowired
 	private final CurrencyService currencyService ;
-	
+	private  final CurrencyRepository currencyRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		currencyRepository.deleteAll();
+	}
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody CurrencyDto div) {
 		CurrencyDto response = currencyService.create(div);

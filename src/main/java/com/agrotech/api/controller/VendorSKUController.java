@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorSKURepository;
+import com.agrotech.api.Repository.VendorsInternalDetailRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VendorSKUDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -21,6 +23,12 @@ import java.util.List;
 public class VendorSKUController {
 
     private final VendorSKUService vendorSKUService ;
+
+    private  final VendorSKURepository vendorSKU;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorSKU.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorSKUDto vendorSku) {
         VendorSKUDto response = vendorSKUService.create(vendorSku);

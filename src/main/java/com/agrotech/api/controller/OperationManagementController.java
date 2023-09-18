@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.OperationManagementRepository;
 import com.agrotech.api.dto.OperationManagementDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Drivers;
@@ -25,7 +26,11 @@ public class OperationManagementController {
     private final OperationManagementService operationManagementService;
 
     private final DriversService driversService;
-
+    private  final OperationManagementRepository operationManagementRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        operationManagementRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody OperationManagementDto logis) {
         OperationManagementDto response = operationManagementService.create(logis);

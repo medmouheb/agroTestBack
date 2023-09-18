@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorsInternalDetailRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VendorsContactInformationDto;
 import com.agrotech.api.dto.VendorsInternalDetailsDto;
@@ -25,6 +26,12 @@ public class VendorsInternalDetailController {
 
     final private VendorsInternalDetailService vendorsInternalDetailService ;
 
+
+    private  final VendorsInternalDetailRepository vendorsInternalDetailRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorsInternalDetailRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorsInternalDetailsDto vendorsInternalDetails) {

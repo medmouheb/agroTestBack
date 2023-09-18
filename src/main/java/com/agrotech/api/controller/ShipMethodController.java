@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.ShipMethodsRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.ShipMethodsDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -22,6 +23,11 @@ public class ShipMethodController {
 
     private final ShipMethodsService shipMethodsService;
 
+    private  final ShipMethodsRepository shipMethodsRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        shipMethodsRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody ShipMethodsDto campany) {
         ShipMethodsDto response = shipMethodsService.create(campany);

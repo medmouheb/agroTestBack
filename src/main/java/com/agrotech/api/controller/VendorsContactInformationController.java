@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VehiculeRepository;
+import com.agrotech.api.Repository.VendorsContactInformationRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VehiculeDto;
 import com.agrotech.api.dto.VendorsContactInformationDto;
@@ -27,6 +29,11 @@ public class VendorsContactInformationController{
     private final VendorsContactInformationService vendorsContactInformationService ;
 
 
+    private  final VendorsContactInformationRepository vendorsContactInformationRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorsContactInformationRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorsContactInformationDto vendorsContactInformation) {
         VendorsContactInformationDto response = vendorsContactInformationService.create(vendorsContactInformation);

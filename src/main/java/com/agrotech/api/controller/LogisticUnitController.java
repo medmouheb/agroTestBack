@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.LogisticUnitRepository;
 import com.agrotech.api.dto.DivisionDTO;
 import com.agrotech.api.dto.LogisticUnitDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -28,7 +29,11 @@ public class LogisticUnitController {
     private final LogisticUnitService logisticUnitService;
     private final CampanyService campanyService;
     private  final DivisionService divisionService;
-
+    private  final LogisticUnitRepository logisticUnitRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        logisticUnitRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody LogisticUnitDto logis) {
         LogisticUnitDto response = logisticUnitService.create(logis);

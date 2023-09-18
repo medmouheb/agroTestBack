@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.SalesRepository;
+import com.agrotech.api.Repository.SalesSkuRepository;
 import com.agrotech.api.dto.SalesSkuDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.SalesSKU;
@@ -19,6 +21,12 @@ import java.util.List;
 public class SalesSkuController {
 
     private final SalesSkuServices salesSkuServices ;
+
+    private  final SalesSkuRepository salesSkuRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        salesSkuRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody SalesSkuDto salesSku) {
         SalesSkuDto response = salesSkuServices.create(salesSku);

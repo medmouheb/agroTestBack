@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.VendorTypeProductRepository;
 import com.agrotech.api.dto.VendorTypeProductDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorTypeProduct;
@@ -24,6 +25,12 @@ public class VendorTypeProductController {
 
     private final VendorTypeProductService vendorTypeProductService ;
 
+
+    private  final VendorTypeProductRepository vendorTypeProductRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorTypeProductRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorTypeProductDto vendorTypeProduct) {

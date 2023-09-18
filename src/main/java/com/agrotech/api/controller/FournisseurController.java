@@ -47,6 +47,10 @@ public class FournisseurController {
     private final FournisseurRepository fournisseurRepository;
 
 
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        fournisseurRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid FournisseurDto fournisseur) {
         FournisseurDto response = fournisseurService.create(fournisseur);

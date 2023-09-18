@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.CurrencyRepository;
+import com.agrotech.api.Repository.DeliveryInstructionRepository;
 import com.agrotech.api.dto.CurrencyDto;
 import com.agrotech.api.dto.DeliveryInstructionDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -23,7 +25,11 @@ import java.util.List;
 public class DeliveryInstructionController {
     @Autowired
     private final DeliveryInstructionService deliveryInstructionService;
-
+    private  final DeliveryInstructionRepository deliveryInstructionRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        deliveryInstructionRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody DeliveryInstructionDto div) {
         DeliveryInstructionDto response = deliveryInstructionService.create(div);

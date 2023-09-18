@@ -1,4 +1,6 @@
 package com.agrotech.api.controller;
+import com.agrotech.api.Repository.ChargeRepository;
+import com.agrotech.api.Repository.CommandeRepository;
 import com.agrotech.api.dto.CommandeDto;
 
 import com.agrotech.api.model.Commande;
@@ -33,7 +35,11 @@ import java.util.List;
 public class CommandeController {
     @Autowired
     private final  CommandeService commandeService;
-
+    private  final CommandeRepository commandeRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        commandeRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid CommandeDto commande) {
         CommandeDto response = commandeService.create(commande);

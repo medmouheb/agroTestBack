@@ -163,10 +163,15 @@ public class Ferme extends BaseEntity {
 	private LocalDate startDateInformation;
 	private LocalDate endDateInformation;
 
+	private String  warehouseprimary ;
+	private String  warehousesecondry ;
 
 
-//
-//	// private String customerCode ;
-//	// private String customerName ;
+
+
+	private String customerCode ;
+private String customerName ;
+
+
 
 }

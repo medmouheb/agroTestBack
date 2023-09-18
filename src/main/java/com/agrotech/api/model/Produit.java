@@ -39,8 +39,7 @@ public class Produit extends BaseEntity {
 	private String currency;
 	@Size(max = 250)
 	private String Inventaire;
-	@Size(max = 250)
-	private String Medicamenteux;
+	private Boolean Medicamenteux;
 	@Size(max = 250)
 	private String Fabricant;
 	@Size(max = 250)
@@ -58,8 +57,16 @@ public class Produit extends BaseEntity {
 
 	private String methodeutilisation;
 
+
+	private String transactionDate;
+	private String farmCode;
+	private String houseCode ;
+
 	private String category;
 
 	private Fournisseur fournisseur;
+
+	private VendorSKU vendorSKU;
+	private SalesSKU salesSKU;
 
 }

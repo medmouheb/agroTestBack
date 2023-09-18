@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorTypeDetailsRepository;
+import com.agrotech.api.Repository.VendorTypeFeedRepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VendorTypeFeedDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -25,7 +27,11 @@ public class VendorTypeFeedController {
 
     private final VendorTypeFeedService vendorTypeFeedService ;
 
-
+    private  final VendorTypeFeedRepository vendorTypeFeedRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorTypeFeedRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VendorTypeFeedDto vendorTypeFeed) {
         VendorTypeFeedDto response = vendorTypeFeedService.create(vendorTypeFeed);

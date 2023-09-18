@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.DriversRepository;
 import com.agrotech.api.dto.DriversDto;
 import com.agrotech.api.dto.TimeSlotDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -25,6 +26,11 @@ public class DriversController {
     private final DriversService driversService;
 
     private final DivisionService divisionService;
+    private  final DriversRepository driversRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        driversRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody DriversDto drivers) {
         // Appelez le service pour créer le conducteur avec les informations mises à jour

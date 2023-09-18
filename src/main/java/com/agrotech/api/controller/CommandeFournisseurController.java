@@ -2,6 +2,9 @@ package com.agrotech.api.controller;
 
 import java.math.BigDecimal;
 import java.util.List;
+
+import com.agrotech.api.Repository.CommandeFournisseurRepository;
+import com.agrotech.api.Repository.CommandeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +35,12 @@ public class CommandeFournisseurController {
 	
 	@Autowired
 	private CommandeFournisseurService commandeFournisseurService ;
-	
-	
+
+	private  final CommandeFournisseurRepository commandeFournisseurRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		commandeFournisseurRepository.deleteAll();
+	}
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody CommandeFournisseurDto commandeFournisseur) {
 		CommandeFournisseurDto response = commandeFournisseurService.create(commandeFournisseur);

@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,11 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService ;
-	
+	private CategoryRepository categoryRepository;
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		categoryRepository.deleteAll();
+	}
 	
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody CategoryDto cat) {

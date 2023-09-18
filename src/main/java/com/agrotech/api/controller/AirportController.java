@@ -1,7 +1,9 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.AirportRepo;
 import com.agrotech.api.dto.AirportDTO;
+import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Airport;
 import com.agrotech.api.services.AirportService;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,15 @@ public class AirportController {
 
     @Autowired
     private ModelMapper modelMapper ;
+
+    @Autowired
+    private   AirportRepo airportRepo;
+
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        airportRepo.deleteAll();
+    }
+
 
     @PostMapping(value = "")
     public ResponseEntity<?> addAirport(@RequestBody @Validated Airport airport) {

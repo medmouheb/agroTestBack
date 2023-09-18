@@ -30,6 +30,12 @@ public class VehiclesController {
     private final LogisticUnitService logisticUnitService;
     private final VehiclesRepository vehiclesRepository;
 
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vehiclesRepository.deleteAll();
+    }
+
+
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody VehiclesDto vehicle) {

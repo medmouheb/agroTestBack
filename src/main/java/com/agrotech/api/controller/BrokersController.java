@@ -1,6 +1,8 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.BreedTypeRepository;
+import com.agrotech.api.Repository.BrokersRepository;
 import com.agrotech.api.dto.BrokersDto;
 import com.agrotech.api.dto.BuyersDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -24,6 +26,13 @@ public class BrokersController {
 
     private final BrokersService brokersService;
 
+
+
+    private  final BrokersRepository brokersRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        brokersRepository.deleteAll();
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody BrokersDto brokers) {
         BrokersDto response = brokersService.create(brokers);

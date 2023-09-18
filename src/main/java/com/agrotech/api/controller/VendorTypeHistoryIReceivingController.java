@@ -1,5 +1,7 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.VendorTypeHistoryIInvoicesRepository;
+import com.agrotech.api.Repository.VendorTypeHistoryIReceivingRepository;
 import com.agrotech.api.dto.VendorTypeHistoryIReceivingDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorTypeHistoryIReceiving;
@@ -23,6 +25,12 @@ public class VendorTypeHistoryIReceivingController {
     private final VendorTypeHistoryIReceivingService vendorTypeHistoryIReceivingService ;
 
 
+
+    private  final VendorTypeHistoryIReceivingRepository vendorTypeHistoryIReceivingRepository;
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        vendorTypeHistoryIReceivingRepository.deleteAll();
+    }
 
 
     @PostMapping("")
