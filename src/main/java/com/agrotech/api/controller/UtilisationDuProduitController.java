@@ -1,6 +1,8 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.ProduitRepository;
+import com.agrotech.api.Repository.UtilisationDuProduitRepository;
 import com.agrotech.api.dto.LogisticUnitDto;
 import com.agrotech.api.dto.ProduitDto;
 import com.agrotech.api.dto.UtilisationDuProduitDto;
@@ -31,8 +33,12 @@ public class UtilisationDuProduitController {
     private final UtilisationDuProduitService utilisationDuProduitService;
 
     private final ProduitService produitService;
+    private final UtilisationDuProduitRepository utilisationDuProduitRepository;
 
-
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        utilisationDuProduitRepository.deleteAll();
+    }
 
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody UtilisationDuProduitDto vehicle) {

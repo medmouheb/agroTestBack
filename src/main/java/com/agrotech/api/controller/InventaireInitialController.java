@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import com.agrotech.api.Repository.InventaireInitialRepository;
 import com.agrotech.api.dto.InventaireInitialDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.InventaireInitial;
@@ -23,6 +24,7 @@ public class InventaireInitialController {
     private final InventaireInitialService inventaireInitialService;
 
     private final ProduitService produitService;
+    private final InventaireInitialRepository inventaireInitialRepository;
 
 
     @PostMapping("")
@@ -75,6 +77,10 @@ public class InventaireInitialController {
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         inventaireInitialService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
+    }
+    @DeleteMapping("/deleteall")
+    public void deleteall() throws NotFoundException {
+        inventaireInitialRepository.deleteAll();
     }
 
     @GetMapping("/archiver/{id}")

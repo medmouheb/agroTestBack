@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.CampanyRepository;
 import com.agrotech.api.model.Campany;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CampanyController {
 	private final CampanyService campanyService ;
+	private final CampanyRepository campanyRepository;
+
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		campanyRepository.deleteAll();
+	}
+
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody CampanyDto campany) {
 		CampanyDto response = campanyService.create(campany);

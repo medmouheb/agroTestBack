@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.DivisionRepository;
 import com.agrotech.api.model.Division;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,7 +37,15 @@ public class DivisionController {
 	
 	@Autowired
 	private final DivisionService divisionService ;
-	
+private final DivisionRepository divisionRepository;
+
+	@DeleteMapping("/deleteall")
+	public void deleteall() throws NotFoundException {
+		divisionRepository.deleteAll();
+	}
+
+
+
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody DivisionDTO div) {
 		DivisionDTO response = divisionService.create(div);
