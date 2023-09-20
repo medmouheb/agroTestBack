@@ -44,4 +44,7 @@ public class CostCenter extends BaseEntity {
     private String  facilityType;
     @Size(max = 10)
     private String  speciesType;
+
+    private String divisiontype;
+
 }

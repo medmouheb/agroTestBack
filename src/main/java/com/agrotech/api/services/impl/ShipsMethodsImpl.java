@@ -108,7 +108,7 @@ public class ShipsMethodsImpl implements ShipMethodsService {
     @Override
     public Page<ShipMethods> getpages(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<ShipMethods> result =  shipMethodsRepository.findByIsDeleted(false, pageable);
+        Page<ShipMethods> result =  shipMethodsRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
 
         return result;
     }
