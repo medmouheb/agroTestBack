@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.agrotech.api.Repository.FacilityDetailsRepository;
 import com.agrotech.api.Repository.FermeRepository;
+import com.agrotech.api.dto.PropertyDTO;
 import com.agrotech.api.model.Ferme;
+import com.agrotech.api.model.Property;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -50,12 +52,29 @@ public class fermeController {
 		fermeRepository.deleteAll();
 	}
 	@PostMapping("")
-	public ResponseEntity<?> create(@RequestBody FermeDto ferme) {
+	public ResponseEntity<?> create(@RequestBody FermeDto ferme) {;
+		List<PropertyDTO> properties = ferme.getProperties();
+		for (PropertyDTO property : properties) {
+			System.out.println("Product: " + property.getProduct());
+			System.out.println("Land: " + property.getLand());
+		}
 		FermeDto response = fermeService.create(ferme);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
+	@PostMapping("/add")
+	public ResponseEntity<?> create(@RequestBody Ferme ferme) {;
+		List<Property> properties = ferme.getProperties();
+		for (Property property : properties) {
+			System.out.println("Product: " + property.getProduct());
+			System.out.println("Land: " + property.getLand());
+		}
+		Ferme response = fermeService.saveferme(ferme);
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
 
-	
+
+
+
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(

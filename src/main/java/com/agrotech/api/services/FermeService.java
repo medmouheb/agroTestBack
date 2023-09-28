@@ -9,7 +9,7 @@ import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
 public interface FermeService extends BaseService<FermeDto, String> {
-
+	Ferme saveferme(Ferme ferme);
 	FermeDto findByCode(String code) throws NotFoundException;
 
 	public void archive(String id) throws NotFoundException;

@@ -13,8 +13,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -172,6 +174,9 @@ public class Ferme extends BaseEntity {
 	private String customerCode ;
 private String customerName ;
 
+
+	@Field("properties")
+	private List<Property> properties;
 
 
 }

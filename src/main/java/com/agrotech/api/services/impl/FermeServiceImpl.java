@@ -39,6 +39,9 @@ public class FermeServiceImpl implements FermeService {
     public Ferme save(Ferme entity) {
         return fermeRepository.save(entity);
     }
+    public Ferme saveferme(Ferme entity) {
+        return fermeRepository.save(entity);
+    }
 
 
     @Override
@@ -110,6 +113,8 @@ public class FermeServiceImpl implements FermeService {
         }
         fermeRepository.deleteById(id);
     }
+
+
 
 
     @Override

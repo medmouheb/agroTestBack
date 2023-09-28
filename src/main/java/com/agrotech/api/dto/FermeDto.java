@@ -2,6 +2,7 @@ package com.agrotech.api.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import com.agrotech.api.model.*;
@@ -17,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Getter
 @Setter
@@ -168,4 +170,9 @@ public class FermeDto extends BaseDto {
 
 	private String  warehouseprimary ;
 	private String  warehousesecondry ;
+	@Field("properties")
+
+	private List<PropertyDTO> properties;
+
+
 }

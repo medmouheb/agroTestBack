@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 @Mapper(uses = {
         WarehouseMapper.class,
         FournisseurMapper.class
+
 })
 @Component
 
