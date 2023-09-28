@@ -206,37 +206,82 @@ public class WarehouseController {
                 if(i==1){
                     continue;
                 }
-                String[] data = line.replace("\"", "").split(",");
+                String[] data = line.replace("\"", "").split(";");
                 WarehouseDto w= new WarehouseDto();
-                w.setCode(data[0]);
-                w.setName(data[1]);
-                w.setType(data[2]);
+                try{                w.setCode(data[0]);
+                }catch (Exception e){}
+                try{                w.setName(data[1]);
+                }catch (Exception e){}
+                try{                w.setType(data[2]);
+                }catch (Exception e){}
                 try{
-                    w.setFacilityType(data[3]);
+                    w.setVendor(data[3]);
                 }catch(Exception e) {
                     System.out.println(e);
                 }
                 try {
-                    w.setStartingDate(LocalDate.parse(data[4]));
+                    w.setCostCenterCode(data[4]);
 
                 }catch (Exception e){
                     System.out.println(e);
 
                 }
-                w.setIsPrimary(Boolean.valueOf(data[5]));
-                w.setAddress1(data[6]);
-                w.setAddress2(data[7]);
-                w.setCityCode(data[8]);
-                w.setCityName(data[9]);
-                w.setWilayaCode(data[10]);
-                w.setWilayaName(data[11]);
-                w.setZipCode(data[12]);
-                w.setEmail(data[13]);
-                w.setPhoneNumber(data[14]);
-                w.setFaxNumber(data[15]);
-                w.setLatitude( Double.valueOf(data[16]) );
-                w.setLongitude(Double.valueOf(data[17]));
-                w.setIsDeleted(Boolean.valueOf(data[18]));
+                try {
+                    w.setCostCenterName(data[5]);
+
+                }catch (Exception e){
+                    System.out.println(e);
+
+                }
+//                w.setIsPrimary(Boolean.valueOf(data[5]));
+                try{
+                    String t=data[6].split("/")[2]+"-"+data[6].split("/")[1]+"-"+data[6].split("/")[0];
+                    w.setStartingDate(LocalDate.parse(t));
+
+                }catch(Exception e){}
+                try{                w.setIsPrimary(Boolean.valueOf(data[7]));
+                }catch(Exception e){}
+                try{                w.setAddress1(data[8]);
+                }catch(Exception e){}
+
+                try{                w.setCityCode(data[9]);
+                }catch(Exception e){}
+
+
+                try{                w.setCityName(data[10]);
+                }catch(Exception e){}
+
+                try{                w.setWilayaCode(data[11]);
+                }catch(Exception e){}
+
+                try{                w.setWilayaName(data[12]);
+                }catch(Exception e){}
+
+                try{                w.setZipCode(data[13]);
+                }catch(Exception e){}
+
+                try{                w.setEmail(data[14]);
+                }catch(Exception e){}
+
+                try{                w.setPhoneNumber(data[15]);
+                }catch(Exception e){}
+
+                try{                w.setFaxNumber(data[16]);
+                }catch(Exception e){}
+
+                try{                w.setLatitude( Double.valueOf(data[17]) );
+                }catch(Exception e){}
+
+                try{                w.setLongitude(Double.valueOf(data[18]));
+                }catch(Exception e){}
+
+                try{                w.setIsDeleted(Boolean.valueOf(data[19]));
+                }catch(Exception e){}
+
+                try{                w.setStatus(Boolean.valueOf(data[20]));
+                }catch(Exception e){}
+
+
                 warehouseService.create(w);
                 System.out.println(line);
             }

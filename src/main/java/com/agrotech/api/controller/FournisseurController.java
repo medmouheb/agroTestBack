@@ -199,7 +199,7 @@ public class FournisseurController {
                 if(i==1){
                     continue;
                 }
-                String[] data = line.replace("\"", "").split(",");
+                String[] data = line.replace("\"", "").split(";");
                 FournisseurDto w= new FournisseurDto();
                 try{
                     w.setCode(data[0]);
