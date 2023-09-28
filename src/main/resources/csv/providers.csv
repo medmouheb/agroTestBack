@@ -1,1 +1,1 @@
-name,email,phone,type,currencyCode,paymentTerm,address,codeCity,nameCity,wilayaName
+code;name;type;paymentTerm;currency;address;codeCity;nameCity;wilayaName;wilayaCode;phone;email;zipCode;vendorSKU;isDeleted
