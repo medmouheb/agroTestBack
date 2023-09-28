@@ -40,4 +40,7 @@ public class CostCenterDto extends BaseDto{
     private String  facilityType;
     @Size(max = 10)
     private String  speciesType;
+
+    private String divisiontype;
+
 }
