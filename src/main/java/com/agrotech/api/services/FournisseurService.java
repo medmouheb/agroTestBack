@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface FournisseurService extends BaseService<FournisseurDto, String> {
     void importCSV(List<CSVRecord> records);
-
+    Fournisseur savex(Fournisseur fournisseur);
     FournisseurDto findByCode(String code) throws NotFoundException;
     public void archive(String id) throws NotFoundException;
 

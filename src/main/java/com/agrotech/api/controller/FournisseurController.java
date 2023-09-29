@@ -53,7 +53,18 @@ public class FournisseurController {
     }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid FournisseurDto fournisseur) {
+        System.out.println(fournisseur.getVendorSKUname());
+        System.out.println(fournisseur.getVendorSKUcode());
+
         FournisseurDto response = fournisseurService.create(fournisseur);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> creates(@RequestBody @Valid Fournisseur fournisseur) {
+        System.out.println(fournisseur.getVendorSKUname());
+        System.out.println(fournisseur.getVendorSKUcode());
+
+        Fournisseur response = fournisseurService.savex(fournisseur);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @PostMapping("/import")
@@ -68,7 +79,12 @@ public class FournisseurController {
             @PathVariable String id,
             @RequestBody FournisseurDto fournisseur
     ) throws NotFoundException {
+        System.out.println(fournisseur.getVendorSKUname());
+        System.out.println(fournisseur.getVendorSKUcode());
+
         FournisseurDto response = fournisseurService.update(id, fournisseur);
+        System.out.println(response.getVendorSKUcode());
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

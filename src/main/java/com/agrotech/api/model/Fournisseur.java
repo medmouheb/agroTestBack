@@ -44,7 +44,7 @@ public class Fournisseur extends BaseEntity {
 	private String nameCity;
 	@Size(max = 100)
 	private String wilayaName;
-	@Size(max = 3)
+	@Size(max = 50)
 	private String wilayaCode;
 	@Size(max = 12)
 	private String phone;
@@ -55,16 +55,22 @@ public class Fournisseur extends BaseEntity {
 
 	private String vendorSKU;
 	private Boolean isDeleted=false;
+
+	@Size(max = 12)
+	private String vendorSKUcode;
+	@Size(max = 150)
+	private String vendorSKUname;
+	@Size(max = 10)
 	private String currencycode;
 
-	private String	currencyname;
+	@Size(max = 50)
+	private String currencyname;
+
+
+	@Size(max = 12)
+	private String shippingCity;
+	@Size(max = 150)
 	private String shippingAddress;
-
-	private String	shippingCity;
-
-	private String vendorSKUcode;
-
-	private String		vendorSKUname;
 
 }
 

@@ -33,6 +33,11 @@ public class FournisseurServiceImpl implements FournisseurService {
         return fournisseurRepository.save(entity);
     }
 
+
+    public Fournisseur savex(Fournisseur entity) {
+        return fournisseurRepository.save(entity);
+    }
+
     @Override
     public FournisseurDto create(FournisseurDto dto) {
 
@@ -61,6 +66,8 @@ public class FournisseurServiceImpl implements FournisseurService {
         }
 
         Fournisseur existing = optional.get();
+
+
         fournisseurMapper.partialUpdate(existing, dto);
         return fournisseurMapper.toDto(   
                 save(existing)
