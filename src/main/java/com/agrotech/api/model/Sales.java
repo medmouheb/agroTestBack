@@ -33,7 +33,7 @@ public class Sales  extends BaseEntity{
 	@Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
     private String name;
     private String type ;
-    private String Currency ;
+    private String currency ;
     private String Payment_Term ;
     private Boolean isDeleted=false;
 

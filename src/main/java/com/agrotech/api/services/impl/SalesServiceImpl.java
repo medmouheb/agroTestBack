@@ -124,6 +124,11 @@ public class SalesServiceImpl implements SalesServices {
 
 
     @Override
+    public Sales saves(Sales sales) {
+      return  salesRepository.save(sales);
+    }
+
+    @Override
     public SalesDto findByCode(String code) throws NotFoundException {
         Optional<Sales> optional = salesRepository.findByCode(code);
         if (optional.isEmpty()) {

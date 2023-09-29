@@ -45,6 +45,12 @@ public class SalesController {
 		return new ResponseEntity<>(response , HttpStatus.CREATED);
 		
 	}
+	@PostMapping("/add")
+	public ResponseEntity<?> creates(@RequestBody Sales sales){
+		Sales response = salesServices.saves(sales);
+		return new ResponseEntity<>(response , HttpStatus.CREATED);
+
+	}
 	
 	
 	@PutMapping("/{id}")

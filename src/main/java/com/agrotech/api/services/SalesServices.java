@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 
 public interface  SalesServices extends BaseService<SalesDto, String>{
-	
+	Sales saves (Sales sales);
     SalesDto findByCode(String code) throws NotFoundException;
 //    public void archive(String id) throws NotFoundException;
 
