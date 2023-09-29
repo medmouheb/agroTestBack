@@ -1,8 +1,10 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.FournisseurRepository;
+import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.WarehouseDto;
 import com.agrotech.api.enums.CostCenterType;
+import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.Vendors;
 import com.opencsv.CSVWriter;
@@ -46,7 +48,16 @@ public class FournisseurController {
     private final FournisseurService fournisseurService;
     private final FournisseurRepository fournisseurRepository;
 
-
+    @GetMapping("/by-code/{code}")
+    public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
+        FournisseurDto response = fournisseurService.findByCode(code);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @GetMapping("/getbyname/{name}")
+    public ResponseEntity<?> findByname(@PathVariable String name) throws NotFoundException{
+        Fournisseur response=fournisseurService.findByname(name);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         fournisseurRepository.deleteAll();

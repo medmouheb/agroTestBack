@@ -3,7 +3,9 @@ package com.agrotech.api.controller;
 import java.util.List;
 
 import com.agrotech.api.Repository.SalesRepository;
+import com.agrotech.api.dto.FournisseurDto;
 import com.agrotech.api.dto.SalesSkuDto;
+import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,6 +46,12 @@ public class SalesController {
 		SalesDto response = salesServices.create(sales);
 		return new ResponseEntity<>(response , HttpStatus.CREATED);
 		
+	}
+
+	@GetMapping("/getbyname/{name}")
+	public ResponseEntity<?> findByname(@PathVariable String name) throws NotFoundException{
+		Sales response=salesServices.findByname(name);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	@PostMapping("/add")
 	public ResponseEntity<?> creates(@RequestBody Sales sales){
