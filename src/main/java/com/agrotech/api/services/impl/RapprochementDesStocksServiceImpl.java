@@ -5,6 +5,7 @@ import com.agrotech.api.dto.RapprochementDesStocksDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.RapprochementDesStocksMapper;
 import com.agrotech.api.model.RapprochementDesStocks;
+import com.agrotech.api.model.Sales;
 import com.agrotech.api.services.RapprochementDesStocksService;
 
 import lombok.RequiredArgsConstructor;
@@ -130,6 +131,15 @@ public class RapprochementDesStocksServiceImpl implements RapprochementDesStocks
         Page<RapprochementDesStocks> result =  rapprochementDesStocksRepository.findByIsDeletedAndNomDuProduitContainingIgnoreCase(true, filter,pageable);
 
         return result;
+    }
+
+    @Override
+    public RapprochementDesStocksDto findbynumeroDeLot(String numeroDeLot) throws NotFoundException {
+        Optional<RapprochementDesStocks> optional = rapprochementDesStocksRepository.findByNumeroDeLot(numeroDeLot);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Sales not found");
+        }
+        return rapprochementDesStocksMapper.toDto(optional.get());
     }
 
     @Override

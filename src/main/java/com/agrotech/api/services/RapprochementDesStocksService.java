@@ -13,7 +13,7 @@ public interface RapprochementDesStocksService extends BaseService<Rapprochement
     Page<RapprochementDesStocksDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<RapprochementDesStocks> getpages(int pageSize, int pageNumber, String filter) ;
     Page<RapprochementDesStocks> getpagesarchive(int pageSize, int pageNumber, String filter) ;
-
+    RapprochementDesStocksDto findbynumeroDeLot(String numeroDeLot ) throws NotFoundException;
     public void archive(String id) throws NotFoundException;
 
     // Page<CampanyDto> findPage(int pageSize, int pageNumber, String filter);

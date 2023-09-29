@@ -7,6 +7,7 @@ import java.util.List;
 import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.model.ProductCategory;
 import com.agrotech.api.model.Produit;
+import com.agrotech.api.model.Sales;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,11 @@ public class ProduitController {
 		ProduitDto response = produitService.findByCode(code);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-
+	@GetMapping("/getbyname/{name}")
+	public ResponseEntity<?> findByname(@PathVariable String name) throws NotFoundException{
+		Produit response=produitService.findByname(name);
+		return new ResponseEntity<>(response,HttpStatus.OK);
+	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {

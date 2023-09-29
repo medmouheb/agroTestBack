@@ -4,6 +4,7 @@ package com.agrotech.api.controller;
 import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.Repository.RapprochementDesStocksRepository;
 import com.agrotech.api.dto.RapprochementDesStocksDto;
+import com.agrotech.api.dto.SalesDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.RapprochementDesStocks;
 import com.agrotech.api.services.RapprochementDesStocksService;
@@ -29,7 +30,11 @@ public class RapprochementDesStocksController {
     public void deleteall() throws NotFoundException {
         rapprochementDesStocksRepository.deleteAll();
     }
-
+    @GetMapping("/numlot/{code}")
+    public ResponseEntity<?> findBynumerlot(@PathVariable String code) throws NotFoundException {
+        RapprochementDesStocksDto response = rapprochementDesStocksService.findbynumeroDeLot(code);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody RapprochementDesStocksDto rapprochementDesStocks) {
         RapprochementDesStocksDto response = rapprochementDesStocksService.create(rapprochementDesStocks);
