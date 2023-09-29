@@ -57,5 +57,15 @@ public class FournisseurDto extends BaseDto {
 		private String vendorSKU;
 
 		private Boolean isDeleted=false;
+	private String currencycode;
+
+	private String	currencyname;
+	private String shippingAddress;
+
+	private String	shippingCity;
+
+	private String vendorSKUcode;
+
+	private String		vendorSKUname;
 
 }

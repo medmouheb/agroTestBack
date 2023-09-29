@@ -32,8 +32,7 @@ public class Fournisseur extends BaseEntity {
 //	@NotBlank(message = ValidationMessages.PAYMENT_TERM_REQUIRED)
 	@Size(max = 20, message = ValidationMessages.PAYMENT_TERM_LONG)
 	private String paymentTerm;
-	//@NotBlank(message = ValidationMessages.CURRENCY_REQUIRED)
-	@Size(max = 50, message = ValidationMessages.CURRENCY_LONG)
+
 	private String currency;
 
 	// optional
@@ -56,5 +55,29 @@ public class Fournisseur extends BaseEntity {
 
 	private String vendorSKU;
 	private Boolean isDeleted=false;
+	private String currencycode;
+
+	private String	currencyname;
+	private String shippingAddress;
+
+	private String	shippingCity;
+
+	private String vendorSKUcode;
+
+	private String		vendorSKUname;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
