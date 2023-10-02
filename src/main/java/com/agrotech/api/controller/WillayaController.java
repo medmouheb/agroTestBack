@@ -3,6 +3,7 @@ package com.agrotech.api.controller;
 import com.agrotech.api.Repository.WillayaRepository;
 import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
+import com.agrotech.api.model.Currency;
 import com.agrotech.api.model.Willaya;
 import com.agrotech.api.services.WilayaService;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +42,11 @@ public class WillayaController {
         WillayaDto response = willayaService.update(id, div);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+    @GetMapping("/getbyname/{name}")
+    public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException{
+        Willaya response=willayaService.findByname(name);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
         WillayaDto response = willayaService.findById(id);
