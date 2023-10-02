@@ -29,7 +29,7 @@ public class Vehicles extends BaseEntity{
 
     private Boolean utilisation;
 
-    private Double coutHoraire;
+    private String coutHoraire;
 
     private String nomOperationmaintenance;
 
