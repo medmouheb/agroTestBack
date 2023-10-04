@@ -91,7 +91,7 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
     public Page<DeliveryInstructionDto> findPage1(int pageSize, int pageNumber, String filter) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BreedCodeName").ascending());
-        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndProductTypeContainingIgnoreCase(false,filter, pageable)
+        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndInstructiuonNameContainingIgnoreCase(false,filter, pageable)
                 .stream()
 ////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(deliveryInstructionMapper::toDto)
@@ -135,7 +135,7 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
     @Override
     public Page<DeliveryInstructionDto> findArchivedPage1(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BreedCodeName").ascending());
-        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndProductTypeContainingIgnoreCase(true,filter, pageable)
+        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndInstructiuonNameContainingIgnoreCase(true,filter, pageable)
                 .stream()
 ////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(deliveryInstructionMapper::toDto)

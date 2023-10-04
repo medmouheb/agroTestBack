@@ -14,7 +14,7 @@ public interface DeliveryInstructionRepository  extends MongoRepository <Deliver
 
     Optional<DeliveryInstruction> findByProductType(String productType);
     Page<DeliveryInstruction> findByProductTypeContainingIgnoreCase(String productType, Pageable pageable);
-    Page<DeliveryInstruction> findByIsDeletedAndProductTypeContainingIgnoreCase(Boolean isDeleted, String productType , Pageable pageable);
+    Page<DeliveryInstruction> findByIsDeletedAndInstructiuonNameContainingIgnoreCase(Boolean isDeleted, String productType , Pageable pageable);
     Page<DeliveryInstruction> findByIsDeleted(Boolean isDeleted, Pageable pageable);
 
 }
