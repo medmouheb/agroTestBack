@@ -1,1 +1,1 @@
-name;code;type;status;inventory;medicated;manufacturer;maxOver;color;unitPrice;tva;category
+code;name;type;statuss;currency;Inventaire;Medicamenteux;Fabricant;couleur;maxdepasse;prixUnitaireHt;tauxTva;isDeleted;fournisseur;category;transactionDate;farmCode;houseCode;vendorSKU;salesSKU;

@@ -1,11 +1,13 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.FournisseurRepository;
+import com.agrotech.api.Repository.VendorSKURepository;
 import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.WarehouseDto;
 import com.agrotech.api.enums.CostCenterType;
 import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Fournisseur;
+import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.model.Vendors;
 import com.opencsv.CSVWriter;
 import jakarta.servlet.http.HttpServletResponse;
@@ -47,6 +49,7 @@ public class FournisseurController {
 	@Autowired
     private final FournisseurService fournisseurService;
     private final FournisseurRepository fournisseurRepository;
+    private final VendorSKURepository vendorSKURepository;
 
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
@@ -226,7 +229,7 @@ public class FournisseurController {
                 if(i==1){
                     continue;
                 }
-                String[] data = line.replace("\"", "").split(";");
+                String[] data = line.replace("\"", "").replace(",",";").split(";");
                 FournisseurDto w= new FournisseurDto();
                 try{
                     w.setCode(data[0]);
@@ -241,37 +244,52 @@ public class FournisseurController {
                     w.setPaymentTerm(data[3]);
                 }catch(Exception e){}
                 try{
-                    w.setCurrency(data[4]);
+                    w.setCurrencycode(data[4]);
                 }catch(Exception e){}
                 try{
-                    w.setAddress(data[5]);
+                    w.setCurrencyname(data[5]);
                 }catch(Exception e){}
                 try{
-                    w.setCodeCity(data[6]);
+                    w.setAddress(data[6]);
                 }catch(Exception e){}
                 try{
-                    w.setNameCity(data[7]);
+                    w.setCodeCity(data[7]);
                 }catch(Exception e){}
                 try{
-                    w.setWilayaName(data[8]);
+                    w.setNameCity(data[8]);
                 }catch(Exception e){}
                 try{
-                    w.setWilayaCode(data[9]);
+                    w.setWilayaName(data[9]);
                 }catch(Exception e){}
                 try{
-                    w.setPhone(data[10]);
+                    w.setWilayaCode(data[10]);
                 }catch(Exception e){}
                 try{
-                    w.setEmail(data[11]);
+                    w.setPhone(data[11]);
                 }catch(Exception e){}
                 try{
-                    w.setZipCode(data[12]);
+                    w.setEmail(data[12]);
                 }catch(Exception e){}
                 try{
-                    w.setVendorSKU(data[13]);
+                    w.setZipCode(data[13]);
                 }catch(Exception e){}
                 try{
-                    w.setIsDeleted(Boolean.valueOf(data[13]) );
+                    VendorSKU vendorSKU= vendorSKURepository.findByVendorSKUName(data[14]);
+                    w.setVendorSKU(vendorSKU.getId());
+                    w.setVendorSKUname(vendorSKU.getVendorSKUName());
+                    w.setVendorSKUcode(vendorSKU.getVendorSKUCode());
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+
+                try{
+                    w.setShippingAddress(data[15]);
+                }catch(Exception e){}
+                try{
+                    w.setShippingCity(data[16]);
+                }catch(Exception e){}
+                try{
+                    w.setIsDeleted(Boolean.valueOf(data[17]) );
                 }catch(Exception e){}
                 fournisseurService.create(w);
                 System.out.println(line);

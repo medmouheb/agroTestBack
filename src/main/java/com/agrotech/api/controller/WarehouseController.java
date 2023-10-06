@@ -206,7 +206,7 @@ public class WarehouseController {
                 if(i==1){
                     continue;
                 }
-                String[] data = line.replace("\"", "").split(";");
+                String[] data = line.replace("\"", "").replace(",",";").split(";");
                 WarehouseDto w= new WarehouseDto();
                 try{                w.setCode(data[0]);
                 }catch (Exception e){}
@@ -235,10 +235,21 @@ public class WarehouseController {
                 }
 //                w.setIsPrimary(Boolean.valueOf(data[5]));
                 try{
-                    String t=data[6].split("/")[2]+"-"+data[6].split("/")[1]+"-"+data[6].split("/")[0];
+                    String t01="";
+                    String t02="";
+                    if(data[6].split("/")[1].length()<2){
+                        t01="0";
+                    }
+                    if(data[6].split("/")[0].length()<2){
+                        t02="0";
+                    }
+                    String t=data[6].split("/")[2]+"-"+t01+data[6].split("/")[1]+"-"+t02+data[6].split("/")[0];
+                    System.out.println(t);
                     w.setStartingDate(LocalDate.parse(t));
 
-                }catch(Exception e){}
+                }catch(Exception e){
+                    System.out.println(e);
+                }
                 try{                w.setIsPrimary(Boolean.valueOf(data[7]));
                 }catch(Exception e){}
                 try{                w.setAddress1(data[8]);

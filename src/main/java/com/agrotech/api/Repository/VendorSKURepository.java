@@ -17,4 +17,6 @@ public interface VendorSKURepository extends MongoRepository<VendorSKU, String> 
 
     Optional<VendorSKU> findByCode(String code);
     VendorSKU findByName(String name);
+    VendorSKU findByVendorSKUName(String name);
+
 }

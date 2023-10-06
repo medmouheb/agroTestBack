@@ -1,11 +1,16 @@
 package com.agrotech.api.services.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.agrotech.api.Repository.FournisseurRepository;
+import com.agrotech.api.Repository.SalesSkuRepository;
+import com.agrotech.api.Repository.VendorSKURepository;
+import com.agrotech.api.model.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +24,6 @@ import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.dto.ProduitDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.ProduitMapper;
-import com.agrotech.api.model.Category;
-import com.agrotech.api.model.Growout;
-import com.agrotech.api.model.Produit;
 import com.agrotech.api.services.ProduitService;
 
 @Service
@@ -32,6 +34,15 @@ public class ProduitServiceImpl implements ProduitService {
     private final ProduitRepository produitRepository;
 	@Autowired
     private final ProduitMapper produitMapper;
+
+    @Autowired
+    private final FournisseurRepository fournisseurRepository;
+
+    @Autowired
+    private  final VendorSKURepository vendorSKURepository;
+
+    @Autowired
+    private  final SalesSkuRepository salesSkuRepository;
 
     private Produit save(Produit entity) {
         return produitRepository.save(entity);
@@ -197,17 +208,38 @@ public class ProduitServiceImpl implements ProduitService {
 
     private Produit recordToProduit(CSVRecord record){
         Produit produit = new Produit();
+        Fournisseur fournisseur =new Fournisseur();
+        VendorSKU vendorSKU=new VendorSKU();
+        SalesSKU salesSKU = new SalesSKU();
+
+
         produit.setName(record.get("name"));
         produit.setCode(record.get("code"));
         produit.setType(record.get("type"));
-        produit.setStatus(Boolean.valueOf(record.get("status")));
-        produit.setInventaire(record.get("inventory"));
-        produit.setMedicamenteux( Boolean.valueOf(record.get("medicated"))  );
-        produit.setFabricant(record.get("manufacturer"));
-        produit.setMaxdepasse(record.get("maxOver"));
-        produit.setCouleur(record.get("color"));
-        produit.setPrixUnitaireHt(new BigDecimal(record.get("unitPrice")));
-        produit.setTauxTva(new BigDecimal(record.get("tva")));
+        produit.setStatuss(Boolean.valueOf(record.get("statuss")));
+        produit.setCurrency(record.get("currency"));
+        produit.setInventaire(record.get("Inventaire"));
+        produit.setMedicamenteux( Boolean.valueOf(record.get("Medicamenteux"))  );
+        produit.setFabricant(record.get("Fabricant"));
+        produit.setCouleur(record.get("couleur"));
+        produit.setMaxdepasse(record.get("maxdepasse"));
+        produit.setPrixUnitaireHt(new BigDecimal(record.get("prixUnitaireHt")));
+        produit.setTauxTva(new BigDecimal(record.get("tauxTva")));
+        produit.setIsDeleted( Boolean.valueOf(record.get("isDeleted"))  );
+        fournisseur = fournisseurRepository.findByName(record.get("fournisseur"));
+        produit.setFournisseur(fournisseur);
+        produit.setCategory(record.get("category"));
+        String t=record.get("transactionDate").split("/")[2]+"-"+record.get("transactionDate").split("/")[1]+"-"+record.get("transactionDate").split("/")[0];
+        produit.setTransactionDate(t);
+        System.out.println("::"+record);
+        produit.setFarmCode(record.get("farmCode"));
+        produit.setHouseCode(record.get("houseCode"));
+        vendorSKU = vendorSKURepository.findByVendorSKUName(record.get("vendorSKU"));
+        produit.setVendorSKU(vendorSKU);
+        salesSKU = salesSkuRepository.findBySailorNameSku(record.get("salesSKU"));
+        produit.setSalesSKU(salesSKU);
+
+
 //        produit.setCategory(new Category((record.get("code")), (record.get("designation")), null));
         return produit;
     }

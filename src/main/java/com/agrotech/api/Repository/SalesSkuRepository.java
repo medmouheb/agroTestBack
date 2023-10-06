@@ -16,4 +16,6 @@ public interface SalesSkuRepository extends MongoRepository<SalesSKU, String> {
     Page<SalesSKU> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<SalesSKU> findByIsDeletedAndSailorNameSkuContainingIgnoreCase(Boolean isDeleted, String sailorNameSku, Pageable pageable);
     SalesSKU findByName(String name);
+    SalesSKU findBySailorNameSku(String name);
+
 }
