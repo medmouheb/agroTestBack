@@ -19,6 +19,13 @@
 		<java.version>17</java.version>
 		<org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
 		<org.projectlombok.version>1.18.26</org.projectlombok.version>
+
+		<sonar.host.url>http://localhost:9000</sonar.host.url>
+		<sonar.login>21db6362a0766678f356c8a5a9a8b2059d628c97</sonar.login>
+		<Dsonar.projectKey> agroteck </Dsonar.projectKey>
+		<Dsonar.host.url>http://localhost:9000 </Dsonar.host.url>
+		<Dsonar.login>21db6362a0766678f356c8a5a9a8b2059d628c97</Dsonar.login>
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -192,6 +199,11 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.1.2184</version>
 			</plugin>
 		</plugins>
 	</build>

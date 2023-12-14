@@ -64,15 +64,5 @@ public class Warehouse extends BaseEntity {
     private String vendor;
 
 
-    // @NotBlank(message = "Cost center code is required")
-
-    // private String costCenterCode;
-    // @NotBlank(message = "Cost center name is required")
-    // private String costCenterName;
-    //  private String divisionCode;
-    //  private String divisionName;
-    //  private String vendor;
-    //Active
-
 
 }
