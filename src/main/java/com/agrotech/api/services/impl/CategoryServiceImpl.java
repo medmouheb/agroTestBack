@@ -12,7 +12,6 @@ import com.agrotech.api.Repository.CategoryRepository;
 import com.agrotech.api.dto.CategoryDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.CategoryMapper;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Category;
 import com.agrotech.api.services.CategoryService;
 
@@ -21,19 +20,19 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
-	
+
 	@Autowired
 	private CategoryRepository categoryRepository ;
 	@Autowired
 	private CategoryMapper categoryMapper ;
-	
-	
-	
+
+
+
 	public Category save(Category entity) {
 		return categoryRepository.save(entity);
 	}
-	
-	
+
+
 
 	@Override
 	public CategoryDto create(CategoryDto dto) {
@@ -46,15 +45,15 @@ public class CategoryServiceImpl implements CategoryService{
 		if(catgOptional.isEmpty()) {
 			throw new NotFoundException("Category not found ");
 		}
-		
+
 		Category catg = catgOptional.get();
 		categoryMapper.partialUpdate(catg, dto);
-	
+
 	return categoryMapper.toDto(save(catg));
 	}
 
-	
-	
+
+
 	@Override
 	public CategoryDto findById(String id) throws NotFoundException {
 		Optional<Category> campOptional = categoryRepository.findById(id);
@@ -63,10 +62,10 @@ public class CategoryServiceImpl implements CategoryService{
 		}
 		return categoryMapper.toDto(campOptional.get());
 	}
-	
-	
-	
-	
+
+
+
+
 
 	@Override
 	public List<CategoryDto> findAll() {
@@ -85,8 +84,8 @@ public class CategoryServiceImpl implements CategoryService{
 		if(!categoryRepository.existsById(id)) {
 			throw new NotFoundException("Category not found ");
 		}
-		
-		categoryRepository.deleteById(id); 
+
+		categoryRepository.deleteById(id);
 	}
 
 

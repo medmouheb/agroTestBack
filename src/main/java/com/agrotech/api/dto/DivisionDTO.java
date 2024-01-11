@@ -1,9 +1,6 @@
 package com.agrotech.api.dto;
 
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.utils.ValidationMessages;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,12 +10,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter 
+@Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class DivisionDTO extends BaseDto{
-	
+
 	@NotBlank(message = ValidationMessages.DIVISION_CODE_REQUIRED)
    	@Indexed(unique = true)
     @Size(max = 10, message = ValidationMessages.DIVISION_CODE_LONG)
@@ -28,9 +25,9 @@ public class DivisionDTO extends BaseDto{
 	private String name ;
     @NotBlank(message = ValidationMessages.SPECIES_TYPE_REQUIRED)
     @Size(max = 20)
-    private String speciesType ; 
+    private String speciesType ;
     private String measurement ;
-    @Size(max = 500)  
+    @Size(max = 500)
 	private String address;
 	@Size(max = 10)
 	private String codeCity;
@@ -56,8 +53,6 @@ public class DivisionDTO extends BaseDto{
 	private String zipCode;
 	private String divisiontype;
 	private Boolean isDeleted=false;
-	
-//	@DBRef
-//	private Campany campany;
+
 
 }

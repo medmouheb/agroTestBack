@@ -1,13 +1,11 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.LogisticUnit;
 import com.agrotech.api.model.Vehicles;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,6 +17,5 @@ public interface VehiclesRepository extends MongoRepository<Vehicles,String> {
     Vehicles findByNomDuVehicule(String nomDuVehicule);
 
 
-//    List<String> findAllListeDesOperationsEffectuees();
 
 }

@@ -1,8 +1,6 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.VendorTypeReceivingRepository;
 import com.agrotech.api.Repository.WarehouseRepository;
-import com.agrotech.api.enums.CostCenterType;
 import com.agrotech.api.model.Warehouse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +20,20 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import jakarta.servlet.http.HttpServletResponse;
 import com.opencsv.CSVWriter;
 import org.springframework.web.multipart.MultipartFile;
-import com.opencsv.CSVReader;
-import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/warehouse")
 @RequiredArgsConstructor
 public class WarehouseController {
-	
+
 	@Autowired
     private final WarehouseService warehouseService;
 
@@ -131,13 +126,10 @@ public class WarehouseController {
         response.setContentType("text/csv");
         response.setHeader("Content-Disposition", "attachment; filename=warehouseData.csv");
 
-        // Get the data from MongoDB (Assuming your entity is called "YourEntity")
         List<Warehouse> entities = warehouseRepository.findAll();
 
-        // Create a CSV writer
         CSVWriter csvWriter = new CSVWriter(response.getWriter());
 
-        // Write CSV header
         String[] header = {
                 "code",
                 "name",
@@ -163,7 +155,6 @@ public class WarehouseController {
         };
         csvWriter.writeNext(header);
 
-        // Write data rows
         for (Warehouse entity : entities) {
             String[] data = new String[]{
                     String.valueOf(entity.getCode()),
@@ -233,7 +224,6 @@ public class WarehouseController {
                     System.out.println(e);
 
                 }
-//                w.setIsPrimary(Boolean.valueOf(data[5]));
                 try{
                     String t01="";
                     String t02="";

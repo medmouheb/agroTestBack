@@ -1,9 +1,7 @@
 package com.agrotech.api.controller;
 
 
-import com.agrotech.api.dto.AirportDTO;
 import com.agrotech.api.dto.ProductCategoryDTO;
-import com.agrotech.api.model.Airport;
 import com.agrotech.api.model.ProductCategory;
 import com.agrotech.api.services.ProductCategoryService;
 import org.modelmapper.ModelMapper;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/productCategory")
 public class PorductCategoryController {
@@ -52,7 +50,6 @@ public class PorductCategoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Check if the productcategory code already exists for another airport (excluding the one being updated)
         String updatedAirportCode = productCategory.getProductCategoryCode();
         ProductCategory existingProductCategoryWithCode = productCategoryService.getProductCategoryByProductCategoryCode(updatedAirportCode);
         if (existingProductCategoryWithCode != null && !existingProductCategoryWithCode.getId().equals(id)) {

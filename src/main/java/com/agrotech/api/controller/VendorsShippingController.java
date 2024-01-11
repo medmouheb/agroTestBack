@@ -1,14 +1,9 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.VendorsRemitRepository;
 import com.agrotech.api.Repository.VendorsShippingRepository;
-import com.agrotech.api.dto.CampanyDto;
-import com.agrotech.api.dto.VendorsRemitDto;
 import com.agrotech.api.dto.VendorsShippingDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.VendorsShipping;
-import com.agrotech.api.services.VendorsRemitService;
 import com.agrotech.api.services.VendorsShippingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vendorsShipping")
 @RequiredArgsConstructor

@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.agrotech.api.enums.CostCenterType;
 import com.agrotech.api.utils.ValidationMessages;
 
 import java.time.LocalDate;
@@ -26,7 +25,6 @@ public class Warehouse extends BaseEntity {
     @Indexed(unique = true)
     @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
     private String name;
-    //	@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
     private String type;
     private String facilityType;
     @Size(max = 50)

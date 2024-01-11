@@ -2,9 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
-import com.agrotech.api.Repository.CostCenterRepository;
 import com.agrotech.api.Repository.CurrencyRepository;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Currency;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/currency")
 @RequiredArgsConstructor

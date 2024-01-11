@@ -14,7 +14,7 @@ import java.util.List;
 import com.agrotech.api.exceptions.NotFoundException;
 
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/breedCode")
 @RequiredArgsConstructor

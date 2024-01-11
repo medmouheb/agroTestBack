@@ -2,7 +2,6 @@ package com.agrotech.api.controller;
 
 
 import com.agrotech.api.Repository.LogisticUnitRepository;
-import com.agrotech.api.dto.DivisionDTO;
 import com.agrotech.api.dto.LogisticUnitDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Campany;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/logisticunit")
 @RequiredArgsConstructor

@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.agrotech.api.enums.Etat;
 import com.agrotech.api.utils.ValidationMessages;
 
 import lombok.AllArgsConstructor;
@@ -97,7 +96,6 @@ public class Ferme extends BaseEntity {
 	@Size(max = 250)
 	private String longitude;
 	private Boolean isDeleted=false;
-//
 	@DBRef
 	private CostCenter cost_Center ;
 	@DBRef

@@ -1,7 +1,6 @@
 package com.agrotech.api.model;
 
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.agrotech.api.utils.ValidationMessages;
@@ -58,10 +57,8 @@ public class Division extends BaseEntity {
 	private String divisiontype;
 	private Boolean isDeleted=false;
 
-//	@DBRef
-//	private Campany campany;
-//
-	
-	
+
+
+
 
 }

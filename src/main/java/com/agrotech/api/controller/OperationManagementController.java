@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/operationmanagement")
 @RequiredArgsConstructor
@@ -109,13 +109,10 @@ public class OperationManagementController {
 
 
 
-    //GetList des drivers get nnomDuChauffeur
     @GetMapping("/getlistdrivers")
     public ResponseEntity<?> getlistdrivers() throws NotFoundException {
         List<Drivers> drivers = driversService.findByNomDuChauffeurs();
-        //Get List des nomDuChauffeur
         List<String> driversName = new ArrayList<>();
-        // Extract company names from the list of companies
         for (Drivers driver : drivers) {
             driversName.add(driver.getNomDuChauffeur());
         }

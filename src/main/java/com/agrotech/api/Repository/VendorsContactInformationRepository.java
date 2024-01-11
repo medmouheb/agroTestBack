@@ -1,6 +1,5 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.Vehicule;
 import com.agrotech.api.model.VendorsContactInformation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

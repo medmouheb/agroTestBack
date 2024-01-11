@@ -2,7 +2,6 @@ package com.agrotech.api.model;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.agrotech.api.utils.ValidationMessages;
 

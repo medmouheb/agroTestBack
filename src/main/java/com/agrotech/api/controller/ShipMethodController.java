@@ -1,10 +1,8 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.ShipMethodsRepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.ShipMethodsDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.ShipMethods;
 import com.agrotech.api.services.ShipMethodsService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/shipmethods")
 @RequiredArgsConstructor

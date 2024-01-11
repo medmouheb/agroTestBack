@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TimeSlot {
@@ -42,6 +41,3 @@ public class TimeSlot {
         this.heureFin = heureFin;
     }
 }
-
-
-

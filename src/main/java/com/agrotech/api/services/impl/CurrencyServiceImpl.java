@@ -9,11 +9,9 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import com.agrotech.api.Repository.CurrencyRepository;
-import com.agrotech.api.dto.CostCenterDto;
 import com.agrotech.api.dto.CurrencyDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.CurrencyMapper;
-import com.agrotech.api.model.CostCenter;
 import com.agrotech.api.model.Currency;
 import com.agrotech.api.services.CurrencyService;
 
@@ -22,18 +20,18 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CurrencyServiceImpl implements CurrencyService {
-	
+
 	@Autowired
 	private final CurrencyRepository currencyRepository ;
 	@Autowired
 	private final CurrencyMapper currencyMapper ;
-	
+
 
 	public Currency saveCurrency(Currency entity) {
-		return currencyRepository.save(entity);		
+		return currencyRepository.save(entity);
 	}
-	
-	
+
+
 	@Override
 	public CurrencyDto create(CurrencyDto dto) {
 		return currencyMapper.toDto(saveCurrency(currencyMapper.toEntity(dto))) ;
@@ -46,10 +44,10 @@ public class CurrencyServiceImpl implements CurrencyService {
 		if(currencyOptional.isEmpty()) {
 			throw new NotFoundException("Currency not found ");
 		}
-		
+
 		Currency currencyExisting = currencyOptional.get();
 		currencyMapper.partialUpdate(currencyExisting, dto);
-	
+
 	    return currencyMapper.toDto(saveCurrency(currencyExisting));
 	}
 
@@ -111,8 +109,8 @@ public class CurrencyServiceImpl implements CurrencyService {
 		if(!currencyRepository.existsById(id)) {
 			throw new NotFoundException("Currency not found ");
 		}
-		
-		currencyRepository.deleteById(id); 
+
+		currencyRepository.deleteById(id);
 	}
 
 	@Override

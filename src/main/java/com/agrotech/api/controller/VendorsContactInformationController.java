@@ -1,13 +1,8 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.VehiculeRepository;
 import com.agrotech.api.Repository.VendorsContactInformationRepository;
-import com.agrotech.api.dto.CampanyDto;
-import com.agrotech.api.dto.VehiculeDto;
 import com.agrotech.api.dto.VendorsContactInformationDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
-import com.agrotech.api.model.Vehicule;
 import com.agrotech.api.model.VendorsContactInformation;
 import com.agrotech.api.services.VendorsContactInformationService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vendorsContactInformation")
 @RequiredArgsConstructor

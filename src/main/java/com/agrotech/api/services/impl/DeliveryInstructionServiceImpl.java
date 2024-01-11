@@ -1,14 +1,9 @@
 package com.agrotech.api.services.impl;
 
-import com.agrotech.api.Repository.CampanyRepository;
 import com.agrotech.api.Repository.DeliveryInstructionRepository;
-import com.agrotech.api.dto.BreedCodeDto;
 import com.agrotech.api.dto.DeliveryInstructionDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.mapper.CampanyMapper;
 import com.agrotech.api.mapper.DeliveryInstructionMapper;
-import com.agrotech.api.model.BreedCode;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.DeliveryInstruction;
 import com.agrotech.api.services.DeliveryInstructionService;
 import lombok.RequiredArgsConstructor;

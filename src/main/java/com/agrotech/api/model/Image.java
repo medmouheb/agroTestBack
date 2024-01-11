@@ -37,5 +37,4 @@ public class Image {
         this.data = data;
     }
 
-    // Constructors, getters, and setters
 }

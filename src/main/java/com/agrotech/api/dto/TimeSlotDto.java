@@ -2,13 +2,6 @@ package com.agrotech.api.dto;
 
 
 import com.agrotech.api.model.TimeSlot;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-
 
 public class TimeSlotDto extends TimeSlot {
 

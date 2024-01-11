@@ -1,16 +1,8 @@
 package com.agrotech.api.dto;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.agrotech.api.utils.ValidationMessages;
 import jakarta.validation.constraints.Size;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-
-import com.agrotech.api.enums.statusVente;
-import com.agrotech.api.model.SalesSKU;
-
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +27,6 @@ public class SalesDto extends BaseDto {
     private String Payment_Term ;
     private Boolean isDeleted=false;
 
-	
+
 
 }

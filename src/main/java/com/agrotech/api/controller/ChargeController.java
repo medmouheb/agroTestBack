@@ -30,7 +30,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RequestMapping("/charge")
 @RequiredArgsConstructor
 public class ChargeController {
@@ -122,4 +122,3 @@ public class ChargeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
-

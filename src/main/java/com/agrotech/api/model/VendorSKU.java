@@ -31,18 +31,7 @@ public class VendorSKU extends BaseEntity {
 	@NotBlank(message = ValidationMessages.NAME_REQUIRED)
 	@Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
 	private String vendorSKUName;
-//	@NotBlank(message = ValidationMessages.unitDescription_REQUIRED)
-//	@Size(max = 40, message = ValidationMessages.unitDescription_TOO_LONG)
-//	private String unitDescription;
-//	@NotBlank(message = ValidationMessages.inventoryUnit_REQUIRED)
-//	@Size(max = 12, message = ValidationMessages.inventoryUnit_TOO_LONG)
-//	private String inventoryUnit;
-//	@NotBlank(message = ValidationMessages.payBasis_REQUIRED)
-//	@Size(max = 12, message = ValidationMessages.payBasis_TOO_LONG)
-//	private String payBasis;
-//	private String taxable;
 	private String vendorCode;
 	private Boolean isDeleted=false;
-	// private String SalesSKUCode ;
 
 }

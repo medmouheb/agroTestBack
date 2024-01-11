@@ -15,12 +15,12 @@ import com.agrotech.api.services.GrowoutService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/growout")
 @RequiredArgsConstructor
 public class GrowoutController {
-	
+
 	@Autowired
 	private GrowoutService growoutService ;
 	private  final Growoutrepository growoutrepository;
@@ -28,14 +28,14 @@ public class GrowoutController {
 	public void deleteall() throws NotFoundException {
 		growoutrepository.deleteAll();
 	}
-	
+
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody GrowoutDto growout) {
 		GrowoutDto response = growoutService.create(growout);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	
+
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(

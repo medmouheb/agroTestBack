@@ -5,12 +5,9 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.agrotech.api.utils.ValidationMessages;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
 @Setter
@@ -27,9 +24,7 @@ public class Fournisseur extends BaseEntity {
 	@NotBlank(message = ValidationMessages.NAME_REQUIRED)
 	@Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
 	private String name;
-//	@NotBlank(message = ValidationMessages.TYPE_REQUIRED)
 	private String type;
-//	@NotBlank(message = ValidationMessages.PAYMENT_TERM_REQUIRED)
 	@Size(max = 20, message = ValidationMessages.PAYMENT_TERM_LONG)
 	private String paymentTerm;
 
@@ -73,17 +68,3 @@ public class Fournisseur extends BaseEntity {
 	private String shippingAddress;
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

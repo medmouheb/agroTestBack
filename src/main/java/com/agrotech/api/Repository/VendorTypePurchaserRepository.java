@@ -1,7 +1,5 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.dto.VendorTypePurchaserDto;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.VendorTypePurchaser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,5 +16,4 @@ public interface VendorTypePurchaserRepository extends MongoRepository<VendorTyp
     Page<VendorTypePurchaser> findByIdContainingIgnoreCase(String id, Pageable pageable);
     Page<VendorTypePurchaser> findByIsDeletedAndIdContainingIgnoreCase(Boolean isDeleted, String id, Pageable pageable);
     Page<VendorTypePurchaser> findByIsDeleted(Boolean isDeleted, Pageable pageable);
-    //VendorTypePurchaser findByName(String name );
 }

@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -24,7 +23,7 @@ import jakarta.validation.constraints.Size;
 @NoArgsConstructor
 @Document(collection = "category")
 public class Category extends BaseEntity {
-   
+
 
 	 @NotBlank(message = ValidationMessages.CODE_REQUIRED)
 	 @Indexed(unique = true)
@@ -36,15 +35,15 @@ public class Category extends BaseEntity {
 	 @Size(max = 250, message = ValidationMessages.DESCRIPTION_TOO_LONG)
 	 private String description;
 	private Boolean isDeleted=false;
-	  
+
 	    @DBRef
 	    private Set<Produit> produit = new HashSet<>();
-	  
-	  
-	  
 
 
-	  
-	  
-	  
+
+
+
+
+
+
 }

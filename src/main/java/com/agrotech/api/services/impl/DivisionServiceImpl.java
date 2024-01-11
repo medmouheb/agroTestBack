@@ -12,12 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.agrotech.api.Repository.DivisionRepository;
-import com.agrotech.api.dto.CurrencyDto;
 import com.agrotech.api.dto.DivisionDTO;
-import com.agrotech.api.dto.ProduitDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.DivisionMapper;
-import com.agrotech.api.model.Currency;
 import com.agrotech.api.model.Division;
 import com.agrotech.api.services.DivisionService;
 
@@ -48,7 +45,6 @@ public class DivisionServiceImpl implements DivisionService {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
 		Page<Division>  result =  divisionRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
 		return result;
-		// return new PageImpl<>(result);
 	}
 
 	@Override
@@ -69,7 +65,6 @@ public class DivisionServiceImpl implements DivisionService {
 	@Override
 	public DivisionDTO create(DivisionDTO dto) {
 
-//		return divisionMapper.toDto(save(divisionMapper.toEntity(dto)));
 		return divisionMapper.toDto(save(divisionMapper.toEntity(dto)));
 	}
 
@@ -120,8 +115,8 @@ public class DivisionServiceImpl implements DivisionService {
 
 		if(!divisionRepository.existsById(id)) {
 			throw new NotFoundException("Division not found ");
-		}	
-		divisionRepository.deleteById(id); 
+		}
+		divisionRepository.deleteById(id);
 	}
 
 	@Override

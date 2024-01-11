@@ -25,7 +25,7 @@ import com.agrotech.api.services.CampanyService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/campany")
 @RequiredArgsConstructor
@@ -44,7 +44,7 @@ public class CampanyController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	
+
 @GetMapping("/getbyname/{name}")
 public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException{
 		Campany response=campanyService.findByname(name);

@@ -2,7 +2,6 @@ package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.DriversRepository;
 import com.agrotech.api.dto.DriversDto;
-import com.agrotech.api.dto.TimeSlotDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.DriversMapper;
 import com.agrotech.api.model.Drivers;
@@ -86,7 +85,6 @@ public class DriversServiceImpl implements DriversService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<DriversDto> result = driversRepository.findByNomDuChauffeurContainingIgnoreCase(filter, pageable)
                 .stream()
-//				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(driversMapper::toDto)
                 .collect(Collectors.toList());
 
@@ -116,10 +114,8 @@ public class DriversServiceImpl implements DriversService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("NomDuVehicles").ascending());
         List<DriversDto> result =  driversRepository.findByIsDeletedAndNomDuChauffeurContainingIgnoreCase(false,filter, pageable)
                 .stream()
-////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(driversMapper::toDto)
                 .collect(Collectors.toList());
-        //return result;
         return new PageImpl<>(result);
     }
 
@@ -172,7 +168,6 @@ public class DriversServiceImpl implements DriversService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
         List<DriversDto>  result = driversRepository.findByIsDeletedAndNomDuChauffeurContainingIgnoreCase(true,filter, pageable)
                 .stream()
-                //.filter(g->g.getIsDeleted()!=null && g.getIsDeleted())
                 .map(driversMapper::toDto)
                 .collect(Collectors.toList());
 

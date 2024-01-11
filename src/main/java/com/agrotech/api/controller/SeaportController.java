@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 
 @RequestMapping(value = "/seaport")
 
@@ -56,7 +56,6 @@ public class SeaportController {
         if (!seaportService.seaportExists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        // Check if the seaport code already exists for another seaport (excluding the one being updated)
         String updatedSeaportCode = seaport.getSeaportCode();
         Seaport existingSeaportWithCode = seaportService.getSeaportBySeaportCode(updatedSeaportCode);
         if (existingSeaportWithCode != null && !existingSeaportWithCode.getId().equals(id)) {

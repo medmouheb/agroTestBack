@@ -3,9 +3,6 @@ package com.agrotech.api.controller;
 import java.util.List;
 
 import com.agrotech.api.Repository.SalesRepository;
-import com.agrotech.api.dto.FournisseurDto;
-import com.agrotech.api.dto.SalesSkuDto;
-import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.Sales;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,12 +25,12 @@ import com.agrotech.api.services.SalesServices;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/sales")
 @RequiredArgsConstructor
 public class SalesController {
-	
+
 	@Autowired
 	private final SalesServices salesServices ;
 	private  final SalesRepository salesRepository;
@@ -45,7 +42,7 @@ public class SalesController {
 	public ResponseEntity<?> create(@RequestBody SalesDto sales){
 		SalesDto response = salesServices.create(sales);
 		return new ResponseEntity<>(response , HttpStatus.CREATED);
-		
+
 	}
 
 	@GetMapping("/getbyname/{name}")
@@ -59,8 +56,8 @@ public class SalesController {
 		return new ResponseEntity<>(response , HttpStatus.CREATED);
 
 	}
-	
-	
+
+
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(
 			@PathVariable String id,

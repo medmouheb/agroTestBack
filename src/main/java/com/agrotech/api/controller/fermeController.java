@@ -2,12 +2,10 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
-import com.agrotech.api.Repository.FacilityDetailsRepository;
 import com.agrotech.api.Repository.FermeRepository;
 import com.agrotech.api.dto.PropertyDTO;
 import com.agrotech.api.model.Ferme;
 import com.agrotech.api.model.Property;
-import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -20,25 +18,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.agrotech.api.dto.DivisionDTO;
 import com.agrotech.api.dto.FermeDto;
-import com.agrotech.api.dto.ProduitDto;
-import com.agrotech.api.exceptions.CSVReaderException;
-import com.agrotech.api.exceptions.EmptyFileException;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.FermeService;
-import com.agrotech.api.services.FournisseurService;
-import com.agrotech.api.utils.CSVReader;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/ferme")
 @RequiredArgsConstructor

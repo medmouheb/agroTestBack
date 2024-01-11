@@ -2,7 +2,6 @@ package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.DriversRepository;
 import com.agrotech.api.dto.DriversDto;
-import com.agrotech.api.dto.TimeSlotDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.*;
 import com.agrotech.api.services.DivisionService;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/drivers")
 @RequiredArgsConstructor
@@ -33,7 +32,6 @@ public class DriversController {
     }
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody DriversDto drivers) {
-        // Appelez le service pour créer le conducteur avec les informations mises à jour
         DriversDto response = driversService.create(drivers);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -111,13 +109,11 @@ public class DriversController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //get all division findByCompanyName
     @GetMapping("getbydivision")
     public ResponseEntity<?> findbydivion() throws NotFoundException {
         List<Division> divisions = divisionService.findByCompanyName();
         List<String> divisionCompanyNames = new ArrayList<>();
 
-        // Extract company names from the list of companies
         for (Division division : divisions) {
             divisionCompanyNames.add(division.getCompanyname());
         }

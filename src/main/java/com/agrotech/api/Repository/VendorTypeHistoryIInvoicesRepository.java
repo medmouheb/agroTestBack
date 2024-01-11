@@ -1,6 +1,5 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.VendorTypeHistoryIInvoices;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

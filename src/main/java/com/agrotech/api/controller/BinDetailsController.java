@@ -1,6 +1,5 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.AirportRepo;
 import com.agrotech.api.Repository.BinDetailsRepository;
 import com.agrotech.api.dto.BinDetailsDto;
 import com.agrotech.api.exceptions.NotFoundException;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/binDetails")
 @RequiredArgsConstructor
@@ -108,4 +107,3 @@ public class BinDetailsController {
     }
 
 }
-

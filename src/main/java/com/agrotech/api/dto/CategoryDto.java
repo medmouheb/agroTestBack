@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import com.agrotech.api.model.Produit;
-import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.utils.ValidationMessages;
 
 import jakarta.validation.constraints.NotBlank;
@@ -22,8 +21,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryDto extends BaseDto {
-	
-	
+
+
 
 	 @NotBlank(message = ValidationMessages.CODE_REQUIRED)
 	 @Indexed(unique = true)

@@ -1,10 +1,8 @@
 package com.agrotech.api.controller;
 
 
-import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.Repository.RapprochementDesStocksRepository;
 import com.agrotech.api.dto.RapprochementDesStocksDto;
-import com.agrotech.api.dto.SalesDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.RapprochementDesStocks;
 import com.agrotech.api.services.RapprochementDesStocksService;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/rapprochement-des-stocks")
 @RequiredArgsConstructor

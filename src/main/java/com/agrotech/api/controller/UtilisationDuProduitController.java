@@ -21,9 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/UtilisationDuProduit")
 @RequiredArgsConstructor
@@ -128,11 +127,8 @@ public class UtilisationDuProduitController {
 
     @GetMapping("/getAllproduit/{code}")
     public String findProduitName(@PathVariable String code) throws NotFoundException {
-        //find the produitname by code
         ProduitDto produitDto = produitService.findByCode(code);
-        //get the name of codeproduit selement
         String nameProduit = produitDto.getName();
-        //get the list of all produit
         return nameProduit;
     }
 

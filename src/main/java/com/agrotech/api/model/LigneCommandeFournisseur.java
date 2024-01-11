@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.agrotech.api.utils.ValidationMessages;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -19,7 +18,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Document(collection = "ligne_commande_fournisseur")
 public class LigneCommandeFournisseur extends BaseEntity {
-   
+
 
 	  @NotBlank(message = ValidationMessages.QUANTITE_REQUIRED)
 	  private BigDecimal quantite;

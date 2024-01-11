@@ -1,11 +1,7 @@
 package com.agrotech.api.model;
 import com.agrotech.api.utils.ValidationMessages;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
-import java.util.*;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter

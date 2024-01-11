@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.dto.HousseDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.HousseService;
@@ -27,12 +26,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/housse")
 @RequiredArgsConstructor
 public class HousseController {
-	
+
 	@Autowired
 	private HousseService housseService ;
 
@@ -45,10 +44,10 @@ public class HousseController {
 	public ResponseEntity<?> create(@RequestBody HousseDto housse){
 		HousseDto response = housseService.create(housse);
 		return new ResponseEntity<>(response , HttpStatus.CREATED);
-		
+
 	}
-	
-	
+
+
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(
 			@PathVariable String id,
@@ -85,34 +84,10 @@ public class HousseController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		housseService.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-
-//	@GetMapping("/archiver/{id}")
-//	public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
-//		housseService.archive(id);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//
-//	@PutMapping("/desarchiver/{id}")
-//	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
-//		housseService.setNotArchive(id);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//
-//	@GetMapping("/archived/page")
-//	public ResponseEntity<?> findArchivedPage(
-//			@RequestParam(defaultValue = "10") int pageSize,
-//			@RequestParam(defaultValue = "0") int pageNumber,
-//			@RequestParam(defaultValue = "") String filter
-//	) {
-//		Page<FermeDto> response = housseService.findArchivedPage(pageSize, pageNumber, filter);
-//		return new ResponseEntity<>(response, HttpStatus.OK);
-//	}
-	
 
 }

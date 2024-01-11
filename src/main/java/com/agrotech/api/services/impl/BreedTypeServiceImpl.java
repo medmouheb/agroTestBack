@@ -2,14 +2,11 @@ package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.BreedTypeRepository;
 import com.agrotech.api.dto.BreedTypeDto;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.BreedTypeMapper;
 import com.agrotech.api.model.BreedType;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.services.BreedTypeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 

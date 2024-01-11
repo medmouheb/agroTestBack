@@ -22,12 +22,12 @@ import com.agrotech.api.services.CategoryService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/category")
 @RequiredArgsConstructor
 public class CategoryController {
-	
+
 	@Autowired
 	private CategoryService categoryService ;
 	private CategoryRepository categoryRepository;
@@ -35,7 +35,7 @@ public class CategoryController {
 	public void deleteall() throws NotFoundException {
 		categoryRepository.deleteAll();
 	}
-	
+
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody CategoryDto cat) {
 		CategoryDto response = categoryService.create(cat);

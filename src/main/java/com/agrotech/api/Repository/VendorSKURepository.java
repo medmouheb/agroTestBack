@@ -1,8 +1,6 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.VendorSKU;
-import com.agrotech.api.model.Warehouse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

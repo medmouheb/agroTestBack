@@ -2,8 +2,6 @@ package com.agrotech.api.Repository;
 
 import java.util.Optional;
 
-import com.agrotech.api.model.Campany;
-import com.agrotech.api.model.Willaya;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

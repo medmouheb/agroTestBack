@@ -1,13 +1,8 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.CurrencyRepository;
 import com.agrotech.api.Repository.DeliveryInstructionRepository;
-import com.agrotech.api.dto.CurrencyDto;
 import com.agrotech.api.dto.DeliveryInstructionDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Currency;
-import com.agrotech.api.model.DeliveryInstruction;
-import com.agrotech.api.services.CurrencyService;
 import com.agrotech.api.services.DeliveryInstructionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/delivery")
 @RequiredArgsConstructor
@@ -67,12 +62,6 @@ public class DeliveryInstructionController {
         List<DeliveryInstructionDto> response = deliveryInstructionService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-//    @GetMapping("/by-code/{code}")
-//    public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-//        CurrencyDto response = deliveryInstructionService.findBytypeproduct(code);
-//        return new ResponseEntity<>(response, HttpStatus.OK);
-//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {

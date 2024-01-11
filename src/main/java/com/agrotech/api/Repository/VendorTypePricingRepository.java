@@ -1,6 +1,5 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.VendorTypePODetails;
 import com.agrotech.api.model.VendorTypePricing;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

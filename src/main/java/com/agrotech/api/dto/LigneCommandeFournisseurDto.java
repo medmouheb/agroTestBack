@@ -4,8 +4,6 @@ import java.math.BigDecimal;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import com.agrotech.api.model.CommandeFournisseur;
-import com.agrotech.api.model.Produit;
 import com.agrotech.api.utils.ValidationMessages;
 
 import jakarta.validation.constraints.NotBlank;

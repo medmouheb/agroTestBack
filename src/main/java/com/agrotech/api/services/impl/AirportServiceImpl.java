@@ -1,7 +1,6 @@
 package com.agrotech.api.services.impl;
 
 import com.agrotech.api.model.Airport;
-import com.agrotech.api.model.Seaport;
 import com.agrotech.api.Repository.AirportRepo;
 import com.agrotech.api.services.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;

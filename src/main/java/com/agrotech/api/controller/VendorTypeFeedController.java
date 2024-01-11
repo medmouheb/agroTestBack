@@ -1,13 +1,9 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.VendorTypeDetailsRepository;
 import com.agrotech.api.Repository.VendorTypeFeedRepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VendorTypeFeedDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.VendorTypeFeed;
-import com.agrotech.api.services.CampanyService;
 import com.agrotech.api.services.VendorTypeFeedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vendortypefeed")
 @RequiredArgsConstructor

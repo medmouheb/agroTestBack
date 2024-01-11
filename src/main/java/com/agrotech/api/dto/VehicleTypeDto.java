@@ -1,7 +1,6 @@
 package com.agrotech.api.dto;
 
 
-import com.agrotech.api.model.BaseEntity;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import com.agrotech.api.utils.ValidationMessages;

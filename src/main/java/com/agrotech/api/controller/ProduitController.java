@@ -26,7 +26,7 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.ProduitService;
 import com.agrotech.api.utils.CSVReader;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/produit")
 @RequiredArgsConstructor

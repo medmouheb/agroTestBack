@@ -1,12 +1,9 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.VendorSKURepository;
-import com.agrotech.api.Repository.VendorsInternalDetailRepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VendorSKUDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorSKU;
-import com.agrotech.api.services.CampanyService;
 import com.agrotech.api.services.VendorSKUService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vendorSku")
 @RequiredArgsConstructor

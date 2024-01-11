@@ -3,7 +3,6 @@ package com.agrotech.api.dto;
 import com.agrotech.api.model.Commande;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import com.agrotech.api.utils.ValidationMessages;
 

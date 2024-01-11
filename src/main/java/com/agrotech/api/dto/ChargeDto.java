@@ -2,7 +2,6 @@ package com.agrotech.api.dto;
 
 import com.agrotech.api.utils.ValidationMessages;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

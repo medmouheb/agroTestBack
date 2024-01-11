@@ -4,10 +4,7 @@ package com.agrotech.api.controller;
 import com.agrotech.api.Repository.VehiclesRepository;
 import com.agrotech.api.dto.LogisticUnitDto;
 import com.agrotech.api.dto.VehiclesDto;
-import com.agrotech.api.dto.VehiculeDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
-import com.agrotech.api.model.LogisticUnit;
 import com.agrotech.api.model.Vehicles;
 import com.agrotech.api.services.LogisticUnitService;
 import com.agrotech.api.services.VehiclesService;
@@ -20,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vehicles")
 @RequiredArgsConstructor
@@ -49,10 +46,6 @@ public class VehiclesController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
-    /*@GetMapping("/getallListeDesOperationsEffectuees")
-    public List<String> getallListeDesOperationsEffectuees() throws NotFoundException {
-        return vehiclesRepository.findAllListeDesOperationsEffectuees();
-    }*/
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id,@RequestBody VehiclesDto campany) throws NotFoundException {
         VehiclesDto response = vehiclesService.update(id, campany);
@@ -124,7 +117,6 @@ public class VehiclesController {
 
         List<String> companyNames = new ArrayList<>();
 
-        // Extract company names from the list of companies
         for (LogisticUnitDto company : companies) {
             companyNames.add(company.getLogisticCode());
         }

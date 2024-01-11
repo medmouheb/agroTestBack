@@ -1,5 +1,4 @@
 package com.agrotech.api.controller;
-import com.agrotech.api.Repository.ChargeRepository;
 import com.agrotech.api.Repository.CommandeRepository;
 import com.agrotech.api.dto.CommandeDto;
 
@@ -29,7 +28,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RequestMapping("/commande")
 @RequiredArgsConstructor
 public class CommandeController {

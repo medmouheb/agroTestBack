@@ -1,7 +1,6 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.BreedType;
-import com.agrotech.api.model.LogisticUnit;
+
 import com.agrotech.api.model.OperationManagement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

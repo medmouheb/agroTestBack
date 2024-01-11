@@ -1,6 +1,5 @@
 package com.agrotech.api.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,9 +8,7 @@ import com.agrotech.api.Repository.ChargeRepository;
 import com.agrotech.api.dto.ChargeDto;
 
 import com.agrotech.api.mapper.ChargeMapper;
-import com.agrotech.api.mapper.CommandeMapper;
 import com.agrotech.api.model.Charge;
-import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.services.ChargeService;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +16,6 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import com.agrotech.api.exceptions.NotFoundException;
@@ -86,7 +82,6 @@ public class ChargeServiceImpl implements ChargeService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
         Page<Charge>  result =  chargeRepository.findBySuppNameContainingIgnoreCaseAndIsDeleted(filter,false,pageable);
         return result;
-        // return new PageImpl<>(result);
     }
 
     @Override
@@ -97,7 +92,6 @@ public class ChargeServiceImpl implements ChargeService {
         );
         List<ChargeDto>  result = chargeRepository.findBySuppNameContainingIgnoreCase(filter, pageable)
                 .stream()
-                //.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(chargeMapper::toDto)
                 .collect(Collectors.toList());
         return new PageImpl<>(result);

@@ -3,7 +3,6 @@ package com.agrotech.api.controller;
 import com.agrotech.api.Repository.WillayaRepository;
 import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Currency;
 import com.agrotech.api.model.Willaya;
 import com.agrotech.api.services.WilayaService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/willaya")
 @RequiredArgsConstructor

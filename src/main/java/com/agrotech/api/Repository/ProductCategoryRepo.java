@@ -1,7 +1,6 @@
 package com.agrotech.api.Repository;
 
 import com.agrotech.api.model.ProductCategory;
-import com.agrotech.api.model.Reason;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

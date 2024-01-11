@@ -75,7 +75,6 @@ public class ReceptionDto extends BaseDto{
     private String VendorName;
 
     private String HaulageVendorName;
-    /////
     private String ComplexPoNo;
 
     private Number ProductNo;

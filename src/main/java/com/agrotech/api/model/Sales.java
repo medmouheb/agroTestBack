@@ -1,14 +1,9 @@
 package com.agrotech.api.model;
 
-import java.util.HashSet;
-import java.util.Set;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.agrotech.api.enums.statusVente;
 import com.agrotech.api.utils.ValidationMessages;
 
 import lombok.AllArgsConstructor;
@@ -24,7 +19,7 @@ import jakarta.validation.constraints.Size;
 @NoArgsConstructor
 @Document(collection = "sales")
 public class Sales  extends BaseEntity{
-	
+
 	@NotBlank(message = ValidationMessages.CODE_REQUIRED)
 	@Indexed(unique = true)
 	@Size(max = 50, message = ValidationMessages.CODE_TOO_LONG)
@@ -38,8 +33,8 @@ public class Sales  extends BaseEntity{
     private Boolean isDeleted=false;
 
 
-    
-    
-    
+
+
+
 
 }

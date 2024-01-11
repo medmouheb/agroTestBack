@@ -17,11 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.agrotech.api.dto.CampanyDto;
-import com.agrotech.api.dto.CostCenterDto;
 import com.agrotech.api.dto.DivisionDTO;
-import com.agrotech.api.dto.ProduitDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.DivisionService;
 
@@ -29,12 +25,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/division")
 @RequiredArgsConstructor
 public class DivisionController {
-	
+
 	@Autowired
 	private final DivisionService divisionService ;
 private final DivisionRepository divisionRepository;
@@ -52,11 +48,7 @@ private final DivisionRepository divisionRepository;
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-//	@PutMapping("/{id}")
-//	public ResponseEntity<?> update(@PathVariable String id,@RequestBody DivisionDTO div) throws NotFoundException {
-//		DivisionDTO response = divisionService.update(id, div);
-//		return new ResponseEntity<>(response, HttpStatus.OK);
-//	}
+
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,@RequestBody DivisionDTO div) throws NotFoundException {
 		DivisionDTO response = divisionService.update(id, div);
@@ -73,8 +65,8 @@ private final DivisionRepository divisionRepository;
 		List<DivisionDTO> response = divisionService.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	
+
+
 	@GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,

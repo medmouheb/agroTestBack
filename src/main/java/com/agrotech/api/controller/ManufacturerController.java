@@ -1,9 +1,7 @@
 package com.agrotech.api.controller;
 
 
-import com.agrotech.api.dto.AirportDTO;
 import com.agrotech.api.dto.ManufacturerDTO;
-import com.agrotech.api.model.Airport;
 import com.agrotech.api.model.Manufacturer;
 import com.agrotech.api.services.ManufacturerService;
 import org.modelmapper.ModelMapper;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping(value = "/manufacturer")
 public class ManufacturerController {
@@ -53,7 +51,6 @@ public class ManufacturerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Check if the airport code already exists for another manufacturer (excluding the one being updated)
         String updatedManufacturerCode = manufacturer.getManufacturerCode();
         Manufacturer existingManufacturerWithCode = manufacturerService.getManufacturerByManufacturerCode(updatedManufacturerCode);
         if (existingManufacturerWithCode != null && !existingManufacturerWithCode.getId().equals(id)) {

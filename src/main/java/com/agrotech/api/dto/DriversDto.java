@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 

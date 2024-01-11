@@ -1,19 +1,16 @@
 package com.agrotech.api.services.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.agrotech.api.dto.CommandeDto;
-import com.agrotech.api.model.Charge;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.agrotech.api.Repository.CommandeRepository;
 

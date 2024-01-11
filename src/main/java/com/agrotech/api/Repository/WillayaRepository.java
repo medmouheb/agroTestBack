@@ -1,7 +1,5 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.Currency;
-import com.agrotech.api.model.Warehouse;
 import com.agrotech.api.model.Willaya;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

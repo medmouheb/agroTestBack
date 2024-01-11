@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.agrotech.api.Repository.CommandeFournisseurRepository;
-import com.agrotech.api.Repository.CommandeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +26,12 @@ import com.agrotech.api.services.CommandeFournisseurService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/commandeFournisseur")
 @RequiredArgsConstructor
 public class CommandeFournisseurController {
-	
+
 	@Autowired
 	private CommandeFournisseurService commandeFournisseurService ;
 
@@ -47,7 +46,7 @@ public class CommandeFournisseurController {
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	
+
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id, @RequestBody CommandeFournisseurDto commandeFournisseur) throws NotFoundException {
@@ -67,7 +66,7 @@ public class CommandeFournisseurController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	
+
 	@GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		CommandeFournisseurDto response = commandeFournisseurService.findByCode(code);
@@ -80,14 +79,14 @@ public class CommandeFournisseurController {
 		commandeFournisseurService.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
-	
-	
+
+
 	@PatchMapping("/update/etat/{idCommande}/{etatCommande}")
 	public  ResponseEntity<?> updateEtatCommande(@PathVariable("idCommande") String idCommande, @PathVariable("etatCommande") EtatCommande etatCommande) throws NotFoundException {
 		CommandeFournisseurDto response = commandeFournisseurService.updateEtatCommande(idCommande, etatCommande);
 	    return new ResponseEntity<>(response, HttpStatus.OK);
 	  }
-	  
+
 	@PatchMapping("/update/quantite/{idCommande}/{idLigneCommande}/{quantite}")
 	public  ResponseEntity<?> updateQuantiteCommande(@PathVariable("idCommande") String idCommande,
 		      @PathVariable("idLigneCommande") String idLigneCommande, @PathVariable("quantite") BigDecimal quantite) throws NotFoundException{
@@ -95,16 +94,16 @@ public class CommandeFournisseurController {
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	
+
+
 	 @PatchMapping( "/update/fournisseur/{idCommande}/{idFournisseur}")
 	 public  ResponseEntity<?>  updateFournisseur(@PathVariable("idCommande") String idCommande, @PathVariable("idFournisseur") String idFournisseur) throws NotFoundException {
 		 CommandeFournisseurDto response = commandeFournisseurService.updateFournisseur(idCommande, idFournisseur);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 
 	 }
- 
-	 
+
+
 	 @PatchMapping("/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
 	 public  ResponseEntity<?> updateProduit(@PathVariable("idCommande") String idCommande,
 	      @PathVariable("idLigneCommande") String idLigneCommande, @PathVariable("idArticle") String idArticle) throws NotFoundException {
@@ -112,35 +111,25 @@ public class CommandeFournisseurController {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 
 	 }
-	 
-	 
+
+
 	 @GetMapping("/lignesCommande/{idCommande}")
 	 public  List<LigneCommandeFournisseurDto> findAllLignesCommandesFournisseurByCommandeFournisseurId(@PathVariable("idCommande") String idCommande) throws NotFoundException {
-		 
+
 		 return commandeFournisseurService.findAllLignesCommandesFournisseurByCommandeFournisseurId(idCommande);
-		 
+
 	 }
-	 
-	 
+
+
 	 @DeleteMapping("/delete/produit/{idCommande}/{idLigneCommande}")
 	 public ResponseEntity<?> deleteProduit(@PathVariable("idCommande") String idCommande, @PathVariable("idLigneCommande") String idLigneCommande) throws NotFoundException {
-		 CommandeFournisseurDto response = commandeFournisseurService.deleteProduit(idCommande, idLigneCommande); 
+		 CommandeFournisseurDto response = commandeFournisseurService.deleteProduit(idCommande, idLigneCommande);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 
 	 }
-	 
-	 
-	 
-	 
-	 
+
+
+
+
+
 }
-
-
-
-
-
-
-
-
-
-

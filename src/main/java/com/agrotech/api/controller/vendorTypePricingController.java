@@ -1,8 +1,6 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.dto.VendorTypePODetailsDto;
 import com.agrotech.api.dto.VendorTypePricingDto;
-import com.agrotech.api.dto.VendorTypesDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorTypePricing;
 import com.agrotech.api.services.VendorTypePricingService;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vendorTypePricing")
 @RequiredArgsConstructor

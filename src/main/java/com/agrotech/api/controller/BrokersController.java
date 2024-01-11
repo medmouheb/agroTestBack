@@ -1,13 +1,10 @@
 package com.agrotech.api.controller;
 
 
-import com.agrotech.api.Repository.BreedTypeRepository;
 import com.agrotech.api.Repository.BrokersRepository;
 import com.agrotech.api.dto.BrokersDto;
-import com.agrotech.api.dto.BuyersDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Brokers;
-import com.agrotech.api.model.Buyers;
 import com.agrotech.api.services.BrokersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/brokers")
 @RequiredArgsConstructor

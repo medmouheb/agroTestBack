@@ -1,6 +1,5 @@
 package com.agrotech.api.Repository;
 
-import com.agrotech.api.model.LogisticUnit;
 import com.agrotech.api.model.RapprochementDesStocks;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

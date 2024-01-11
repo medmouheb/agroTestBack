@@ -1,15 +1,12 @@
 package com.agrotech.api.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 import com.agrotech.api.model.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
-import com.agrotech.api.enums.Etat;
 import com.agrotech.api.utils.ValidationMessages;
 
 import jakarta.validation.constraints.NotBlank;
@@ -96,7 +93,6 @@ public class FermeDto extends BaseDto {
 	@Size(max = 250)
 	private String longitude;
 	private Boolean isDeleted=false;
-	//
 	private String growoutcode;
 	@DBRef
 	private CostCenter cost_Center ;

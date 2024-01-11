@@ -1,15 +1,10 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.FacilityDetailsRepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.FacilityDetailsDto;
-import com.agrotech.api.dto.FreightTermsDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.FacilityDetails;
-import com.agrotech.api.services.CampanyService;
 import com.agrotech.api.services.FacilityDetailsService;
-import com.agrotech.api.services.FreightTermsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/facilityDetails")
 @RequiredArgsConstructor

@@ -1,6 +1,5 @@
 package com.agrotech.api.model;
 
-import com.agrotech.api.dto.VendorTypeProductDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -50,6 +49,3 @@ public class VendorTypeProduct extends BaseEntity {
 
 
     }
-
-
-

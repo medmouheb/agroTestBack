@@ -2,9 +2,7 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
-import com.agrotech.api.Repository.CommandeFournisseurRepository;
 import com.agrotech.api.Repository.CostCenterRepository;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.CostCenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,19 +20,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.agrotech.api.dto.CostCenterDto;
-import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.CostCenterService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/costcenter")
 @RequiredArgsConstructor
 public class CostCenterController {
-	
-	
+
+
 	@Autowired
 	private final CostCenterService costCenterService ;
 	private  final CostCenterRepository costCenterRepository;
@@ -52,7 +49,7 @@ public class CostCenterController {
 		CostCenter response=costCenterService.findByname(name);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-	
+
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,@RequestBody CostCenterDto cost) throws NotFoundException {

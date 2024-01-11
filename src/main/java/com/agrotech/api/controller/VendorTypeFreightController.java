@@ -1,8 +1,6 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.VendorTypeFeedRepository;
 import com.agrotech.api.Repository.VendorTypeFreightRepository;
-import com.agrotech.api.dto.VendorTypeFeedDto;
 import com.agrotech.api.dto.VendorTypeFreightDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorTypeFreight;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vendorTypeFreight")
 @RequiredArgsConstructor

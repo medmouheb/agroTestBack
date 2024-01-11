@@ -1,9 +1,7 @@
 package com.agrotech.api.controller;
 
-import com.agrotech.api.Repository.VendorTypeHistoryIReceivingRepository;
 import com.agrotech.api.Repository.VendorTypePODetailsRepository;
 import com.agrotech.api.dto.VendorTypePODetailsDto;
-import com.agrotech.api.dto.VendorsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorTypePODetails;
 import com.agrotech.api.services.VendorTypePODetailsService;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/vendorTypePODetails")
 @RequiredArgsConstructor

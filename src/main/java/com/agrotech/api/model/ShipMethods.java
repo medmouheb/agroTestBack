@@ -1,6 +1,5 @@
 package com.agrotech.api.model;
 
-import com.agrotech.api.utils.ValidationMessages;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

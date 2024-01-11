@@ -35,17 +35,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RequestMapping("/fournisseur")
 @RequiredArgsConstructor
 public class FournisseurController {
-	
+
 	@Autowired
     private final FournisseurService fournisseurService;
     private final FournisseurRepository fournisseurRepository;
