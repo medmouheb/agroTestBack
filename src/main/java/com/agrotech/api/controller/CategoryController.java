@@ -6,6 +6,7 @@ import com.agrotech.api.Repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,11 +32,13 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService ;
 	private CategoryRepository categoryRepository;
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		categoryRepository.deleteAll();
 	}
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@PostMapping("")
 	public ResponseEntity<?> create(@RequestBody CategoryDto cat) {
 		CategoryDto response = categoryService.create(cat);
@@ -43,6 +46,7 @@ public class CategoryController {
 	}
 
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,@RequestBody CategoryDto cat) throws NotFoundException {
 		CategoryDto response = categoryService.update(id, cat);
@@ -50,12 +54,14 @@ public class CategoryController {
 	}
 
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		CategoryDto response = categoryService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<CategoryDto> response = categoryService.findAll();
@@ -63,6 +69,7 @@ public class CategoryController {
 	}
 
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		CategoryDto response = categoryService.findByCode(code);
@@ -70,6 +77,7 @@ public class CategoryController {
 	}
 
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		categoryService.delete(id);

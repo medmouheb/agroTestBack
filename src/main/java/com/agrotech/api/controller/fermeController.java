@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,11 +38,13 @@ public class fermeController {
 	@Autowired
 	private final FermeService fermeService ;
 	private  final FermeRepository fermeRepository;
-	@DeleteMapping("/deleteall")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		fermeRepository.deleteAll();
 	}
-	@PostMapping("")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PostMapping("")
 	public ResponseEntity<?> create(@RequestBody FermeDto ferme) {;
 		List<PropertyDTO> properties = ferme.getProperties();
 		for (PropertyDTO property : properties) {
@@ -51,7 +54,8 @@ public class fermeController {
 		FermeDto response = fermeService.create(ferme);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-	@PostMapping("/add")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PostMapping("/add")
 	public ResponseEntity<?> create(@RequestBody Ferme ferme) {;
 		List<Property> properties = ferme.getProperties();
 		for (Property property : properties) {
@@ -66,7 +70,8 @@ public class fermeController {
 
 
 
-	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PutMapping("/{id}")
 	public ResponseEntity<?> update(
 			@PathVariable String id,
 			@RequestBody FermeDto ferme
@@ -75,19 +80,22 @@ public class fermeController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		FermeDto response = fermeService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<FermeDto> response = fermeService.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/page")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,
 			@RequestParam(defaultValue = "0") int pageNumber,
@@ -97,7 +105,8 @@ public class fermeController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/by-code/{code}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		FermeDto response = fermeService.findByCode(code);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -105,25 +114,29 @@ public class fermeController {
 
 
 
-	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		fermeService.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@GetMapping("/archiver/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/archiver/{id}")
 	public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
 		fermeService.archive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/desarchiver/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/desarchiver/{id}")
 	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
 		fermeService.setNotArchive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@GetMapping("/archived/page")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
 	public ResponseEntity<?> findArchivedPage(
 			@RequestParam(defaultValue = "10") int pageSize,
 			@RequestParam(defaultValue = "0") int pageNumber,

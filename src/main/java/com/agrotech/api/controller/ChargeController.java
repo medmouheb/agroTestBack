@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,16 +40,19 @@ public class ChargeController {
     @Autowired
     private final  ChargeService chargeService;
     private  final ChargeRepository chargeRepository;
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         chargeRepository.deleteAll();
     }
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody @Valid ChargeDto charge) {
         ChargeDto response = chargeService.create(charge);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("/import")
     public ResponseEntity<?> importCSV(@RequestPart("file") MultipartFile file) throws CSVReaderException, EmptyFileException {
         List<CSVRecord> read = CSVReader.read(file);
@@ -56,6 +60,7 @@ public class ChargeController {
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable String id,
@@ -65,18 +70,21 @@ public class ChargeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable String id) throws NotFoundException {
         ChargeDto response = chargeService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<ChargeDto> response = chargeService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage1(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -87,11 +95,13 @@ public class ChargeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         chargeService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping(value = "/csv-template")
     public ResponseEntity<?> downloadCSVTemplate() throws IOException {
         File file = ResourceUtils.getFile("classpath:csv/providers.csv");
@@ -100,6 +110,7 @@ public class ChargeController {
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(resource);
     }
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         chargeService.archive(id);
@@ -107,11 +118,13 @@ public class ChargeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         chargeService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,

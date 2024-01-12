@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class ReasonController {
 
 
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping(value = "")
     public ResponseEntity<?> addReason(@RequestBody @Validated Reason reason) {
         if (reasonService.reasonCodeExists(reason.getReasonCode())) {
@@ -38,6 +40,7 @@ public class ReasonController {
         return new ResponseEntity<>(newReason, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteReason(@PathVariable String id) {
         if (reasonService.reasonExists(id)) {
@@ -48,6 +51,7 @@ public class ReasonController {
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping(value = "{id}")
     public ResponseEntity<?> updateReason(@PathVariable String id, @RequestBody @Validated Reason reason) {
         if (!reasonService.reasonExists(id)) {
@@ -63,6 +67,7 @@ public class ReasonController {
 
         return new ResponseEntity<>(updatedReason, HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PatchMapping("deactivate/{id}")
     public ResponseEntity<?> deactivateReason(@PathVariable String id) {
         if (!reasonService.reasonExists(id)) {
@@ -74,6 +79,7 @@ public class ReasonController {
         reasonService.ajouterReason(reason);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PatchMapping("activate/{id}")
     public ResponseEntity<?> activateReason(@PathVariable String id) {
         if (!reasonService.reasonExists(id)) {
@@ -86,17 +92,20 @@ public class ReasonController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping(value = "active")
     public ResponseEntity<List<ReasonDTO>> getActiveTrueReasons() {
         List<ReasonDTO> Reasons = reasonService.getActiveTrueReasons().stream().map(reason -> modelMapper.map(reason, ReasonDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(Reasons, HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping(value = "archived")
     public ResponseEntity<List<ReasonDTO>> getArchivedReasons() {
         List<ReasonDTO> reasons = reasonService.getArchivedReasons().stream().map(reason -> modelMapper.map(reason, ReasonDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(reasons, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping(value = "{id}")
     public ResponseEntity<?> getReasonById(@PathVariable String id) {
         if (reasonService.reasonExists(id)) {
@@ -107,11 +116,13 @@ public class ReasonController {
         }
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping(value = "/searchactive")
     public ResponseEntity<List<ReasonDTO>> searchReasonByNameAndActive(@RequestParam String reasonName) {
         List<ReasonDTO> reasons = reasonService.SearchReasonByNameAndActive(reasonName).stream().map(reason -> modelMapper.map(reason, ReasonDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(reasons, HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping(value = "/searcharchived")
     public ResponseEntity<List<ReasonDTO>> searchReasonByNameAndArchived(@RequestParam String reasonName) {
         List<ReasonDTO> reasons = reasonService.SearchReasonByNameAndArchived(reasonName).stream().map(reason -> modelMapper.map(reason, ReasonDTO.class)).collect(Collectors.toList());

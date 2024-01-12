@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,11 +37,13 @@ public class HousseController {
 	private HousseService housseService ;
 
 	private  final HousseRepository housseRepository;
-	@DeleteMapping("/deleteall")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		housseRepository.deleteAll();
 	}
-	@PostMapping("")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PostMapping("")
 	public ResponseEntity<?> create(@RequestBody HousseDto housse){
 		HousseDto response = housseService.create(housse);
 		return new ResponseEntity<>(response , HttpStatus.CREATED);
@@ -48,7 +51,8 @@ public class HousseController {
 	}
 
 
-	@PutMapping("/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PutMapping("/{id}")
 	public ResponseEntity<?> update(
 			@PathVariable String id,
 			@RequestBody HousseDto housse
@@ -57,19 +61,22 @@ public class HousseController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		HousseDto response = housseService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<HousseDto> response = housseService.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/page")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,
 			@RequestParam(defaultValue = "0") int pageNumber
@@ -78,13 +85,15 @@ public class HousseController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping("/by-code/{code}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		HousseDto response = housseService.findByCode(code);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		housseService.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);

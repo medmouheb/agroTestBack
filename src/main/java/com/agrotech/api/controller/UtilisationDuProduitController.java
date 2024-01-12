@@ -1,15 +1,10 @@
 package com.agrotech.api.controller;
 
 
-import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.Repository.UtilisationDuProduitRepository;
-import com.agrotech.api.dto.LogisticUnitDto;
 import com.agrotech.api.dto.ProduitDto;
 import com.agrotech.api.dto.UtilisationDuProduitDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Division;
-import com.agrotech.api.model.LogisticUnit;
-import com.agrotech.api.model.Produit;
 import com.agrotech.api.model.UtilisationDuProduit;
 import com.agrotech.api.services.ProduitService;
 import com.agrotech.api.services.UtilisationDuProduitService;
@@ -17,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -34,40 +30,47 @@ public class UtilisationDuProduitController {
     private final ProduitService produitService;
     private final UtilisationDuProduitRepository utilisationDuProduitRepository;
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         utilisationDuProduitRepository.deleteAll();
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody UtilisationDuProduitDto vehicle) {
         UtilisationDuProduitDto response = utilisationDuProduitService.create(vehicle);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/getbyname/{name}")
     public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException {
         UtilisationDuProduit response=utilisationDuProduitService.findByNomDuProduit(name);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id,@RequestBody UtilisationDuProduitDto campany) throws NotFoundException {
         UtilisationDuProduitDto response = utilisationDuProduitService.update(id, campany);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
         UtilisationDuProduitDto response = utilisationDuProduitService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<UtilisationDuProduitDto> response = utilisationDuProduitService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage(
             @RequestParam(defaultValue = "3") int pageSize,
@@ -78,6 +81,7 @@ public class UtilisationDuProduitController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
         UtilisationDuProduitDto response = utilisationDuProduitService.findByCodeProduit(code);
@@ -86,24 +90,28 @@ public class UtilisationDuProduitController {
 
 
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         utilisationDuProduitService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         utilisationDuProduitService.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         utilisationDuProduitService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -115,6 +123,7 @@ public class UtilisationDuProduitController {
     }
 
 //get all produit code
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/getAllproduit")
     public ResponseEntity<?> findAllProduit() {
         List<ProduitDto> response = produitService.findAll();
@@ -125,6 +134,7 @@ public class UtilisationDuProduitController {
         return new ResponseEntity<>(codeProduit, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("/getAllproduit/{code}")
     public String findProduitName(@PathVariable String code) throws NotFoundException {
         ProduitDto produitDto = produitService.findByCode(code);
