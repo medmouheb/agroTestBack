@@ -71,7 +71,7 @@ public class ProduitController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<ProduitDto> response = produitService.findAll();

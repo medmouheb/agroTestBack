@@ -121,10 +121,12 @@ public class WebSecurityConfig {
                         .requestMatchers("/vendorTypePODetails/**").permitAll()
                         .requestMatchers("/vendorTypePricing/**").permitAll()
                         .requestMatchers("/vendorTypeProduct/**").permitAll()
+                        .requestMatchers("/crop/**").permitAll()
                         .requestMatchers("/vendorTypePurchase/**").permitAll()
                         .requestMatchers("/vendorTypeReceiving/**").permitAll()
                         .requestMatchers("/warehouse/**").permitAll()
                         .requestMatchers("/willaya/**").permitAll()
+                        .requestMatchers("/buy/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated());
 
         http.authenticationProvider(authenticationProvider());
