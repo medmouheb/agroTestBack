@@ -1,6 +1,7 @@
 package com.agrotech.api.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import lombok.*;
 
@@ -65,5 +66,7 @@ public class Produit extends BaseEntity {
 
 	private VendorSKU vendorSKU;
 	private SalesSKU salesSKU;
+
+
 
 }

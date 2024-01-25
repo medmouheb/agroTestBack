@@ -69,7 +69,7 @@ public class BuyersServiceImpl implements BuyersService {
     @Override
     public Page<BuyersDto> findPage(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<BuyersDto>  result = buyersRepository.findByBuyerNameContainingIgnoreCase(filter, pageable)
+        List<BuyersDto>  result = buyersRepository.findByNameContainingIgnoreCase(filter, pageable)
                 .stream()
 //				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(buyersMapper::toDto)
@@ -89,7 +89,7 @@ public class BuyersServiceImpl implements BuyersService {
 
     @Override
     public BuyersDto findByBuyersCode(String BuyersCode) throws NotFoundException {
-        Optional<Buyers> campOptional = buyersRepository.findByBuyerCode(BuyersCode);
+        Optional<Buyers> campOptional = buyersRepository.findByCode(BuyersCode);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Buyers not found ");
         }
@@ -98,7 +98,7 @@ public class BuyersServiceImpl implements BuyersService {
     @Override
     public Page<BuyersDto> findPage1(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
-        List<BuyersDto> result =  buyersRepository.findByIsDeletedAndBuyerNameContainingIgnoreCase(false,filter, pageable)
+        List<BuyersDto> result =  buyersRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable)
                 .stream()
 ////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(buyersMapper::toDto)
@@ -150,12 +150,12 @@ public class BuyersServiceImpl implements BuyersService {
 
     @Override
     public Buyers findByBuyersName(String BuyersName) throws NotFoundException {
-        return buyersRepository.findByBuyerName(BuyersName);    }
+        return buyersRepository.findByName(BuyersName);    }
 
     @Override
     public Page<BuyersDto> findArchivedPage1(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
-        List<BuyersDto>  result = buyersRepository.findByIsDeletedAndBuyerNameContainingIgnoreCase(true,filter, pageable)
+        List<BuyersDto>  result = buyersRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable)
                 .stream()
                 //.filter(g->g.getIsDeleted()!=null && g.getIsDeleted())
                 .map(buyersMapper::toDto)
@@ -170,7 +170,7 @@ public class BuyersServiceImpl implements BuyersService {
                 pageNumber,
                 pageSize
         );
-        List<BuyersDto>  result = buyersRepository.findByBuyerNameContainingIgnoreCase(filter, pageable)
+        List<BuyersDto>  result = buyersRepository.findByNameContainingIgnoreCase(filter, pageable)
                 .stream()
                 .filter(g->g.getIsDeleted()!=null && g.getIsDeleted())
                 .map(buyersMapper::toDto)

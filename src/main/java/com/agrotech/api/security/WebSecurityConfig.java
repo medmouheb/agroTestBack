@@ -126,7 +126,9 @@ public class WebSecurityConfig {
                         .requestMatchers("/vendorTypeReceiving/**").permitAll()
                         .requestMatchers("/warehouse/**").permitAll()
                         .requestMatchers("/willaya/**").permitAll()
+                        .requestMatchers("/currency/**").permitAll()
                         .requestMatchers("/buy/**").permitAll()
+                        .requestMatchers("/tax/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated());
 
         http.authenticationProvider(authenticationProvider());

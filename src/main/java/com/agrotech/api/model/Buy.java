@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class Buy  extends BaseEntity{
     private LocalDateTime buyDate;
     private int  totalPrice;
     private String ProductType;
-//    private ArrayList<Taxe> taxes = new ArrayList<Taxe>();
+    private List<Tax> taxes = new ArrayList<>();
     private int  payed;
     private int  remain;
     private String buyStatus;

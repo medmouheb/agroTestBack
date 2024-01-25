@@ -9,8 +9,9 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
+import java.util.List;
+
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "Buyers")
@@ -19,20 +20,66 @@ public class Buyers extends BaseEntity{
     @NotBlank(message = "BuyerCode is required")
     @Indexed(unique = true)
     @Size(max = 50)
-    private String BuyerCode;
+    private String code;
     @Indexed(unique = true)
     @NotBlank(message = "BuyerName is required")
 
     @Size(max = 50)
-    private String BuyerName;
+    private String name;
 
-    private boolean Active  ;
+    private boolean active =true ;
+    private List<String> tags;
 
     @Size(max = 100)
-    private String Notes;
+    private String notes;
 
     private Boolean isDeleted=false;
 
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 }

@@ -1,17 +1,17 @@
 package com.agrotech.api.model;
 
 
+import lombok.*;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.agrotech.api.utils.ValidationMessages;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,9 +32,20 @@ public class Sales  extends BaseEntity{
     private String Payment_Term ;
     private Boolean isDeleted=false;
 
+	private  Buyers buyer;
 
+	private List<Tax> taxes = new ArrayList<>();
 
-
-
-
+	@Override
+	public String toString() {
+		return "Sales{" +
+				"code='" + code + '\'' +
+				", name='" + name + '\'' +
+				", type='" + type + '\'' +
+				", currency='" + currency + '\'' +
+				", Payment_Term='" + Payment_Term + '\'' +
+				", isDeleted=" + isDeleted +
+				", taxes=" + taxes +
+				'}';
+	}
 }

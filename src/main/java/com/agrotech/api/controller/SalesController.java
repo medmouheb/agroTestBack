@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.agrotech.api.Repository.SalesRepository;
 import com.agrotech.api.model.Sales;
+import com.agrotech.api.model.Tax;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -40,9 +41,12 @@ public class SalesController {
 	public void deleteall() throws NotFoundException {
 		salesRepository.deleteAll();
 	}
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("")
 	public ResponseEntity<?> create(@RequestBody SalesDto sales){
+		for(Tax tax : sales.getTaxes()){
+			System.out.println(tax.getId());
+		}
 		SalesDto response = salesServices.create(sales);
 		return new ResponseEntity<>(response , HttpStatus.CREATED);
 
