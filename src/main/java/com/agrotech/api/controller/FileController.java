@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
-
+import java.util.Map;
+import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/files")
 public class FileController {
@@ -43,5 +45,13 @@ public class FileController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/getall")
+    public List<Map<String, String>>getAll() {
+        List<FileDocument> entities = fileRepository.findAll();
+        return entities.stream()
+                .map(entity -> Map.of("id", entity.getId(), "fileName", entity.getFileName()))
+                .collect(Collectors.toList());
     }
 }

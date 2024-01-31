@@ -32,9 +32,17 @@ public class Sales  extends BaseEntity{
     private String Payment_Term ;
     private Boolean isDeleted=false;
 
-	private  Buyers buyer;
+	private  String buyer;
 
 	private List<Tax> taxes = new ArrayList<>();
+
+
+
+	private String purchaseOrder;
+	private String quotation;
+	private String salesInvoice;
+	private String deliveryNote;
+	private String creditNote;
 
 	@Override
 	public String toString() {

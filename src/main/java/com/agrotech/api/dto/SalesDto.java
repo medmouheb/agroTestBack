@@ -26,7 +26,7 @@ public class SalesDto extends BaseDto {
     private String Payment_Term ;
     private Boolean isDeleted=false;
 
-    private Buyers buyer;
+    private String buyer;
 
 
     public  String toStrings() {
