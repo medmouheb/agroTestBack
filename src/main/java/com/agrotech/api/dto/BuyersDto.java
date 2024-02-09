@@ -25,6 +25,9 @@ public class BuyersDto extends BaseDto{
     @Size(max = 50)
     private String name;
 
+    private String email;
+
+
 
     private List<String> tags;
 
@@ -81,5 +84,21 @@ public class BuyersDto extends BaseDto{
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }

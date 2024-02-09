@@ -41,6 +41,7 @@ public class EmailController {
 
         String email=DataJSON.getString("email");
         String title=DataJSON.getString("title");
+        String subject=DataJSON.getString("subject");
         String paragraph=DataJSON.getString("paragraph");
 
 
@@ -99,7 +100,7 @@ public class EmailController {
 
 
             helper.setTo(email);
-            helper.setSubject("Activez votre compte !\n");
+            helper.setSubject(subject);
             helper.setText(htmlBody, true);
 
             javaMailSender.send(message);
@@ -108,6 +109,8 @@ public class EmailController {
             // Handle the exception as needed
         }
     }
+
+
 
 
 

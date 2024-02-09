@@ -27,11 +27,16 @@ public class Buyers extends BaseEntity{
     @Size(max = 50)
     private String name;
 
+
+    private String email;
+
     private boolean active =true ;
     private List<String> tags;
 
     @Size(max = 100)
     private String notes;
+
+    private String address="";
 
     private Boolean isDeleted=false;
 
@@ -80,6 +85,31 @@ public class Buyers extends BaseEntity{
     }
 
     public void setIsDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
 }

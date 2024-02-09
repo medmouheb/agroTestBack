@@ -8,6 +8,9 @@ public class FileDocument {
     @Id
     private String id;
     private String fileName;
+
+    private String documentType="no type";
+
     private String contentType;
     private byte[] data;
 
@@ -44,5 +47,13 @@ public class FileDocument {
 
     public void setData(byte[] data) {
         this.data = data;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
     }
 }

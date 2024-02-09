@@ -1,7 +1,8 @@
 package com.agrotech.api.model;
 
+
+import com.agrotech.api.utils.ValidationMessages;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,20 +14,26 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "ShipMethods")
-public class ShipMethods extends BaseEntity {
-    @NotBlank()
+@Document(collection = "stock")
+public class Stock extends BaseEntity{
+    @NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)
-    @Size(max = 50)
     private String code ;
-    @NotBlank()
-    @Size(max = 250)
+    @NotBlank(message = ValidationMessages.CODE_REQUIRED)
+    @Indexed(unique = true)
     private String name ;
 
-    private String notes;
-    private Boolean active ;
+    private String notes ;
 
+    private String typeOfMovement ;
+
+    private String product;
+
+    private String warehouse;
 
 
     private Boolean isDeleted=false;
+
+
+
 }
