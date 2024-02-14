@@ -1,5 +1,6 @@
 package com.agrotech.api.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import java.util.HashSet;
@@ -43,11 +44,20 @@ public class User {
     private String region;
     private String numeroTelephone;
 
+    private HashSet<String> tags = new HashSet<>();
+
     public User() {
     }
 
+    public HashSet<String> getTags() {
+        return tags;
+    }
 
-    public User(String username, String email, String password,  String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone) {
+    public void setTags(HashSet<String> tags) {
+        this.tags = tags;
+    }
+
+    public User(String username, String email, String password, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone) {
         this.username = username;
         this.email = email;
         this.password = password;

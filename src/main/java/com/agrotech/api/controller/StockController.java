@@ -1,21 +1,27 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.BuyersRepository;
+import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.Repository.StockRepository;
 import com.agrotech.api.Repository.TaxRepository;
 import com.agrotech.api.dto.StockDTO;
 import com.agrotech.api.dto.TaxDto;
 import com.agrotech.api.exceptions.NotFoundException;
+import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.Stock;
 import com.agrotech.api.model.Tax;
 import com.agrotech.api.services.StockServices;
 import com.agrotech.api.services.TaxService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 //@CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3600)
@@ -27,6 +33,10 @@ public class StockController {
 
     private final StockServices stockServices;
     private final StockRepository stockRepository;
+    private final ProduitRepository produitRepository;
+    private  final BuyersRepository buyersRepository;
+    private final EmailController emailController;
+
 
     //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
@@ -34,11 +44,37 @@ public class StockController {
         stockRepository.deleteAll();
     }
 
+    private static String getCurrentDate() {
+        // Get the current date
+        LocalDate currentDate = LocalDate.now();
+
+        // Format the date using a specific pattern
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return currentDate.format(formatter);
+    }
+
     //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody StockDTO campany) {
+    public ResponseEntity<?> create(@RequestBody StockDTO campany) throws JSONException {
         StockDTO response = stockServices.create(campany);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        System.out.println( ":::"+ produitRepository.findById(campany.getProduct()).get().getTags()  );
+
+        List<Buyers> l=buyersRepository.findByTagsIn(produitRepository.findById(campany.getProduct()).get().getTags());
+
+
+        for(Buyers singleBuyer:l){
+            String dto="{\n" +
+                    "      \"email\":\""+singleBuyer.getEmail()+"\",\n" +
+                    "      \"title\":\"NEW PRODUCTS\",\n" +
+                    "      \"subject\":\" "+getCurrentDate()+" NEW PRODUCTS\",\n" +
+                    "      \"paragraph\":\"we have new products you can be interested in ,\n" +
+                    produitRepository.findById(campany.getProduct()).get().getName()+"\","+
+                    "      \"files\":[]\n" +
+                    "  }";
+            emailController.sendActivateMAil(dto);
+        }
+
+        return new ResponseEntity<>(l, HttpStatus.CREATED);
     }
 
     //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")

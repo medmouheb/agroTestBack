@@ -1,4 +1,4 @@
-package com.agrotech.api.dto;
+package com.agrotech.api.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -7,23 +7,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShipMethodsDto extends  BaseDto {
+@Document(collection = "payemetMethod")
+public class PaymentMethod  extends BaseEntity{
     @NotBlank()
-
-@Indexed(unique = true)
-@Size(max = 50)
-private String code ;
+    @Indexed(unique = true)
+    @Size(max = 50)
+    private String code ;
     @NotBlank()
     @Size(max = 250)
     private String name ;
 
     private String notes;
     private Boolean active ;
+
+
+
     private Boolean isDeleted=false;
-
-
 }

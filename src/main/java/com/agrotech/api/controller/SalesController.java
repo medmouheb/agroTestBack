@@ -2,9 +2,15 @@ package com.agrotech.api.controller;
 
 import java.util.List;
 
+import com.agrotech.api.Repository.BuyersRepository;
+import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.Repository.SalesRepository;
+import com.agrotech.api.Repository.UserRepository;
+import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.Sales;
 import com.agrotech.api.model.Tax;
+import com.agrotech.api.model.User;
+import com.agrotech.api.services.BuyersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -36,6 +42,11 @@ public class SalesController {
 	@Autowired
 	private final SalesServices salesServices ;
 	private  final SalesRepository salesRepository;
+
+	private final ProduitRepository produitRepository;
+
+	private  final BuyersRepository buyersRepository;
+	private final BuyersService buyersService;
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
@@ -44,6 +55,10 @@ public class SalesController {
 //	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     @PostMapping("")
 	public ResponseEntity<?> create(@RequestBody SalesDto sales){
+		System.out.println( ":::"+ produitRepository.findById(sales.getProduct()).get().getTags()  );
+		Buyers u=buyersRepository.findById(sales.getBuyer()).get();
+		u.addTags(produitRepository.findById(sales.getProduct()).get().getTags()  );
+		buyersRepository.save(u);
 		for(Tax tax : sales.getTaxes()){
 			System.out.println(tax.getId());
 		}

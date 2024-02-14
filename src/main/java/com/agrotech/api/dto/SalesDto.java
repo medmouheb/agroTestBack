@@ -29,6 +29,10 @@ public class SalesDto extends BaseDto {
     private String buyer;
 
 
+
+    private String product;
+
+
     public  String toStrings() {
         return "SalesDto{" +
                 "code='" + code + '\'' +

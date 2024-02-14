@@ -14,6 +14,7 @@ import com.agrotech.api.model.*;
 import com.agrotech.api.utils.ValidationMessages;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 
 @Getter
 @Setter
@@ -63,6 +64,10 @@ public class ProduitDto extends BaseDto {
 	private String houseCode ;
 	private VendorSKU vendorSKU;
 	private SalesSKU salesSKU;
+
+
+	private HashSet<String> tags = new HashSet<>();
+
 
 
 

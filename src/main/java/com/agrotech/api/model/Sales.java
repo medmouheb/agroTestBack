@@ -44,6 +44,9 @@ public class Sales  extends BaseEntity{
 	private String deliveryNote;
 	private String creditNote;
 
+	private String product;
+
+
 	@Override
 	public String toString() {
 		return "Sales{" +

@@ -2,6 +2,7 @@ package com.agrotech.api.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import lombok.*;
 
@@ -48,8 +49,10 @@ public class Produit extends BaseEntity {
 	private BigDecimal prixUnitaireHt;
 	@Size(max = 250)
 	private BigDecimal tauxTva;
+
 	@Size(max = 250)
 	private BigDecimal prixUnitaireTtc;
+
 	private Boolean isDeleted=false;
 
 
@@ -66,6 +69,9 @@ public class Produit extends BaseEntity {
 
 	private VendorSKU vendorSKU;
 	private SalesSKU salesSKU;
+
+	private HashSet<String> tags = new HashSet<>();
+
 
 
 

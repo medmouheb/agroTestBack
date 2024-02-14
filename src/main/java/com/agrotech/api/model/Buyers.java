@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -31,7 +32,7 @@ public class Buyers extends BaseEntity{
     private String email;
 
     private boolean active =true ;
-    private List<String> tags;
+    private HashSet<String> tags;
 
     @Size(max = 100)
     private String notes;
@@ -64,11 +65,11 @@ public class Buyers extends BaseEntity{
         this.active = active;
     }
 
-    public List<String> getTags() {
+    public HashSet<String> getTags() {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(HashSet<String> tags) {
         this.tags = tags;
     }
 
@@ -112,4 +113,12 @@ public class Buyers extends BaseEntity{
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
+
+
+    public void addTags(HashSet<String> tags) {
+        for(String t :tags){
+            this.tags.add(t);
+        }
+    }
+
 }

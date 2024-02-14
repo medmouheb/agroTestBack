@@ -314,6 +314,17 @@ public class FileController {
             addTableCell1(tableDevisTotal, ""+total);
 
             document.add(tableDevisTotal);
+
+            try {
+                boolean hasShipping =Boolean.parseBoolean(DataJSON.getString("hasPaymentMethod"));
+                if(hasShipping){
+                    Font RolesTextFont2 = new Font(Font.FontFamily.HELVETICA, 10);
+                    Paragraph RolesText2= new Paragraph("Payment via "+ DataJSON.getString("PayingMethod")   +" in "+  DataJSON.getString("InstallmentsNumber") +" installments",RolesTextFont2);
+                    document.add(RolesText2);
+                }
+            }catch(Exception e){
+                System.out.println(e.toString());
+            }
             Font RolesTextFont = new Font(Font.FontFamily.HELVETICA, 10);
             Paragraph RolesText= new Paragraph("Validité du "+DataJSON.getString("documentType")+": 3 mois\nConditions de règlement: 40% à la commande, le solde à la livraison\nNous restons à votre disposition pour toute information complémentaire.\nCordialement,\nSi ce devis vous convient, veuillez nous le retourner signé précédé de la mention :\n\"BON POUR ACCORD ET EXECUTION DES TRAVAUX\"\n\n\n",RolesTextFont);
             document.add(RolesText);
