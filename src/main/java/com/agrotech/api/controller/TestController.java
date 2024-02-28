@@ -29,7 +29,6 @@ public class TestController {
     @PreAuthorize("hasRole('MODERATOR')")
     public String moderatorAccess() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
         if (authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 

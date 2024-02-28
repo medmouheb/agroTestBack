@@ -2,6 +2,7 @@ package com.agrotech.api.payload.request;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.validation.constraints.*;
@@ -30,6 +31,39 @@ public class SignupRequest {
     private String pays;
     private String region;
     private String numeroTelephone;
+
+    private HashSet<String> tags = new HashSet<>();
+
+    public HashSet<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(HashSet<String> tags) {
+        this.tags = tags;
+    }
+
+
+    public String getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(String farmer) {
+        this.farmer = farmer;
+    }
+
+    public HashSet<String> getModules() {
+        return modules;
+    }
+
+    public void setModules(HashSet<String> modules) {
+        this.modules = modules;
+    }
+
+
+    private String farmer;
+
+    private HashSet<String> modules = new HashSet<>();
+
 
     public String getUsername() {
         return username;

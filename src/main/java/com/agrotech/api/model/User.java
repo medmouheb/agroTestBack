@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 @Document(collection = "users")
 public class User {
@@ -21,11 +22,13 @@ public class User {
 
     @NotBlank
     @Size(max = 20)
+    @Indexed(unique = true)
     private String username;
 
     @NotBlank
     @Size(max = 50)
     @Email
+    @Indexed(unique = true)
     private String email;
 
     @NotBlank
@@ -34,6 +37,8 @@ public class User {
 
     @DBRef
     private Set<Role> roles = new HashSet<>();
+
+    private String farmer;
 
 
     private String nom;
@@ -44,10 +49,39 @@ public class User {
     private String region;
     private String numeroTelephone;
 
+    private Boolean verified=true;
+
+    public Boolean getVerified() {
+        return verified;
+    }
+
+    public void setVerified(Boolean verified) {
+        this.verified = verified;
+    }
+
     private HashSet<String> tags = new HashSet<>();
+    private HashSet<String> modules = new HashSet<>();
 
     public User() {
     }
+
+
+    public String getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(String farmer) {
+        this.farmer = farmer;
+    }
+
+    public HashSet<String> getModules() {
+        return modules;
+    }
+
+    public void setModules(HashSet<String> modules) {
+        this.modules = modules;
+    }
+
 
     public HashSet<String> getTags() {
         return tags;

@@ -4,6 +4,7 @@ package com.agrotech.api.controller;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import com.agrotech.api.Repository.RoleRepository;
@@ -20,18 +21,21 @@ import com.agrotech.api.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import com.agrotech.api.exceptions.NotFoundException;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -100,7 +104,10 @@ public class AuthController {
                 signUpRequest.getRegion(),
                 signUpRequest.getNumeroTelephone());
 
+
+
         Set<String> strRoles = signUpRequest.getRoles();
+
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
@@ -122,6 +129,21 @@ public class AuthController {
                         roles.add(modRole);
 
                         break;
+                    case "farmer":
+                        Role farmerRole = roleRepository.findByName(ERole.ROLE_FARMER)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(farmerRole);
+                        user.setVerified(false);
+
+
+
+                        break;
+                    case "employee":
+                        Role employeeRole = roleRepository.findByName(ERole.ROLE_EMPLOYEE)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(employeeRole);
+                        user.setFarmer(signUpRequest.getFarmer());
+                        break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -131,8 +153,69 @@ public class AuthController {
         }
 
         user.setRoles(roles);
+        user.setTags(signUpRequest.getTags());
+        user.setModules(signUpRequest.getModules());
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+
+
+
+
+    @PutMapping("/verif-farmer/{farmer}")
+    @PreAuthorize("hasRole('ADMIN') ")
+    public ResponseEntity<?> verifFarmer(@PathVariable String farmer) throws NotFoundException{
+        User user= userRepository.findByUsername(farmer).get();
+        user.setVerified(true);
+        userRepository.save(user);
+        return ResponseEntity.ok(new MessageResponse("farmer verified succefully"));
+    }
+
+
+    @GetMapping("/getFarmers")
+    @PreAuthorize("hasRole('ADMIN') ")
+    public ResponseEntity<?> getFarmers(@RequestParam(defaultValue = "3") int pageSize,
+                                        @RequestParam(defaultValue = "0") int pageNumber,
+                                        @RequestParam(defaultValue = "") String filter) throws NotFoundException{
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        Page<User> farmers= userRepository.findByRolesContaining(roleRepository.findByName(ERole.ROLE_FARMER).get(),pageable);
+
+        return new ResponseEntity<>(farmers, HttpStatus.OK);
+    }
+
+    @GetMapping("/getemployees")
+    @PreAuthorize("hasRole('FARMER') or hasRole('ADMIN')")
+    public ResponseEntity<?> getEmployees(@RequestParam(defaultValue = "3") int pageSize,
+                                          @RequestParam(defaultValue = "0") int pageNumber,
+                                          @RequestParam(defaultValue = "") String filter) throws NotFoundException{
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        AtomicReference<String> t= new AtomicReference<>("admin");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Page<User> users;
+         // Replace with the actual method
+
+        userDetails.getAuthorities().forEach(authority -> {
+            if(authority.getAuthority().equals("ROLE_FARMER")){
+                System.out.println("1");
+                t.set("farmer");
+            }else if(authority.getAuthority().equals("ROLE_ADMIN")){
+                System.out.println("2");
+                t.set("admin");            }
+        });
+        System.out.println(t);
+        if(t.get().equals("farmer")){
+            System.out.println("1a");
+            String userId = userDetails.getUsername();
+            users = userRepository.findByFarmer(userId,pageable);
+        }else {
+            users= userRepository.findByRolesContaining(roleRepository.findByName(ERole.ROLE_EMPLOYEE).get(),pageable);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }
+
+
+

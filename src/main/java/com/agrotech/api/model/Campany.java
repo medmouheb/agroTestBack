@@ -1,6 +1,7 @@
 package com.agrotech.api.model;
 
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.agrotech.api.utils.ValidationMessages;
@@ -11,6 +12,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.HashSet;
 
 @Getter
 @Setter
@@ -44,4 +47,12 @@ public class Campany  extends BaseEntity{
     @Size(max = 150)
     private String email ;
     private Boolean isDeleted=false;
+
+
+    @DBRef
+    private User farmer;
+
+
+
+    private HashSet<User> employees = new HashSet<>();
 }
