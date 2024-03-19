@@ -27,4 +27,6 @@ public class DeliveryInstructionDto extends  BaseDto{
 
     private String  notes;
     private Boolean active;
+    private String farmer;
+
 }

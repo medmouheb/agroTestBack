@@ -26,5 +26,6 @@ public class Tax  extends BaseEntity{
     private int percentage;
     private String description;
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

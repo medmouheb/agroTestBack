@@ -18,7 +18,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Document(collection="currency")
 public class Currency extends BaseEntity {
-	
+	private String farmer;
+
 	@NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)
 	@Size(max = 10, message = ValidationMessages.CODE_TOO_LONG)

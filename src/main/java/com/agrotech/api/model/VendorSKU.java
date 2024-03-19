@@ -33,5 +33,6 @@ public class VendorSKU extends BaseEntity {
 	private String vendorSKUName;
 	private String vendorCode;
 	private Boolean isDeleted=false;
+	private String farmer;
 
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VendorsPayementDto extends  BaseDto{
+    private String farmer;
 
     private String Currency;
 

@@ -46,5 +46,6 @@ public class UtilisationDuProduit extends BaseEntity{
     private Boolean Void;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

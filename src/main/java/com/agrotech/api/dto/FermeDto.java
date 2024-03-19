@@ -130,6 +130,7 @@ public class FermeDto extends BaseDto {
 	private String TimeinVisit;
 	private String TimeoutVisit;
 	private String Purposeofthevisit;
+	private String farmer;
 
 	//cezrtiff
 	private String Certifications;

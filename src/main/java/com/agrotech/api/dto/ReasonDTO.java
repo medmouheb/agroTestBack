@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Data
 public class ReasonDTO implements Serializable {
+    private String farmer;
 
     private String id;
     private String reasonCode;

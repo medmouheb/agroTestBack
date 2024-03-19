@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorTypePricingDto extends BaseDto{
 
+    private String farmer;
 
     private String PriceBasisMode;
     private String MarketCode ;

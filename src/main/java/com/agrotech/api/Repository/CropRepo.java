@@ -13,6 +13,9 @@ public interface CropRepo extends MongoRepository<Crop, String> {
     Optional<Crop> findByCode(String code);
     Page<Crop> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Crop> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+
+    Page<Crop> findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(Boolean isDeleted, String name,String farmer, Pageable pageable);
+
     Page<Crop> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Crop findByName(String name );
 }

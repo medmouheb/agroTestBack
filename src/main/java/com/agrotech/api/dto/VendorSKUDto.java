@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @NoArgsConstructor
 public class VendorSKUDto extends BaseDto{
 
+    private String farmer;
 
     @NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)

@@ -31,6 +31,7 @@ public class VendorTypePurchaser extends BaseEntity{
 
     private Boolean isDeleted=false;
 
+    private String farmer;
 
 
 }

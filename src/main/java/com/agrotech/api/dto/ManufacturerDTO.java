@@ -11,4 +11,7 @@ public class ManufacturerDTO {
     private String manufacturerCode;
     private boolean active;
     private String notes;
+
+    private String farmer;
+
 }

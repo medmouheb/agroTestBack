@@ -5,6 +5,7 @@ import com.agrotech.api.dto.CommandeDto;
 
 import com.agrotech.api.model.Commande;
 
+import com.itextpdf.text.DocumentException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
@@ -24,6 +25,7 @@ import com.agrotech.api.services.CommandeService;
 import com.agrotech.api.utils.CSVReader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
@@ -37,20 +39,20 @@ public class CommandeController {
     private final CommandeService commandeService;
     private final CommandeRepository commandeRepository;
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         commandeRepository.deleteAll();
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid CommandeDto commande) {
+    public ResponseEntity<?> create(@RequestBody @Valid CommandeDto commande) throws DocumentException, FileNotFoundException {
         CommandeDto response = commandeService.create(commande);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/import")
     public ResponseEntity<?> importCSV(@RequestPart("file") MultipartFile file)
             throws CSVReaderException, EmptyFileException {
@@ -59,7 +61,7 @@ public class CommandeController {
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable String id,
@@ -68,21 +70,21 @@ public class CommandeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable String id) throws NotFoundException {
         CommandeDto response = commandeService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<CommandeDto> response = commandeService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage1(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -92,14 +94,14 @@ public class CommandeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         commandeService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/csv-template")
     public ResponseEntity<?> downloadCSVTemplate() throws IOException {
         File file = ResourceUtils.getFile("classpath:csv/providers.csv");
@@ -109,21 +111,21 @@ public class CommandeController {
                 .body(resource);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         commandeService.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         commandeService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,

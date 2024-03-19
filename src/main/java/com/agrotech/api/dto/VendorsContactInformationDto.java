@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VendorsContactInformationDto extends BaseDto{
+    private String farmer;
 
     private String Type;
     private String Internal;

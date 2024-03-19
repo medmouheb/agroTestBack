@@ -40,4 +40,6 @@ public class TimeSlot {
     public void setHeureFin(String heureFin) {
         this.heureFin = heureFin;
     }
+    private String farmer;
+
 }

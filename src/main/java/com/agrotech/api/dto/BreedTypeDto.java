@@ -28,6 +28,7 @@ public class BreedTypeDto extends BaseDto{
     @Size(max=200)
     private String Notes;
     private Boolean isDeleted=false;
+    private String farmer;
 
 
     @Override

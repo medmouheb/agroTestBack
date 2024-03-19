@@ -41,5 +41,6 @@ public class BreedCode extends BaseEntity{
 
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

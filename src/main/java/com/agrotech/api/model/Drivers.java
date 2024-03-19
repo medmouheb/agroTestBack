@@ -18,6 +18,7 @@ import java.util.List;
 public class Drivers extends BaseEntity{
 
     private String typeDeDriver;
+    private String farmer;
 
     @Indexed(unique = true)
     private String codeEmploye;

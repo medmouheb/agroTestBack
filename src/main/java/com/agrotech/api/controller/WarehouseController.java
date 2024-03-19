@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.WarehouseRepository;
 import com.agrotech.api.model.Warehouse;
+import com.itextpdf.text.DocumentException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,16 +18,13 @@ import com.agrotech.api.dto.WarehouseDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.WarehouseService;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.time.LocalDate;
 import java.util.List;
 import jakarta.servlet.http.HttpServletResponse;
 import com.opencsv.CSVWriter;
 import org.springframework.web.multipart.MultipartFile;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
 
 @CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
@@ -41,7 +39,7 @@ public class WarehouseController {
     @Autowired
     private final WarehouseRepository warehouseRepository;
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         warehouseRepository.deleteAll();
@@ -49,14 +47,14 @@ public class WarehouseController {
 
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid WarehouseDto warehouse) {
+    public ResponseEntity<?> create(@RequestBody @Valid WarehouseDto warehouse) throws DocumentException, FileNotFoundException {
         WarehouseDto response = warehouseService.create(warehouse);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable String id,
@@ -66,21 +64,21 @@ public class WarehouseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
         WarehouseDto response = warehouseService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<WarehouseDto> response = warehouseService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -91,28 +89,28 @@ public class WarehouseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         warehouseService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         warehouseService.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         warehouseService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -124,7 +122,7 @@ public class WarehouseController {
     }
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/csv-template")
     public ResponseEntity<?> downloadCSVTemplate() throws IOException {
         File file = ResourceUtils.getFile("classpath:csv/warehouse.csv");
@@ -133,7 +131,7 @@ public class WarehouseController {
                 .contentType(MediaType.parseMediaType("text/csv"))
                 .body(resource);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/entityCSV")
     public void downloadEntityCsv(HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
@@ -199,7 +197,7 @@ public class WarehouseController {
     }
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/upload")
     public String uploadCSV(@RequestParam("file") MultipartFile file) {
         try {

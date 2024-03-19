@@ -12,5 +12,6 @@ public class ProductCategoryDTO {
     private boolean active=true;
     private String notes;
 
+    private String farmer;
 
 }

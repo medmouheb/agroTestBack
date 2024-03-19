@@ -32,7 +32,8 @@ public class MvtStkDto extends BaseDto{
 
     @DBRef
     private Set<Produit> produits = new HashSet<>();
-	
-	
-	
+	private String farmer;
+
+
+
 }

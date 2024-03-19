@@ -26,6 +26,7 @@ public class PaymentMethodDto extends  BaseDto  {
     private Boolean active ;
 
 
+    private String farmer;
 
     private Boolean isDeleted=false;
 }

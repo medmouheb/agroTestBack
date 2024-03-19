@@ -16,6 +16,7 @@ public class Charge extends BaseEntity {
     @NotNull(message = ValidationMessages.TYPE_REQUIRED)
     private String suppChargeType;
 
+    private String farmer;
 
     private String suppNo;
 

@@ -17,6 +17,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class VehiculeDto extends  BaseDto {
 
+    private String farmer;
+
+
     private String vehiculeType;
     @NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)

@@ -33,6 +33,7 @@ public class Crop  extends BaseEntity{
 
     private float width=0;
     private float height=0;
+    private String farmer;
 
     private Map<String, String> solutions  = new HashMap<>();
 

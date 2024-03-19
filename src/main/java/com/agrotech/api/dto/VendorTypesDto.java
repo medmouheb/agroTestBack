@@ -15,6 +15,7 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class VendorTypesDto extends BaseDto{
 
+    private String farmer;
 
     @NotBlank(message = " ype is required")
     @Indexed(unique = true)

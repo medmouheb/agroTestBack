@@ -33,6 +33,7 @@ public class BreedCodeDto extends BaseDto{
     private Number POL;
     private Number Saleability;
 
+    private String farmer;
 
 
     private String EggAllocation;

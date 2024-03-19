@@ -8,11 +8,20 @@ public class FileDocument {
     @Id
     private String id;
     private String fileName;
+    private String farmer;
 
     private String documentType="no type";
 
     private String contentType;
     private byte[] data;
+
+    public String getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(String farmer) {
+        this.farmer = farmer;
+    }
 
     // Constructors, getters, and setters
 

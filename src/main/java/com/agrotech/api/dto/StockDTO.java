@@ -17,6 +17,7 @@ public class StockDTO extends BaseDto {
     @NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)
     private String code ;
+    private String farmer;
 
     @NotBlank(message = ValidationMessages.CODE_REQUIRED)
     @Indexed(unique = true)

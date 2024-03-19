@@ -1,9 +1,11 @@
 package com.agrotech.api.controller;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.agrotech.api.Repository.DivisionRepository;
 import com.agrotech.api.model.Division;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -36,7 +38,7 @@ public class DivisionController {
 	private final DivisionService divisionService ;
 private final DivisionRepository divisionRepository;
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		divisionRepository.deleteAll();
@@ -44,28 +46,28 @@ private final DivisionRepository divisionRepository;
 
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-	public ResponseEntity<?> create(@RequestBody DivisionDTO div) {
+	public ResponseEntity<?> create(@RequestBody DivisionDTO div) throws DocumentException, FileNotFoundException {
 		DivisionDTO response = divisionService.create(div);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,@RequestBody DivisionDTO div) throws NotFoundException {
 		DivisionDTO response = divisionService.update(id, div);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		DivisionDTO response = divisionService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<DivisionDTO> response = divisionService.findAll();
@@ -73,7 +75,7 @@ private final DivisionRepository divisionRepository;
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,
@@ -84,35 +86,35 @@ private final DivisionRepository divisionRepository;
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		DivisionDTO response = divisionService.findByCode(code);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		divisionService.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
 	public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
 		divisionService.archive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
 	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
 		divisionService.setNotArchive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
 	public ResponseEntity<?> findArchivedPage(
 			@RequestParam(defaultValue = "10") int pageSize,

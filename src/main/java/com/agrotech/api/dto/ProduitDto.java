@@ -64,6 +64,7 @@ public class ProduitDto extends BaseDto {
 	private String houseCode ;
 	private VendorSKU vendorSKU;
 	private SalesSKU salesSKU;
+	private String farmer;
 
 
 	private HashSet<String> tags = new HashSet<>();

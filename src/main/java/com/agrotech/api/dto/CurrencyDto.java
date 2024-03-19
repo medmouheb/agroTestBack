@@ -29,6 +29,7 @@ public class CurrencyDto extends BaseDto{
 	private String Countryname ;
 	private String Countrcode ;
 	private String Digitalcode ;
+	private String farmer;
 
 
 }

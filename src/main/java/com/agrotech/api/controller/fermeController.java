@@ -1,11 +1,13 @@
 package com.agrotech.api.controller;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.agrotech.api.Repository.FermeRepository;
 import com.agrotech.api.dto.PropertyDTO;
 import com.agrotech.api.model.Ferme;
 import com.agrotech.api.model.Property;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -38,14 +40,14 @@ public class fermeController {
 	@Autowired
 	private final FermeService fermeService ;
 	private  final FermeRepository fermeRepository;
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		fermeRepository.deleteAll();
 	}
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-	public ResponseEntity<?> create(@RequestBody FermeDto ferme) {;
+	public ResponseEntity<?> create(@RequestBody FermeDto ferme) throws DocumentException, FileNotFoundException {;
 		List<PropertyDTO> properties = ferme.getProperties();
 		for (PropertyDTO property : properties) {
 			System.out.println("Product: " + property.getProduct());
@@ -54,7 +56,7 @@ public class fermeController {
 		FermeDto response = fermeService.create(ferme);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/add")
 	public ResponseEntity<?> create(@RequestBody Ferme ferme) {;
 		List<Property> properties = ferme.getProperties();
@@ -70,7 +72,7 @@ public class fermeController {
 
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
 	public ResponseEntity<?> update(
 			@PathVariable String id,
@@ -80,21 +82,21 @@ public class fermeController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		FermeDto response = fermeService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<FermeDto> response = fermeService.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,
@@ -105,7 +107,7 @@ public class fermeController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		FermeDto response = fermeService.findByCode(code);
@@ -114,28 +116,28 @@ public class fermeController {
 
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		fermeService.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
 	public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
 		fermeService.archive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
 	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
 		fermeService.setNotArchive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
 	public ResponseEntity<?> findArchivedPage(
 			@RequestParam(defaultValue = "10") int pageSize,

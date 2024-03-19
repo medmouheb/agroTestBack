@@ -22,4 +22,7 @@ public class VendorTypeFreight extends BaseEntity{
     private String FreightType;
 
     private Boolean isDeleted=false;
+
+    private String farmer;
+
 }

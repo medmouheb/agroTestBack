@@ -18,5 +18,6 @@ public class ProductUsage {
     private LocalDate transactionDate;
     private String farmCode;
     private String houseCode;
+    private String farmer;
 
 }

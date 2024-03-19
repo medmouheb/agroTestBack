@@ -21,4 +21,6 @@ public class LigneVente {
     private String id;
     @DBRef
     private Set<Produit> produits = new HashSet<>();
+    private String farmer;
+
 }

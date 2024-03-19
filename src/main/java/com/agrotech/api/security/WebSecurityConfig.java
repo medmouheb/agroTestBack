@@ -133,6 +133,9 @@ public class WebSecurityConfig {
                         .requestMatchers("/paymentmethod/**").permitAll()
                         .requestMatchers("/buy/**").permitAll()
                         .requestMatchers("/tax/**").permitAll()
+                        .requestMatchers("/devis/**").permitAll()
+                        .requestMatchers("/facture/**").permitAll()
+                        .requestMatchers("/potential-client/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated());
 
         http.authenticationProvider(authenticationProvider());

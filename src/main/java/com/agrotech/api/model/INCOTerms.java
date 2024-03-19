@@ -38,6 +38,7 @@ public class INCOTerms extends BaseEntity{
     @Size(max = 200)
     private String Notes;
 
+    private String farmer;
 
     private Boolean isDeleted=false;
 

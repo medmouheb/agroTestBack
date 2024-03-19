@@ -35,4 +35,6 @@ public class ProductCategory {
     private boolean active=true;
 
     private String notes;
+    private String farmer;
+
 }

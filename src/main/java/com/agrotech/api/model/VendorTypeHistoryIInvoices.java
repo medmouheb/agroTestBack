@@ -25,4 +25,7 @@ public class VendorTypeHistoryIInvoices extends BaseEntity{
     private Double InvoicePrice;
 
     private Boolean isDeleted=false;
+
+    private String farmer;
+
 }

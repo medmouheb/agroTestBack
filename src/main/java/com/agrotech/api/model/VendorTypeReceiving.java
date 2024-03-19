@@ -15,6 +15,7 @@ public class VendorTypeReceiving extends BaseEntity{
     
 
     private Boolean IsDeleted=false;
+    private String farmer;
 
 
 }

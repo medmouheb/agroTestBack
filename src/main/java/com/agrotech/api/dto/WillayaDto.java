@@ -24,4 +24,6 @@ public class WillayaDto extends BaseDto {
     @Size(max = 10, message = ValidationMessages.NAME_TOO_LONG)
     private String name ;
     private Boolean isDeleted=false;
+    private String farmer;
+
 }

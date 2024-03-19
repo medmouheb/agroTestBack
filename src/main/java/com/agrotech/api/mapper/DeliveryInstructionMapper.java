@@ -5,7 +5,6 @@ import com.agrotech.api.model.DeliveryInstruction;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface DeliveryInstructionMapper extends BaseMapper<DeliveryInstructionDto, DeliveryInstruction> {
 }

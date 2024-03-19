@@ -16,6 +16,7 @@ public class BinDetailsDto extends BaseDto {
     private Double capacity;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 
 }

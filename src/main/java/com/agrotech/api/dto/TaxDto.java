@@ -23,5 +23,6 @@ public class TaxDto extends BaseDto {
     private int percentage;
     private String description;
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

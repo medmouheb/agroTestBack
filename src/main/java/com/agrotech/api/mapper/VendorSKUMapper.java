@@ -5,7 +5,6 @@ import com.agrotech.api.model.VendorSKU;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface VendorSKUMapper extends BaseMapper<VendorSKUDto, VendorSKU>{
 }

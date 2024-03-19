@@ -54,5 +54,6 @@ public class DivisionDTO extends BaseDto{
 	private String divisiontype;
 	private Boolean isDeleted=false;
 
+	private String farmer;
 
 }

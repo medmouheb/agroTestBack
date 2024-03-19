@@ -33,6 +33,7 @@ public class CommandeFournisseur extends BaseEntity {
 	  private EtatCommande etatCommande;
 
 
+	private String farmer;
 
 	  @DBRef
 	  private Fournisseur fournisseur;

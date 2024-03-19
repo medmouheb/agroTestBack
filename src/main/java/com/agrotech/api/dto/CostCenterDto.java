@@ -42,5 +42,6 @@ public class CostCenterDto extends BaseDto{
     private String  speciesType;
 
     private String divisiontype;
+    private String farmer;
 
 }

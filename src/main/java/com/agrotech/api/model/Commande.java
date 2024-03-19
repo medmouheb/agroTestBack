@@ -63,5 +63,6 @@ public class Commande  extends BaseEntity{
      @NotBlank(message = ValidationMessages.PAYMENT_RATE_REQUIRED)
         private Double paymentRate;
     }
+ private String farmer;
 
 }

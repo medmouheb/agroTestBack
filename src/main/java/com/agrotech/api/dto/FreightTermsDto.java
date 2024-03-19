@@ -17,6 +17,7 @@ public class FreightTermsDto extends  BaseDto {
     @NotBlank(message = ValidationMessages.TYPE_REQUIRED)
     @Size(max = 50)
     private String  freighttermcode ;
+    private String farmer;
 
     @NotBlank(message = ValidationMessages.TYPE_REQUIRED)
     @Size(max = 50)

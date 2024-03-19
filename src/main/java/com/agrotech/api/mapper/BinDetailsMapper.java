@@ -6,7 +6,7 @@ import com.agrotech.api.model.BinDetails;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
+@Mapper
 @Component
 public interface BinDetailsMapper extends BaseMapper<BinDetailsDto , BinDetails>  {
 }

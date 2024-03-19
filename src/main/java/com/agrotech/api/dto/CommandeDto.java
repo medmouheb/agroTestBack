@@ -56,6 +56,8 @@ public class CommandeDto extends BaseDto {
 
     private Commande.PaymentTerm paymentTerm;
     private Boolean isDeleted=false;
+    private String farmer;
+
 
     @Getter
     @Setter

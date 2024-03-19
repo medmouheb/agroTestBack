@@ -6,6 +6,5 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Mapper
-@Component
 public interface VehiclesMapper extends BaseMapper<VehiclesDto, Vehicles>{
 }

@@ -49,6 +49,7 @@ public class VendorsPayments extends BaseEntity{
 
     private Boolean isDeleted=false;
 
+    private String farmer;
 
 
 }

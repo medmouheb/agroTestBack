@@ -19,8 +19,8 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     Boolean existsByEmail(String email);
 
-    Page<User> findByFarmer(String id,Pageable pageable);
-    Page<User>  findByRolesContaining(Role r,Pageable pageable);
+    Page<User> findByFarmerAndUsernameContainingIgnoreCase(String id,String  username,Pageable pageable);
+    Page<User>  findByRolesContainingAndUsernameContainingIgnoreCase(Role r , String username,Pageable pageable);
 
 //    Page<Campany> findByNameContainingIgnoreCase(String name, Pageable pageable);
 

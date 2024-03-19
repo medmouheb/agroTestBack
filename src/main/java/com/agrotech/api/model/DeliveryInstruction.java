@@ -28,6 +28,9 @@ public class DeliveryInstruction extends BaseEntity {
 
 
     private String instructiuonCode;
+
+    private String farmer;
+
     private Boolean isDeleted=false;
     @Size(max = 200)
 

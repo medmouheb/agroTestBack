@@ -22,6 +22,7 @@ public class INCOTermsDto extends BaseDto{
     @Size(max = 50)
     private String INCOTermCode;
 
+    private String farmer;
 
     @Size(max = 50)
     private String INCOTermName;

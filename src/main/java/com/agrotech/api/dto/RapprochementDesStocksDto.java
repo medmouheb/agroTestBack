@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class RapprochementDesStocksDto extends BaseDto{
 
     private String typeEnregistrement;
+    private String farmer;
 
     private String transCode;
 

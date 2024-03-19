@@ -73,6 +73,7 @@ public class Produit extends BaseEntity {
 	private HashSet<String> tags = new HashSet<>();
 
 
+	private String farmer;
 
 
 }

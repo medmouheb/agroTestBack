@@ -36,5 +36,6 @@ public class CategoryDto extends BaseDto {
 	private Boolean isDeleted=false;
 	 @DBRef
 	 private Set<Produit> produit = new HashSet<>();
+	private String farmer;
 
 }

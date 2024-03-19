@@ -45,6 +45,7 @@ public class DriversDto extends BaseDto{
 
     private String driverLicense;
 
+    private String farmer;
 
     private Boolean isDeleted=false;
 

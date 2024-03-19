@@ -44,4 +44,7 @@ public class VendorTypePODetails extends BaseEntity{
     private String VendorWebsite;
 
     private Boolean isDeleted=false;
+
+    private String farmer;
+
 }

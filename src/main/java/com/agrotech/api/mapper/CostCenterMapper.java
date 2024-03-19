@@ -6,9 +6,7 @@ import com.agrotech.api.dto.CostCenterDto;
 import com.agrotech.api.model.CostCenter;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
-
+@Mapper
 public interface CostCenterMapper extends BaseMapper<CostCenterDto, CostCenter> {
 
 	

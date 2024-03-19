@@ -17,6 +17,7 @@ public class VehiclesDto extends BaseDto{
 
 
     private String typeDeVehicule;
+    private String farmer;
 
     @Indexed(unique = true)
     private String codeVehicule;

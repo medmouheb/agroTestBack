@@ -6,6 +6,7 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.*;
 import com.agrotech.api.services.DivisionService;
 import com.agrotech.api.services.DriversService;
+import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +29,14 @@ public class DriversController {
 
     private final DivisionService divisionService;
     private  final DriversRepository driversRepository;
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         driversRepository.deleteAll();
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody DriversDto drivers) {
+    public ResponseEntity<?> create(@RequestBody DriversDto drivers) throws DocumentException, FileNotFoundException {
         DriversDto response = driversService.create(drivers);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -43,34 +45,34 @@ public class DriversController {
 
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getbyname/{name}")
     public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException {
         Drivers response=driversService.findByNomDuChauffeur(name);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id,@RequestBody DriversDto campany) throws NotFoundException {
         DriversDto response = driversService.update(id, campany);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
         DriversDto response = driversService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<DriversDto> response = driversService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage(
             @RequestParam(defaultValue = "3") int pageSize,
@@ -81,7 +83,7 @@ public class DriversController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
         DriversDto response = driversService.findByCodeEmploye(code);
@@ -90,28 +92,28 @@ public class DriversController {
 
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         driversService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         driversService.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         driversService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -122,7 +124,7 @@ public class DriversController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("getbydivision")
     public ResponseEntity<?> findbydivion() throws NotFoundException {
         List<Division> divisions = divisionService.findByCompanyName();

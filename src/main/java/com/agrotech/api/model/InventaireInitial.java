@@ -58,6 +58,7 @@ public class InventaireInitial {
 
 
 
+    private String farmer;
 
 
 

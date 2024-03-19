@@ -30,6 +30,7 @@ public class BuyDto extends BaseDto {
     private String buyStatus;
     private Fournisseur fournisseur;
     private Produit produit;
+    private String farmer;
 
     private String purchaseOrder;
     private String purchaseInvoice;

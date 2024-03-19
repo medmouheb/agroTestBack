@@ -38,6 +38,7 @@ public class CropDTO extends BaseDto {
     private Map<String, String> solutions  = new HashMap<>();
 
     private String healthStatus="";
+    private String farmer;
 
     private Boolean isDeleted=false;
 

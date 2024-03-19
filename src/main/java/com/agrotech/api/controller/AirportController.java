@@ -38,7 +38,7 @@ public class AirportController {
     }
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping(value = "")
     public ResponseEntity<?> addAirport(@RequestBody @Validated Airport airport) {
         if (airportService.airportCodeExists(airport.getAirportCode())) {
@@ -48,7 +48,7 @@ public class AirportController {
         return new ResponseEntity<>(newAirport, HttpStatus.CREATED);
     }
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteSeaport(@PathVariable String id) {
         if (airportService.airportExists(id)) {
@@ -59,7 +59,7 @@ public class AirportController {
         }
     }
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping(value = "{id}")
     public ResponseEntity<?> updateAirport(@PathVariable String id, @RequestBody @Validated Airport airport) {
         if (!airportService.airportExists(id)) {
@@ -77,7 +77,7 @@ public class AirportController {
         AirportDTO updatedAirport = modelMapper.map(airportService.modifierAirport(airport), AirportDTO.class);
         return new ResponseEntity<>(updatedAirport, HttpStatus.OK);
     }
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("deactivate/{id}")
     public ResponseEntity<?> deactivateAirport(@PathVariable String id) {
         if (!airportService.airportExists(id)) {
@@ -89,7 +89,7 @@ public class AirportController {
         airportService.ajouterAirport(airport);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("activate/{id}")
     public ResponseEntity<?> activateAirport(@PathVariable String id) {
         if (!airportService.airportExists(id)) {
@@ -103,20 +103,20 @@ public class AirportController {
     }
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "active")
     public ResponseEntity<List<AirportDTO>> getActiveTrueAirports() {
         List<AirportDTO> airports = airportService.getActiveTrueAirports().stream().map(airport -> modelMapper.map(airport, AirportDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(airports, HttpStatus.OK);
     }
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "archived")
     public ResponseEntity<List<AirportDTO>> getArchivedAirports() {
         List<AirportDTO> airports = airportService.getArchivedAirports().stream().map(airport -> modelMapper.map(airport, AirportDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(airports, HttpStatus.OK);
     }
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "{id}")
     public ResponseEntity<AirportDTO> getAirportById(@PathVariable String id) {
         if (airportService.airportExists(id)) {
@@ -126,13 +126,13 @@ public class AirportController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/searchactive")
     public ResponseEntity<List<AirportDTO>> searchAirportByNameAndActive(@RequestParam String airportName) {
         List<AirportDTO> airports = airportService.SearchAirportByNameAndActive(airportName).stream().map(airport -> modelMapper.map(airport, AirportDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(airports, HttpStatus.OK);
     }
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/searcharchived")
     public ResponseEntity<List<AirportDTO>> searchAirportByNameAndArchived(@RequestParam String airportName) {
         List<AirportDTO> airports = airportService.SearchAirportByNameAndArchived(airportName).stream().map(airport -> modelMapper.map(airport, AirportDTO.class)).collect(Collectors.toList());

@@ -1,8 +1,10 @@
 package com.agrotech.api.controller;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.agrotech.api.Repository.CategoryRepository;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,21 +34,21 @@ public class CategoryController {
 	@Autowired
 	private CategoryService categoryService ;
 	private CategoryRepository categoryRepository;
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		categoryRepository.deleteAll();
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@PostMapping("")
-	public ResponseEntity<?> create(@RequestBody CategoryDto cat) {
+	public ResponseEntity<?> create(@RequestBody CategoryDto cat) throws DocumentException, FileNotFoundException {
 		CategoryDto response = categoryService.create(cat);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id,@RequestBody CategoryDto cat) throws NotFoundException {
 		CategoryDto response = categoryService.update(id, cat);
@@ -54,14 +56,14 @@ public class CategoryController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		CategoryDto response = categoryService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<CategoryDto> response = categoryService.findAll();
@@ -69,7 +71,7 @@ public class CategoryController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		CategoryDto response = categoryService.findByCode(code);
@@ -77,7 +79,7 @@ public class CategoryController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		categoryService.delete(id);

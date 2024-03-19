@@ -32,5 +32,6 @@ public class HousseDto extends BaseDto{
 	private String dateBegin ;
 	private String dateEnd ;
 	private String capacity ;
+	private String farmer;
 
 }

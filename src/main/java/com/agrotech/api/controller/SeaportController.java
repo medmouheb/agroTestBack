@@ -33,7 +33,7 @@ public class SeaportController {
 
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping(value = "")
     public ResponseEntity<?> addSeaport(@RequestBody @Validated Seaport seaport) {
         if (seaportService.seaportCodeExists(seaport.getSeaportCode())) {
@@ -43,7 +43,7 @@ public class SeaportController {
         return new ResponseEntity<>(newSeaport, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteSeaport(@PathVariable String id) {
         if (seaportService.seaportExists(id)) {
@@ -54,7 +54,7 @@ public class SeaportController {
         }
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping(value = "{id}")
     public ResponseEntity<?> updateSeaport(@PathVariable String id, @RequestBody @Validated Seaport seaport) {
         if (!seaportService.seaportExists(id)) {
@@ -69,7 +69,7 @@ public class SeaportController {
         SeaportDTO updatedSeaport =modelMapper.map(seaportService.modifierSeaport(seaport),SeaportDTO.class);
         return new ResponseEntity<>(updatedSeaport, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("deactivate/{id}")
     public ResponseEntity<?> deactivateSeaport(@PathVariable String id) {
         if (!seaportService.seaportExists(id)) {
@@ -81,7 +81,7 @@ public class SeaportController {
         seaportService.ajouterSeaport(seaport);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("activate/{id}")
     public ResponseEntity<?> activateSeaport(@PathVariable String id) {
         if (!seaportService.seaportExists(id)) {
@@ -94,20 +94,20 @@ public class SeaportController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "active")
     public ResponseEntity<List<SeaportDTO>> getActiveTrueSeaports() {
         List<SeaportDTO> seaports = seaportService.getActiveTrueSeaports().stream().map(seaport -> modelMapper.map(seaport, SeaportDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(seaports, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "archived")
     public ResponseEntity<List<SeaportDTO>> getArchivedSeaports() {
         List<SeaportDTO> seaports = seaportService.getArchivedSeaports().stream().map(seaport -> modelMapper.map(seaport, SeaportDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(seaports, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "{id}")
     public ResponseEntity<?> getSeaportById(@PathVariable String id) {
         if (seaportService.seaportExists(id)) {
@@ -117,13 +117,13 @@ public class SeaportController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/searchactive")
     public ResponseEntity<List<SeaportDTO>> searchSeaportByNameAndActive(@RequestParam String seaPortName) {
         List<SeaportDTO> seaports = seaportService.SearchSeaportByNameAndActive(seaPortName).stream().map(seaport -> modelMapper.map(seaport, SeaportDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(seaports, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/searcharchived")
     public ResponseEntity<List<SeaportDTO>> searchSeaportByNameAndArchived(@RequestParam String seaPortName) {
         List<SeaportDTO> seaports = seaportService.SearchSeaportByNameAndArchived(seaPortName).stream().map(seaport -> modelMapper.map(seaport, SeaportDTO.class)).collect(Collectors.toList());

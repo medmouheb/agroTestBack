@@ -27,6 +27,7 @@ public class BuyersDto extends BaseDto{
 
     private String email;
 
+    private String farmer;
 
 
     private List<String> tags;

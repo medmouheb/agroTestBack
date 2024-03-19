@@ -34,5 +34,6 @@ public class WarehouseDto extends BaseDto {
     private double latitude;
     private double longitude;
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

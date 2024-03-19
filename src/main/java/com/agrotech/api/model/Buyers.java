@@ -28,6 +28,7 @@ public class Buyers extends BaseEntity{
     @Size(max = 50)
     private String name;
 
+    private String farmer;
 
     private String email;
 

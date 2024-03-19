@@ -5,6 +5,7 @@ import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Willaya;
 import com.agrotech.api.services.WilayaService;
+import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
@@ -25,40 +27,40 @@ public class WillayaController {
     private final WilayaService willayaService ;
 
     private  final WillayaRepository willayaRepository;
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         willayaRepository.deleteAll();
     }
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody WillayaDto div) {
+    public ResponseEntity<?> create(@RequestBody WillayaDto div) throws DocumentException, FileNotFoundException {
         WillayaDto response = willayaService.create(div);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody WillayaDto div) throws NotFoundException {
         WillayaDto response = willayaService.update(id, div);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getbyname/{name}")
     public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException{
         Willaya response=willayaService.findByname(name);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
         WillayaDto response = willayaService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -69,42 +71,42 @@ public class WillayaController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<WillayaDto> response = willayaService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
         WillayaDto response = willayaService.findByCode(code);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         willayaService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         willayaService.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         willayaService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,

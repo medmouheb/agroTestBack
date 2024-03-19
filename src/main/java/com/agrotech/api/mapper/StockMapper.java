@@ -6,7 +6,6 @@ import com.agrotech.api.model.Stock;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface StockMapper  extends BaseMapper<StockDTO, Stock> {
 }

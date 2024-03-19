@@ -29,4 +29,6 @@ public class LigneCommandeFournisseur extends BaseEntity {
        private Produit produits ;
        @DBRef
 	   private CommandeFournisseur commandeFournisseur;
+	private String farmer;
+
 }

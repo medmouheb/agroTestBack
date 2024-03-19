@@ -6,9 +6,7 @@ import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.model.Growout;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
-
+@Mapper
 public interface GrowoutMapper extends BaseMapper<GrowoutDto, Growout> {
 
 }

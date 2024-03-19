@@ -6,9 +6,7 @@ import com.agrotech.api.dto.CurrencyDto;
 import com.agrotech.api.model.Currency;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
-
+@Mapper
 public interface CurrencyMapper extends BaseMapper<CurrencyDto, Currency>{
 
 }

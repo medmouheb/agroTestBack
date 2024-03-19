@@ -49,5 +49,6 @@ public class OperationManagement {
     private Double coutReel;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

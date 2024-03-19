@@ -5,7 +5,6 @@ import com.agrotech.api.model.ShipMethods;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface ShipMethodsMapper extends  BaseMapper <ShipMethodsDto, ShipMethods> {
 }

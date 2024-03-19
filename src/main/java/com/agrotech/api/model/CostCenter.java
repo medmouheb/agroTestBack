@@ -46,5 +46,6 @@ public class CostCenter extends BaseEntity {
     private String  speciesType;
 
     private String divisiontype;
+    private String farmer;
 
 }

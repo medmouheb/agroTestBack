@@ -27,4 +27,7 @@ public class LigneCommandeFournisseurDto extends BaseDto {
 	private ProduitDto produits;
 	@DBRef
 	private CommandeFournisseurDto commandeFournisseur;
+
+	private String farmer;
+
 }

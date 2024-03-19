@@ -22,6 +22,7 @@ public class OperationManagementDto extends BaseDto{
     @Indexed(unique = true)
     private String operationId;
 
+    private String farmer;
 
     private String typeOperation;
 

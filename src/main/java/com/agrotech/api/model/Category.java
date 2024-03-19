@@ -41,6 +41,7 @@ public class Category extends BaseEntity {
 
 
 
+	private String farmer;
 
 
 

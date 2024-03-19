@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.model.Produit;
+import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,19 +35,19 @@ public class ProduitController {
 	@Autowired
 	private final ProduitService produitService;
 	private  final ProduitRepository produitRepository;
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		produitRepository.deleteAll();
 	}
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-	public ResponseEntity<?> create(@RequestBody ProduitDto produit) {
+	public ResponseEntity<?> create(@RequestBody ProduitDto produit) throws DocumentException, FileNotFoundException {
 		ProduitDto response = produitService.create(produit);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/import")
 	public ResponseEntity<?> importCSV(@RequestPart("file") MultipartFile file) throws CSVReaderException, EmptyFileException {
 		List<CSVRecord> read = CSVReader.read(file);
@@ -54,7 +55,7 @@ public class ProduitController {
 		return new ResponseEntity<>(true, HttpStatus.CREATED);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
 	public ResponseEntity<?> update(
 			@PathVariable String id,
@@ -64,21 +65,21 @@ public class ProduitController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		ProduitDto response = produitService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-//	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<ProduitDto> response = produitService.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,
@@ -89,27 +90,27 @@ public class ProduitController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		ProduitDto response = produitService.findByCode(code);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getbyname/{name}")
 	public ResponseEntity<?> findByname(@PathVariable String name) throws NotFoundException{
 		Produit response=produitService.findByname(name);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		produitService.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/csv-template")
 	public ResponseEntity<?> downloadCSVTemplate() throws IOException {
 		File file = ResourceUtils.getFile("classpath:csv/products.csv");
@@ -119,21 +120,21 @@ public class ProduitController {
 				.body(resource);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
 	public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
 		produitService.archive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
 	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
 		produitService.setNotArchive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
 	public ResponseEntity<?> findArchivedPage(
 			@RequestParam(defaultValue = "10") int pageSize,

@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class InventaireInitialDto extends BaseDto{
 
+    private String farmer;
 
     @Id
     private String id;

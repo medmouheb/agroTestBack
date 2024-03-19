@@ -32,4 +32,7 @@ public class SalesSkuDto extends BaseDto{
     @Size(max = 50, message = ValidationMessages.unitDescription_TOO_LONG)
     private String sailorCodeSku;
     private Boolean isDeleted=false;
+
+    private String farmer;
+
 }

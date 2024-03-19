@@ -32,6 +32,7 @@ public class CommandeFournisseurDto extends BaseDto {
 	private FournisseurDto fournisseur;
 	@DBRef
 	private Set<LigneCommandeFournisseurDto> ligneCommandeFournisseurs = new HashSet<>();
+	private String farmer;
 
 	public boolean isCommandeLivree() {
 		return EtatCommande.LIVREE.equals(this.etatCommande);

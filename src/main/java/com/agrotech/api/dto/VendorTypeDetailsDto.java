@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 @NoArgsConstructor
 public class VendorTypeDetailsDto extends BaseDto{
 
+    private String farmer;
 
     @Indexed(unique = true)
     @NotBlank(message = "Vendor Type Code is required")

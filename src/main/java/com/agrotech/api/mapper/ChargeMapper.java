@@ -9,6 +9,5 @@ import org.springframework.stereotype.Component;
 
 
 @Mapper()
-@Component
 public interface ChargeMapper extends BaseMapper<ChargeDto, Charge> {
 }

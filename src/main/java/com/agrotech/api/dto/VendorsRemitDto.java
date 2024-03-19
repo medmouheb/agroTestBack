@@ -20,6 +20,7 @@ public class VendorsRemitDto extends BaseDto{
     private String RemitToStateNo;
     private String RemitToPostalCode;
     private String RemitToCountry;
+    private String farmer;
 
     private Boolean isDeleted=false;
 }

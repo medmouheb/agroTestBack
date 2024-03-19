@@ -198,6 +198,7 @@ public class RapprochementDesStocks extends BaseEntity{
 
     private Boolean isDeleted=false;
 
+    private String farmer;
 
 
 }

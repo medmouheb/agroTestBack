@@ -6,7 +6,6 @@ import com.agrotech.api.model.Crop;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface CropMapper extends BaseMapper<CropDTO, Crop>  {
 }

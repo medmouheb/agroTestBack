@@ -36,4 +36,6 @@ public class Housse extends BaseEntity {
 	private String dateEnd ;
 	private String capacity ;
 	private Boolean isDeleted=false;
+	private String farmer;
+
 }

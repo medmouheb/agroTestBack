@@ -26,5 +26,7 @@ public class LogisticUnit extends BaseEntity {
     private String divisionName;
 
     private Boolean isDeleted=false;
+    private String farmer;
+
 
 }

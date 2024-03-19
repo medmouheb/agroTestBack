@@ -20,6 +20,7 @@ public class Manufacturer {
     @Id
     private String id;
 
+    private String farmer;
 
     @NotNull
     @Size(max = 50)

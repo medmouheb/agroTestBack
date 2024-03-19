@@ -20,6 +20,9 @@ import com.agrotech.api.security.jwt.JwtUtils;
 import com.agrotech.api.security.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +39,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.agrotech.api.exceptions.NotFoundException;
+import java.io.IOException;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -74,6 +78,8 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
+                userDetails.getFarmer(),
+                userDetails.getModules(),
                 userDetails.getEmail(),
                 roles));
     }
@@ -111,7 +117,7 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            Role userRole = roleRepository.findByName(ERole.ROLE_FARMER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
@@ -123,12 +129,7 @@ public class AuthController {
                         roles.add(adminRole);
 
                         break;
-                    case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
 
-                        break;
                     case "farmer":
                         Role farmerRole = roleRepository.findByName(ERole.ROLE_FARMER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -143,9 +144,10 @@ public class AuthController {
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(employeeRole);
                         user.setFarmer(signUpRequest.getFarmer());
+                        user.setModules(signUpRequest.getModules());
                         break;
                     default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                        Role userRole = roleRepository.findByName(ERole.ROLE_FARMER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
                 }
@@ -173,6 +175,14 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("farmer verified succefully"));
     }
 
+    @DeleteMapping("/delete-employee/{employee}")
+    @PreAuthorize("hasRole('FARMER') or hasRole('ADMIN')")
+    public ResponseEntity<?> deleteFarmer(@PathVariable String employee) throws NotFoundException{
+        User user= userRepository.findByUsername(employee).get();
+        userRepository.delete(user);
+        return ResponseEntity.ok(new MessageResponse("employee deleted succefully"));
+    }
+
 
     @GetMapping("/getFarmers")
     @PreAuthorize("hasRole('ADMIN') ")
@@ -180,7 +190,7 @@ public class AuthController {
                                         @RequestParam(defaultValue = "0") int pageNumber,
                                         @RequestParam(defaultValue = "") String filter) throws NotFoundException{
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<User> farmers= userRepository.findByRolesContaining(roleRepository.findByName(ERole.ROLE_FARMER).get(),pageable);
+        Page<User> farmers= userRepository.findByRolesContainingAndUsernameContainingIgnoreCase(roleRepository.findByName(ERole.ROLE_FARMER).get(),filter,pageable);
 
         return new ResponseEntity<>(farmers, HttpStatus.OK);
     }
@@ -199,21 +209,34 @@ public class AuthController {
 
         userDetails.getAuthorities().forEach(authority -> {
             if(authority.getAuthority().equals("ROLE_FARMER")){
-                System.out.println("1");
                 t.set("farmer");
             }else if(authority.getAuthority().equals("ROLE_ADMIN")){
-                System.out.println("2");
                 t.set("admin");            }
         });
-        System.out.println(t);
         if(t.get().equals("farmer")){
-            System.out.println("1a");
             String userId = userDetails.getUsername();
-            users = userRepository.findByFarmer(userId,pageable);
+            users = userRepository.findByFarmerAndUsernameContainingIgnoreCase(userId,filter,pageable);
         }else {
-            users= userRepository.findByRolesContaining(roleRepository.findByName(ERole.ROLE_EMPLOYEE).get(),pageable);
+            users= userRepository.findByRolesContainingAndUsernameContainingIgnoreCase(roleRepository.findByName(ERole.ROLE_EMPLOYEE).get(),filter,pageable);
         }
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PutMapping("/update-access")
+    @PreAuthorize("hasRole('FARMER') or hasRole('ADMIN')")
+    public ResponseEntity<?> updateAccess( @RequestBody String objectNew) throws NotFoundException, JSONException {
+        System.out.println(objectNew);
+
+        JSONObject DataJSON=new JSONObject(objectNew);
+        User user= userRepository.findByUsername(DataJSON.getString("username")).get();
+        HashSet<String> modules = new HashSet<>();
+        JSONArray products = DataJSON.getJSONArray("modules");
+        for (int i = 0; i <products.length(); i++) {
+            modules.add(products.getString(i));
+        }
+        user.setModules(modules);
+        userRepository.save(user);
+        return ResponseEntity.ok(new MessageResponse("employee was updated succefully"));
     }
 }
 

@@ -70,4 +70,7 @@ public class Vehicule extends BaseEntity {
 
 
     private Boolean isDeleted = false;
+
+    private String farmer;
+
 }

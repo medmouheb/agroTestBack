@@ -49,8 +49,8 @@ public class Campany  extends BaseEntity{
     private Boolean isDeleted=false;
 
 
-    @DBRef
-    private User farmer;
+    private String farmer;
+
 
 
 

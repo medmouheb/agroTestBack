@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorTypeFreightDto {
 
+    private String farmer;
 
     private String HaulageVendorCode;
 

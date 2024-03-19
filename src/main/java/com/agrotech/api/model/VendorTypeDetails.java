@@ -32,6 +32,7 @@ public class VendorTypeDetails extends BaseEntity{
 
     private String PriceMode;
 
+    private String farmer;
 
     private Boolean isDeleted=false;
 }

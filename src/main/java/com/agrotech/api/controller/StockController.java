@@ -13,6 +13,7 @@ import com.agrotech.api.model.Stock;
 import com.agrotech.api.model.Tax;
 import com.agrotech.api.services.StockServices;
 import com.agrotech.api.services.TaxService;
+import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -38,7 +40,7 @@ public class StockController {
     private final EmailController emailController;
 
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         stockRepository.deleteAll();
@@ -53,9 +55,9 @@ public class StockController {
         return currentDate.format(formatter);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody StockDTO campany) throws JSONException {
+    public ResponseEntity<?> create(@RequestBody StockDTO campany) throws JSONException, DocumentException, FileNotFoundException {
         StockDTO response = stockServices.create(campany);
         System.out.println( ":::"+ produitRepository.findById(campany.getProduct()).get().getTags()  );
 
@@ -77,35 +79,35 @@ public class StockController {
         return new ResponseEntity<>(l, HttpStatus.CREATED);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getbyname/{name}")
     public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException {
         Stock response = stockServices.findByname(name);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable String id, @RequestBody StockDTO campany) throws NotFoundException {
         StockDTO response = stockServices.update(id, campany);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
         StockDTO response = stockServices.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<StockDTO> response = stockServices.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage(
             @RequestParam(defaultValue = "3") int pageSize,
@@ -115,35 +117,35 @@ public class StockController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
         StockDTO response = stockServices.findByCode(code);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         stockServices.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         stockServices.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         stockServices.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,

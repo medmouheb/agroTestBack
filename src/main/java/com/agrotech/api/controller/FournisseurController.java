@@ -9,6 +9,7 @@ import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.model.Vendors;
+import com.itextpdf.text.DocumentException;
 import com.opencsv.CSVWriter;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -31,10 +32,7 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.FournisseurService;
 import com.agrotech.api.utils.CSVReader;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -50,33 +48,33 @@ public class FournisseurController {
     private final FournisseurRepository fournisseurRepository;
     private final VendorSKURepository vendorSKURepository;
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
         FournisseurDto response = fournisseurService.findByCode(code);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getbyname/{name}")
     public ResponseEntity<?> findByname(@PathVariable String name) throws NotFoundException{
         Fournisseur response=fournisseurService.findByname(name);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
         fournisseurRepository.deleteAll();
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid FournisseurDto fournisseur) {
+    public ResponseEntity<?> create(@RequestBody @Valid FournisseurDto fournisseur) throws DocumentException, FileNotFoundException {
         System.out.println(fournisseur.getVendorSKUname());
         System.out.println(fournisseur.getVendorSKUcode());
 
         FournisseurDto response = fournisseurService.create(fournisseur);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<?> creates(@RequestBody @Valid Fournisseur fournisseur) {
         System.out.println(fournisseur.getVendorSKUname());
@@ -85,7 +83,7 @@ public class FournisseurController {
         Fournisseur response = fournisseurService.savex(fournisseur);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/import")
     public ResponseEntity<?> importCSV(@RequestPart("file") MultipartFile file) throws CSVReaderException, EmptyFileException {
         List<CSVRecord> read = CSVReader.read(file);
@@ -93,7 +91,7 @@ public class FournisseurController {
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(
             @PathVariable String id,
@@ -108,21 +106,21 @@ public class FournisseurController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable String id) throws NotFoundException {
         FournisseurDto response = fournisseurService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
         List<FournisseurDto> response = fournisseurService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage1(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -133,14 +131,14 @@ public class FournisseurController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         fournisseurService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/csv-template")
     public ResponseEntity<?> downloadCSVTemplate() throws IOException {
         File file = ResourceUtils.getFile("classpath:csv/providers.csv");
@@ -150,21 +148,21 @@ public class FournisseurController {
                 .body(resource);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
         fournisseurService.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         fournisseurService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
     public ResponseEntity<?> findArchivedPage(
             @RequestParam(defaultValue = "10") int pageSize,
@@ -175,7 +173,7 @@ public class FournisseurController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/entityCSV")
     public void downloadEntityCsv(HttpServletResponse response) throws IOException {
         response.setContentType("text/csv");
@@ -233,7 +231,7 @@ public class FournisseurController {
         csvWriter.close();
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/upload")
     public String uploadCSV(@RequestParam("file") MultipartFile file) {
         try {

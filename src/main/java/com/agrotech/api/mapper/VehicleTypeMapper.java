@@ -5,7 +5,6 @@ import com.agrotech.api.model.VehicleType;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface VehicleTypeMapper extends  BaseMapper<VehicleTypeDto,VehicleType > {
 }

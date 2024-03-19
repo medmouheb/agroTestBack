@@ -5,7 +5,6 @@ import com.agrotech.api.model.Tax;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface TaxMapper extends BaseMapper<TaxDto, Tax> {
 }

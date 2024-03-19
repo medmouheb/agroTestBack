@@ -61,6 +61,7 @@ public class Warehouse extends BaseEntity {
     private String costCenterCode;
     private String vendor;
 
+    private String farmer;
 
 
 }

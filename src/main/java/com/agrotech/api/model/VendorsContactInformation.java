@@ -55,4 +55,7 @@ public class VendorsContactInformation extends BaseEntity{
     private String PayRate;
 
     private Boolean isDeleted = false;
+
+    private String farmer;
+
 }

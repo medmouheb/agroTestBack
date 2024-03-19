@@ -13,6 +13,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReceptionDto extends BaseDto{
+    private String farmer;
 
     private Double CostCenterCode ;
 

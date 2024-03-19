@@ -44,4 +44,7 @@ public class CampanyDto extends BaseDto{
 	private String email ;
     private Boolean isDeleted=false;
 
+    private String farmer;
+
+
 }

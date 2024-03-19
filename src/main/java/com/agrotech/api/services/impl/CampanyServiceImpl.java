@@ -134,6 +134,26 @@ public class CampanyServiceImpl implements CampanyService{
 	}
 
 	@Override
+	public Page<Campany> getpages1(int pageSize, int pageNumber, String filter, String farmername) {
+
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		Page<Campany> result =  campanyRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(false,filter,farmername, pageable);
+
+		return result;
+	}
+
+	@Override
+	public Page<Campany> getpagesarchive1(int pageSize, int pageNumber, String filter, String farmername) {
+
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		Page<Campany> result =  campanyRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(true,filter,farmername, pageable);
+
+		return result;
+	}
+
+	@Override
 	public Page<CampanyDto> findPage(int pageSize, int pageNumber, String filter) {
 
 		// Pageable pageable = PageRequest.of(

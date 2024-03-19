@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VendorTypeProductDto extends BaseDto{
+    private String farmer;
 
     private String VendorSKUCode;
 

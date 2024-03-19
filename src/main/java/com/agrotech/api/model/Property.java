@@ -27,5 +27,6 @@ public class Property {
     public void setLand(int land) {
         this.land = land;
     }
+    private String farmer;
 
 }

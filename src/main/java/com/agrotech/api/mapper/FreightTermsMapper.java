@@ -5,7 +5,6 @@ import com.agrotech.api.model.FreightTerms;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface FreightTermsMapper extends BaseMapper<FreightTermsDto, FreightTerms>{
 }

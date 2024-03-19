@@ -3,6 +3,7 @@ package com.agrotech.api.dto;
 public class PropertyDTO {
     private String product;
     private int land;
+    private String farmer;
 
     public PropertyDTO() {
         this.product = product;

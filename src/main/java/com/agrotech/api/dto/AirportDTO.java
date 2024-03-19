@@ -13,5 +13,7 @@ public class AirportDTO implements Serializable {
     private String airportName;
     private boolean active;
     private String notes;
+    private String farmer;
+
 
 }

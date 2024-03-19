@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorsDto extends BaseDto{
 
+    private String farmer;
 
     @Size(max = 40)
     private String Language;

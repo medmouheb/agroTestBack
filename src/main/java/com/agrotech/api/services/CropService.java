@@ -13,11 +13,12 @@ public interface CropService extends BaseService<CropDTO, String> {
 
     CropDTO findByCode(String code) throws NotFoundException;
 
-    Page<CropDTO> findPage1(int pageSize, int pageNumber, String filter);
 
-    Page<Crop> getpages(int pageSize, int pageNumber, String filter);
+    Page<Crop> getpages(int pageSize, int pageNumber, String filter, String farmername);
+    Page<Crop> getpages1(int pageSize, int pageNumber, String filter );
 
     Page<Crop> getpagesarchive(int pageSize, int pageNumber, String filter);
+    Page<Crop> getpagesarchive1(int pageSize, int pageNumber, String filter, String farmername);
 
     public void archive(String id) throws NotFoundException;
 
@@ -27,10 +28,7 @@ public interface CropService extends BaseService<CropDTO, String> {
 
     Crop findByname(String name) throws NotFoundException;
 
-    public Page<CropDTO> findArchivedPage1(int pageSize, int pageNumber, String filter);
-
     public Page<CropDTO> findArchivedPage(int pageSize, int pageNumber, String filter);
 
-    List<Crop> findBynamee() throws NotFoundException;
 
 }

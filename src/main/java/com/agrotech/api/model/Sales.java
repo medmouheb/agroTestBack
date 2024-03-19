@@ -46,6 +46,7 @@ public class Sales  extends BaseEntity{
 
 	private String product;
 
+	private String farmer;
 
 	@Override
 	public String toString() {

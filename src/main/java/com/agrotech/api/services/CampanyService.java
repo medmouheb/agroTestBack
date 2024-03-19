@@ -13,7 +13,9 @@ public interface CampanyService extends BaseService<CampanyDto, String> {
 	CampanyDto findByCode(String code) throws NotFoundException;
 		Page<CampanyDto> findPage1(int pageSize, int pageNumber, String filter) ;
 	Page<Campany> getpages(int pageSize, int pageNumber, String filter) ;
+	Page<Campany> getpages1(int pageSize, int pageNumber, String filter, String farmername) ;
 	Page<Campany> getpagesarchive(int pageSize, int pageNumber, String filter) ;
+	Page<Campany> getpagesarchive1(int pageSize, int pageNumber, String filter, String farmername) ;
 
 	public void archive(String id) throws NotFoundException;
 

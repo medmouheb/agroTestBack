@@ -6,9 +6,7 @@ import com.agrotech.api.dto.HousseDto;
 import com.agrotech.api.model.Housse;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
-
+@Mapper
 public interface HousseMapper extends BaseMapper<HousseDto, Housse> {
 
 }

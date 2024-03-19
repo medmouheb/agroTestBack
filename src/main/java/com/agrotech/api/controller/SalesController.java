@@ -1,5 +1,6 @@
 package com.agrotech.api.controller;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import com.agrotech.api.Repository.BuyersRepository;
@@ -11,6 +12,7 @@ import com.agrotech.api.model.Sales;
 import com.agrotech.api.model.Tax;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.BuyersService;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -47,14 +49,14 @@ public class SalesController {
 
 	private  final BuyersRepository buyersRepository;
 	private final BuyersService buyersService;
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
 	public void deleteall() throws NotFoundException {
 		salesRepository.deleteAll();
 	}
-//	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+//	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-	public ResponseEntity<?> create(@RequestBody SalesDto sales){
+	public ResponseEntity<?> create(@RequestBody SalesDto sales) throws DocumentException, FileNotFoundException {
 		System.out.println( ":::"+ produitRepository.findById(sales.getProduct()).get().getTags()  );
 		Buyers u=buyersRepository.findById(sales.getBuyer()).get();
 		u.addTags(produitRepository.findById(sales.getProduct()).get().getTags()  );
@@ -67,13 +69,13 @@ public class SalesController {
 
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getbyname/{name}")
 	public ResponseEntity<?> findByname(@PathVariable String name) throws NotFoundException{
 		Sales response=salesServices.findByname(name);
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/add")
 	public ResponseEntity<?> creates(@RequestBody Sales sales){
 		Sales response = salesServices.saves(sales);
@@ -82,7 +84,7 @@ public class SalesController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
 	public ResponseEntity<?> update(
 			@PathVariable String id,
@@ -92,21 +94,21 @@ public class SalesController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		SalesDto response = salesServices.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<SalesDto> response = salesServices.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,
@@ -118,7 +120,7 @@ public class SalesController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		SalesDto response = salesServices.findByCode(code);
@@ -126,28 +128,28 @@ public class SalesController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
 	public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		salesServices.delete(id);
 		return new ResponseEntity<>(true, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
 	public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
 		salesServices.archive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
 	public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
 		salesServices.setNotArchive(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archived/page")
 	public ResponseEntity<?> findArchivedPage(
 			@RequestParam(defaultValue = "10") int pageSize,

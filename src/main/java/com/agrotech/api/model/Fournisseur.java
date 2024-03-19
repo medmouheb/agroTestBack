@@ -61,6 +61,7 @@ public class Fournisseur extends BaseEntity {
 	@Size(max = 50)
 	private String currencyname;
 
+	private String farmer;
 
 	@Size(max = 12)
 	private String shippingCity;

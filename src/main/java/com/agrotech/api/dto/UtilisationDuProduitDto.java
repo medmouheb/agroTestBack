@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UtilisationDuProduitDto extends BaseDto{
+    private String farmer;
 
     private LocalDate dateDeTransposition;
 

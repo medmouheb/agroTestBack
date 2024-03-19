@@ -45,4 +45,7 @@ public class VendorTypeHistoryIReceiving extends BaseEntity{
     private Number RelativeQuantity;
 
     private Boolean isDeleted=false;
+
+    private String farmer;
+
 }

@@ -1,9 +1,11 @@
 package com.agrotech.api.controller;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 
 import com.agrotech.api.Repository.CommandeFournisseurRepository;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,28 +44,28 @@ public class CommandeFournisseurController {
 		commandeFournisseurRepository.deleteAll();
 	}
 	@PostMapping("")
-	public ResponseEntity<?> create(@RequestBody CommandeFournisseurDto commandeFournisseur) {
+	public ResponseEntity<?> create(@RequestBody CommandeFournisseurDto commandeFournisseur) throws DocumentException, FileNotFoundException {
 		CommandeFournisseurDto response = commandeFournisseurService.create(commandeFournisseur);
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id, @RequestBody CommandeFournisseurDto commandeFournisseur) throws NotFoundException {
 		CommandeFournisseurDto response = commandeFournisseurService.update(id, commandeFournisseur);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
 	public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
 		CommandeFournisseurDto response = commandeFournisseurService.findById(id);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
 		List<CommandeFournisseurDto> response = commandeFournisseurService.findAll();
@@ -71,7 +73,7 @@ public class CommandeFournisseurController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		CommandeFournisseurDto response = commandeFournisseurService.findByCode(code);
@@ -79,7 +81,7 @@ public class CommandeFournisseurController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
 	 public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
 		commandeFournisseurService.delete(id);
@@ -87,14 +89,14 @@ public class CommandeFournisseurController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("/update/etat/{idCommande}/{etatCommande}")
 	public  ResponseEntity<?> updateEtatCommande(@PathVariable("idCommande") String idCommande, @PathVariable("etatCommande") EtatCommande etatCommande) throws NotFoundException {
 		CommandeFournisseurDto response = commandeFournisseurService.updateEtatCommande(idCommande, etatCommande);
 	    return new ResponseEntity<>(response, HttpStatus.OK);
 	  }
 
-	  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	  @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	  @PatchMapping("/update/quantite/{idCommande}/{idLigneCommande}/{quantite}")
 	public  ResponseEntity<?> updateQuantiteCommande(@PathVariable("idCommande") String idCommande,
 		      @PathVariable("idLigneCommande") String idLigneCommande, @PathVariable("quantite") BigDecimal quantite) throws NotFoundException{
@@ -104,7 +106,7 @@ public class CommandeFournisseurController {
 	}
 
 
-	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping( "/update/fournisseur/{idCommande}/{idFournisseur}")
 	 public  ResponseEntity<?>  updateFournisseur(@PathVariable("idCommande") String idCommande, @PathVariable("idFournisseur") String idFournisseur) throws NotFoundException {
 		 CommandeFournisseurDto response = commandeFournisseurService.updateFournisseur(idCommande, idFournisseur);
@@ -113,7 +115,7 @@ public class CommandeFournisseurController {
 	 }
 
 
-	 @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	 @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("/update/article/{idCommande}/{idLigneCommande}/{idArticle}")
 	 public  ResponseEntity<?> updateProduit(@PathVariable("idCommande") String idCommande,
 	      @PathVariable("idLigneCommande") String idLigneCommande, @PathVariable("idArticle") String idArticle) throws NotFoundException {
@@ -123,7 +125,7 @@ public class CommandeFournisseurController {
 	 }
 
 
-	 @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	 @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/lignesCommande/{idCommande}")
 	 public  List<LigneCommandeFournisseurDto> findAllLignesCommandesFournisseurByCommandeFournisseurId(@PathVariable("idCommande") String idCommande) throws NotFoundException {
 
@@ -132,7 +134,7 @@ public class CommandeFournisseurController {
 	 }
 
 
-	 @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	 @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/delete/produit/{idCommande}/{idLigneCommande}")
 	 public ResponseEntity<?> deleteProduit(@PathVariable("idCommande") String idCommande, @PathVariable("idLigneCommande") String idLigneCommande) throws NotFoundException {
 		 CommandeFournisseurDto response = commandeFournisseurService.deleteProduit(idCommande, idLigneCommande);

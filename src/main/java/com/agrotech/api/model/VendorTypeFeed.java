@@ -18,6 +18,7 @@ public class VendorTypeFeed extends BaseEntity{
     private Double BasisPrice;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 
 }

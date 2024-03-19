@@ -93,20 +93,20 @@ public class CropServiceImpl implements CropService {
         }
         return cropMapper.toDto(campOptional.get());
     }
+
+
     @Override
-    public Page<CropDTO> findPage1(int pageSize, int pageNumber, String filter) {
+    public Page<Crop> getpages(int pageSize, int pageNumber, String filter , String farmername) {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        List<CropDTO> result =  cropRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable)
-                .stream()
-                .map(cropMapper::toDto)
-                .collect(Collectors.toList());
-        return new PageImpl<>(result);
+        return  cropRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(false,filter,farmername, pageable);
+
+
     }
 
     @Override
-    public Page<Crop> getpages(int pageSize, int pageNumber, String filter) {
+    public Page<Crop> getpages1(int pageSize, int pageNumber, String filter ) {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
@@ -123,6 +123,16 @@ public class CropServiceImpl implements CropService {
         return  cropRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
 
     }
+
+    @Override
+    public Page<Crop> getpagesarchive1(int pageSize, int pageNumber, String filter, String farmername) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return  cropRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(true,filter,farmername, pageable);
+
+    }
+
 
     @Override
     public Page<CropDTO> findPage(int pageSize, int pageNumber, String filter) {
@@ -180,22 +190,8 @@ public class CropServiceImpl implements CropService {
         return new PageImpl<>(result);
     }
 
-    @Override
-    public List<Crop> findBynamee() throws NotFoundException {
-        return cropRepository.findAll();
 
 
-    }
-
-    @Override
-    public Page<CropDTO> findArchivedPage1(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        List<CropDTO>  result = cropRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable)
-                .stream()
-                .map(cropMapper::toDto)
-                .collect(Collectors.toList());
-        return new PageImpl<>(result);
-    }
 
 
 

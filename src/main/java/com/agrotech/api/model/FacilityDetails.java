@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "facility")
 public class FacilityDetails extends BaseEntity{
 
+    private String farmer;
 
     private String facilityID;
 

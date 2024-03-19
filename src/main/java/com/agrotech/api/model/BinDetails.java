@@ -15,5 +15,6 @@ public class BinDetails extends BaseEntity {
     private Double capacity;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

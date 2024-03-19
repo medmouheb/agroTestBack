@@ -20,6 +20,7 @@ public class ChargeDto extends BaseDto{
 
     //private Long id;
 
+    private String farmer;
 
     private String suppChargeType;
 

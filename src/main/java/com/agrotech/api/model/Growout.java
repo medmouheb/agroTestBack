@@ -47,5 +47,6 @@ public class Growout extends BaseEntity{
     @Size(max = 250)
     private String divisionName ;
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

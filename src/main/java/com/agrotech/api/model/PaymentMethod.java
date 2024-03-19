@@ -26,6 +26,7 @@ public class PaymentMethod  extends BaseEntity{
     private String notes;
     private Boolean active ;
 
+    private String farmer;
 
 
     private Boolean isDeleted=false;

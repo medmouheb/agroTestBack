@@ -2,6 +2,7 @@ package com.agrotech.api.security.services;
 
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -19,6 +20,25 @@ public class UserDetailsImpl implements UserDetails {
     private String id;
 
     private String username;
+    private HashSet<String> modules = new HashSet<>();
+
+    private String farmer;
+
+    public String getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(String farmer) {
+        this.farmer = farmer;
+    }
+
+    public HashSet<String> getModules() {
+        return modules;
+    }
+
+    public void setModules(HashSet<String> modules) {
+        this.modules = modules;
+    }
 
     private String email;
 
@@ -27,13 +47,15 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(String id, String username, String email, String password,
+    public UserDetailsImpl(String id, String username ,  String farmer,  HashSet<String> modules , String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
+        this.modules = modules;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.farmer=farmer;
     }
 
     public static UserDetailsImpl build(User user) {
@@ -44,6 +66,8 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
+                user.getFarmer(),
+                user.getModules(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities);

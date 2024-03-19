@@ -27,7 +27,7 @@ public class ManufacturerController {
     @Autowired
     private ModelMapper modelMapper ;
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping(value = "")
     public ResponseEntity<?> addManufacturer(@RequestBody @Validated Manufacturer manufacturer) {
         if (manufacturerService.manufacturerExists(manufacturer.getManufacturerCode())) {
@@ -37,7 +37,7 @@ public class ManufacturerController {
         return new ResponseEntity<>(newManufacturer, HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteManufacturer(@PathVariable String id) {
         if (manufacturerService.manufacturerExists(id)) {
@@ -48,7 +48,7 @@ public class ManufacturerController {
         }
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping(value = "{id}")
     public ResponseEntity<?> updateManufacturer(@PathVariable String id, @RequestBody @Validated Manufacturer manufacturer) {
         if (!manufacturerService.manufacturerExists(id)) {
@@ -65,7 +65,7 @@ public class ManufacturerController {
         ManufacturerDTO updatedManufacturer = modelMapper.map(manufacturerService.modifierManufacturer(manufacturer), ManufacturerDTO.class);
         return new ResponseEntity<>(updatedManufacturer, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("deactivate/{id}")
     public ResponseEntity<?> deactivateManufacturer(@PathVariable String id) {
         if (!manufacturerService.manufacturerExists(id)) {
@@ -77,7 +77,7 @@ public class ManufacturerController {
         manufacturerService.ajouterManufacturer(airport);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PatchMapping("activate/{id}")
     public ResponseEntity<?> activateManufacturer(@PathVariable String id) {
         if (!manufacturerService.manufacturerExists(id)) {
@@ -91,20 +91,20 @@ public class ManufacturerController {
     }
 
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "active")
     public ResponseEntity<List<ManufacturerDTO>> getActiveTrueManufacturer() {
         List<ManufacturerDTO> manufacturers = manufacturerService.getActiveTrueManufacturers().stream().map(manufacturer -> modelMapper.map(manufacturer, ManufacturerDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(manufacturers, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "archived")
     public ResponseEntity<List<ManufacturerDTO>> getArchivedManufacturer() {
         List<ManufacturerDTO> manufacturers = manufacturerService.getArchivedManufacturers().stream().map(manufacturer -> modelMapper.map(manufacturer, ManufacturerDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(manufacturers, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "{id}")
     public ResponseEntity<ManufacturerDTO> getManufacturerById(@PathVariable String id) {
         if (manufacturerService.manufacturerExists(id)) {
@@ -114,14 +114,14 @@ public class ManufacturerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/searchactive")
     public ResponseEntity<List<ManufacturerDTO>> searchManufacturerByNameAndActive(@RequestParam String manufacturerName) {
         List<ManufacturerDTO> manufacturers = manufacturerService.SearchManufacturerByNameAndActive(manufacturerName).stream().map(manufacturer -> modelMapper.map(manufacturer, ManufacturerDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(manufacturers, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping(value = "/searcharchived")
     public ResponseEntity<List<ManufacturerDTO>> searchManufacturerByNameAndArchived(@RequestParam String manufacturerName) {
         List<ManufacturerDTO> manufacturers = manufacturerService.SearchManufacturerByNameAndArchived(manufacturerName).stream().map(manufacturer -> modelMapper.map(manufacturer, ManufacturerDTO.class)).collect(Collectors.toList());

@@ -12,4 +12,7 @@ public class SeaportDTO implements Serializable {
     private String seaportName;
     private boolean active;
     private String notes;
+
+    private String farmer;
+
 }

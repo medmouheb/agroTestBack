@@ -35,4 +35,7 @@ public class VendorsInternalDetails extends BaseEntity{
 
     private Boolean isDeleted = false;
 
+    private String farmer;
+
+
 }

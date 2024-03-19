@@ -58,6 +58,7 @@ public class Division extends BaseEntity {
 	private Boolean isDeleted=false;
 
 
+	private String farmer;
 
 
 

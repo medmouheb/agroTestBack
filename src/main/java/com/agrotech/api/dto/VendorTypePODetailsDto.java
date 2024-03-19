@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorTypePODetailsDto extends  BaseDto{
 
+    private String farmer;
 
     private String BuyerName;
 

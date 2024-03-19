@@ -27,7 +27,8 @@ public class MvtStk {
     private BigDecimal quantite;
 	private TypeMvtStk typeMvt;
 	private SourceMvtStk sourceMvt;
- 
+
+	private String farmer;
 
     @DBRef
     private Set<Produit> produits = new HashSet<>();

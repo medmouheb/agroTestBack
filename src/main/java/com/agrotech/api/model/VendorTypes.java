@@ -57,5 +57,6 @@ public class VendorTypes extends BaseEntity{
 
     private Boolean isDeleted=false;
 
+    private String farmer;
 
 }

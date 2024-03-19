@@ -26,5 +26,6 @@ public class LogisticUnitDto extends BaseDto{
     private Boolean isDeleted=false;
 
 
+    private String farmer;
 
 }

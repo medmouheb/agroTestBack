@@ -25,6 +25,7 @@ public class BrokersDto extends BaseDto{
     private  String BrokerName;
 
     private String DivisionCode;
+    private String farmer;
 
     private String DivisionName;
 

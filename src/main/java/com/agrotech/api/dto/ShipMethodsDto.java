@@ -24,6 +24,7 @@ private String code ;
     private String notes;
     private Boolean active ;
     private Boolean isDeleted=false;
+    private String farmer;
 
 
 }

@@ -72,5 +72,6 @@ public class FournisseurDto extends BaseDto {
 
 	private Boolean isDeleted = false;
 
+	private String farmer;
 
 }

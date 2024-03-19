@@ -1,6 +1,7 @@
 package com.agrotech.api.payload.response;
 
 
+import java.util.HashSet;
 import java.util.List;
 
 public class JwtResponse {
@@ -10,13 +11,26 @@ public class JwtResponse {
     private String username;
     private String email;
     private List<String> roles;
+    private HashSet<String> modules = new HashSet<>();
 
-    public JwtResponse(String accessToken, String id, String username, String email, List<String> roles) {
+    private String farmer;
+
+    public String getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(String farmer) {
+        this.farmer = farmer;
+    }
+
+    public JwtResponse(String accessToken, String id, String username, String farmer,HashSet<String> modules , String email, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;
+        this.modules = modules;
         this.email = email;
         this.roles = roles;
+        this.farmer=farmer;
     }
 
     public String getAccessToken() {
@@ -61,5 +75,13 @@ public class JwtResponse {
 
     public List<String> getRoles() {
         return roles;
+    }
+
+    public HashSet<String> getModules() {
+        return modules;
+    }
+
+    public void setModules(HashSet<String> modules) {
+        this.modules = modules;
     }
 }

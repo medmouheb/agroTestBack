@@ -5,7 +5,6 @@ import com.agrotech.api.model.Vendors;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface VendorsMapper extends BaseMapper<VendorsDto, Vendors>{
 }

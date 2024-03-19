@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorTypeHistoryIInvoicesDto extends BaseDto{
 
+    private String farmer;
 
     private String InvoiceType;
     private String InvoiceCode;

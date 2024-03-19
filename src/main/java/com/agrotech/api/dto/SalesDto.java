@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalesDto extends BaseDto {
+    private String farmer;
 
     private String code ;
     private String name;

@@ -13,7 +13,6 @@ import java.util.Optional;
 import org.springframework.data.domain.Pageable;
 
 
-@Mapper()
-@Component
+@Mapper
 public interface PaymentMethodMapper   extends  BaseMapper <PaymentMethodDto, PaymentMethod> {
 }

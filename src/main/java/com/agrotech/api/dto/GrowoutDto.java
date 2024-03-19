@@ -44,5 +44,6 @@ public class GrowoutDto extends BaseDto{
 	@Size(max = 250)
 	private String divisionName ;
 	private Boolean isDeleted=false;
+	private String farmer;
 
 }

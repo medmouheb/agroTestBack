@@ -31,6 +31,7 @@ public class BreedType extends BaseEntity{
     private String Notes;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 
 

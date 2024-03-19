@@ -14,6 +14,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VendorTypeHistoryIReceivingDto {
+    private String farmer;
 
 
     private String ApprovalUserID;

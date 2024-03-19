@@ -5,7 +5,6 @@ import com.agrotech.api.model.SalesSKU;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper()
-@Component
+@Mapper
 public interface SalesSkuMapper extends BaseMapper<SalesSkuDto, SalesSKU>{
 }

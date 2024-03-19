@@ -31,5 +31,6 @@ public class Reason {
 
     @Size(max = 200)
     private String notes;
+    private String farmer;
 
 }

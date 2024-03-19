@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorTypePurchaserDto extends BaseDto{
 
+    private String farmer;
 
     private String DestinationCostCenterCode;
 

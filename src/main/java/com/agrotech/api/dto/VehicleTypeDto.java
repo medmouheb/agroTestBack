@@ -39,6 +39,7 @@ public class VehicleTypeDto extends BaseDto {
 
     private Boolean isDeleted=false;
 
+    private String farmer;
 
     @Override
     public String toString() {

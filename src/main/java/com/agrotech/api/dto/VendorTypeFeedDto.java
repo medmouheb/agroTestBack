@@ -12,6 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class VendorTypeFeedDto extends BaseDto{
 
+    private String farmer;
 
     private String POState;
 

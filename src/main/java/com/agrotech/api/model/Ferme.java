@@ -176,5 +176,6 @@ private String customerName ;
 	@Field("properties")
 	private List<Property> properties;
 
+	private String farmer;
 
 }

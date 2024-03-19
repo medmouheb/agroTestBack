@@ -8,6 +8,7 @@ public class TimeSlotDto extends TimeSlot {
     private String listeDesJours;
 
     private String heureDebut;
+    private String farmer;
 
     private String heureFin;
 

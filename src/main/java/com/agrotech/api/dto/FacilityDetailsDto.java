@@ -18,5 +18,6 @@ public class FacilityDetailsDto extends BaseDto {
     private String alternative;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

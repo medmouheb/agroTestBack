@@ -7,6 +7,5 @@ import org.springframework.stereotype.Component;
 
 
 @Mapper
-@Component
 public interface UtilisationDuProduitMapper extends BaseMapper<UtilisationDuProduitDto, UtilisationDuProduit>{
 }

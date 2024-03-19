@@ -34,6 +34,7 @@ public class Brokers extends BaseEntity{
 
     @Size(max = 100)
     private String Notes;
+    private String farmer;
 
     private Boolean isDeleted=false;
 }

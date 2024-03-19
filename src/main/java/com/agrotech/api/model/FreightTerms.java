@@ -34,6 +34,7 @@ public class FreightTerms extends BaseEntity {
 
     // Add getter and setter methods for 'isDeleted'
 
+    private String farmer;
 
     @Override
     public String toString() {

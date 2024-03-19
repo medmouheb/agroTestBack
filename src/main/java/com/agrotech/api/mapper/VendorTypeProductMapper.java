@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 
 @Mapper
-@Component
 public interface VendorTypeProductMapper extends BaseMapper<VendorTypeProductDto, VendorTypeProduct>{
 
 }

@@ -38,5 +38,6 @@ public class VehicleType extends BaseEntity {
 
     private Boolean isDeleted=false;
 
+    private String farmer;
 
 }

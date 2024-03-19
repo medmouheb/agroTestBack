@@ -50,4 +50,7 @@ public class VendorTypePricing extends BaseEntity{
     private Boolean Taxable ;
 
     private Boolean isDeleted=false;
+
+    private String farmer;
+
 }

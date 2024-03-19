@@ -86,4 +86,7 @@ public class Vendors extends BaseEntity{
 
     private Boolean isDeleted=false;
 
+    private String farmer;
+
+
 }

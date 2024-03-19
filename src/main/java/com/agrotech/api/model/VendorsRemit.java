@@ -24,4 +24,8 @@ public class VendorsRemit {
     private String RemitToCountry;
 
     private Boolean isDeleted=false;
+
+
+    private String farmer;
+
 }
