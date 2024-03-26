@@ -40,9 +40,10 @@ public class Devis  extends BaseEntity{
     private String emailBody;
 
     private String farmer;
+    private float exchangeRate;
 
     private Boolean isDeleted=false;
-
+    private String paymentMethodNotes;
     private LocalDateTime lastUpdate=LocalDateTime.now();
     private Date availableTo;
 

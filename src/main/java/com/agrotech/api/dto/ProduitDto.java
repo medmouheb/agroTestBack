@@ -66,6 +66,21 @@ public class ProduitDto extends BaseDto {
 	private SalesSKU salesSKU;
 	private String farmer;
 
+	private BigDecimal  stockMinimum;
+	private BigDecimal  stockMinimumAlert;
+
+	private BigDecimal  ttc;
+	private BigDecimal  lastSallPrice;
+	private BigDecimal  actualStock= BigDecimal.valueOf(0);
+
+	private String unit;
+
+	private String picture;
+
+	private String barCode;
+
+
+
 
 	private HashSet<String> tags = new HashSet<>();
 

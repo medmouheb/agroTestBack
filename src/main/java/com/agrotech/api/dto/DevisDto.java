@@ -22,11 +22,12 @@ public class DevisDto  extends  BaseDto{
     @Size(max = 5)
     private String code;
     private String description;
-
+    private float exchangeRate;
     private ShipMethods shipMethods;
     private float shippingPrice;
 
     private PaymentMethod paymentMethod;
+    private String paymentMethodNotes ;
     private int InstallmentsNumber;
 
     private Buyers buyer;

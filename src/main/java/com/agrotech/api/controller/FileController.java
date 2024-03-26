@@ -72,17 +72,13 @@ public class FileController {
 
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("fileType") String fileType) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             FileDocument fileDocument = new FileDocument();
             fileDocument.setFileName(file.getOriginalFilename());
             fileDocument.setContentType(file.getContentType());
-            try{
-                fileDocument.setDocumentType(fileType);
 
-            }catch (Exception e){
-                System.out.println(e.toString());
-            }
+
             fileDocument.setData(file.getBytes());
             fileRepository.save(fileDocument);
             return ResponseEntity.status(HttpStatus.CREATED).body(fileDocument.getId());

@@ -28,7 +28,10 @@ public class FactureDto  extends BaseDto{
     private float shippingPrice;
 
     private PaymentMethod paymentMethod;
+    private String paymentMethodNotes;
+
     private int InstallmentsNumber;
+    private float exchangeRate;
 
     private Buyers buyer;
 

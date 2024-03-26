@@ -5,15 +5,27 @@ public class DevisProduct {
     public DevisProduct() {
     }
 
-    public DevisProduct(Produit produit, int qte, Tax tax) {
-        this.produit = produit;
-        this.qte = qte;
-        this.tax = tax;
-    }
 
     private Produit produit;
     private int qte;
     private Tax tax;
+
+    public DevisProduct(Produit produit, int qte, Tax tax, float remise) {
+        this.produit = produit;
+        this.qte = qte;
+        this.tax = tax;
+        this.remise = remise;
+    }
+
+    private float remise;
+
+    public float getRemise() {
+        return remise;
+    }
+
+    public void setRemise(float remise) {
+        this.remise = remise;
+    }
 
     public Produit getProduit() {
         return produit;

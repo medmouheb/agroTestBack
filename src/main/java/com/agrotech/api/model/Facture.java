@@ -28,7 +28,9 @@ public class Facture  extends BaseEntity{
     private float shippingPrice;
 
     private PaymentMethod paymentMethod;
+    private String paymentMethodNotes;
     private int InstallmentsNumber;
+    private float exchangeRate;
 
     private Buyers buyer;
 
@@ -52,6 +54,9 @@ public class Facture  extends BaseEntity{
 
 
     private Devis devis;
+
+    private float tvaCollected;
+    private float tvaDisbursed;
 
 }
 

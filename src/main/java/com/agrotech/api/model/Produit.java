@@ -76,4 +76,17 @@ public class Produit extends BaseEntity {
 	private String farmer;
 
 
+	private BigDecimal  stockMinimum;
+	private BigDecimal  stockMinimumAlert;
+	private BigDecimal  ttc;
+	private BigDecimal  lastSallPrice;
+
+	private String unit;
+
+	private String picture;
+	private String barCode;
+
+
+
+
 }
