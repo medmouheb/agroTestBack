@@ -100,8 +100,8 @@ public class ProductionServiceImpl implements ProductionService {
 
 
     @Override
-    public ProductionDto findByCode(String code) throws NotFoundException {
-        Optional<Production> campOptional = productionRepository.findByCode(code);
+    public ProductionDto findByName(String Name) throws NotFoundException {
+        Optional<Production> campOptional = productionRepository.findByName(Name);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Crop not found ");
         }
@@ -114,7 +114,7 @@ public class ProductionServiceImpl implements ProductionService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        return  productionRepository.findByIsDeletedAndCodeContainingIgnoreCaseAndFarmer(false,filter,farmername, pageable);
+        return  productionRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(false,filter,farmername, pageable);
 
 
     }
@@ -124,7 +124,7 @@ public class ProductionServiceImpl implements ProductionService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        return  productionRepository.findByIsDeletedAndCodeContainingIgnoreCase(false,filter, pageable);
+        return  productionRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
 
 
     }
@@ -134,7 +134,7 @@ public class ProductionServiceImpl implements ProductionService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        return  productionRepository.findByIsDeletedAndCodeContainingIgnoreCase(true,filter, pageable);
+        return  productionRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
 
     }
 
@@ -143,7 +143,7 @@ public class ProductionServiceImpl implements ProductionService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        return  productionRepository.findByIsDeletedAndCodeContainingIgnoreCaseAndFarmer(true,filter,farmername, pageable);
+        return  productionRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(true,filter,farmername, pageable);
 
     }
 
@@ -152,7 +152,7 @@ public class ProductionServiceImpl implements ProductionService {
     public Page<ProductionDto> findPage(int pageSize, int pageNumber, String filter) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<ProductionDto>  result = productionRepository.findByCodeContainingIgnoreCase(filter, pageable)
+        List<ProductionDto>  result = productionRepository.findByNameContainingIgnoreCase(filter, pageable)
                 .stream()
                 .map(productionMapper::toDto)
                 .collect(Collectors.toList());

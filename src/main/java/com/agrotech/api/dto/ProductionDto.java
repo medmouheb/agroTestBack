@@ -37,5 +37,6 @@ public class ProductionDto  extends BaseDto {
     private String  etatProd;
 
     private Boolean isDeleted=false;
+    private String farmer;
 
 }

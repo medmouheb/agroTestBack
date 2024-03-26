@@ -135,9 +135,9 @@ public class ProductionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/by-code/{code}")
-    public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        ProductionDto response = productionService.findByCode(code);
+    @GetMapping("/by-name/{name}")
+    public ResponseEntity<?> findByName(@PathVariable String name) throws NotFoundException {
+        ProductionDto response = productionService.findByName(name);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

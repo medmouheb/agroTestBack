@@ -39,5 +39,7 @@ public class Production extends BaseEntity{
     private String  etatProd;
     private Boolean isDeleted=false;
 
+    private String farmer;
+
 
 }
