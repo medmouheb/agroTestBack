@@ -12,8 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface ProductionRepository extends MongoRepository<Production, String> {
-    Optional<Facture> findByCode(String code);
-    Page<Facture> findByCodeContainingIgnoreCase(String code, Pageable pageable);
-    Page<Facture> findByIsDeletedAndCodeContainingIgnoreCase(Boolean isDeleted, String code, Pageable pageable);
-    Page<Facture> findByIsDeletedAndCodeContainingIgnoreCaseAndFarmer(Boolean isDeleted, String code,String farmer, Pageable pageable);
+    Optional<Production> findByCode(String code);
+    Page<Production> findByCodeContainingIgnoreCase(String code, Pageable pageable);
+    Page<Production> findByIsDeletedAndCodeContainingIgnoreCase(Boolean isDeleted, String code, Pageable pageable);
+    Page<Production> findByIsDeletedAndCodeContainingIgnoreCaseAndFarmer(Boolean isDeleted, String code,String farmer, Pageable pageable);
 }
