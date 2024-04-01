@@ -46,5 +46,6 @@ public class CampanyDto extends BaseDto{
 
     private String farmer;
 
+    private String picture;
 
 }

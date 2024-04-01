@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class BuyDto extends BaseDto {
 
     private String code ;
     private LocalDateTime buyDate;
+    private LocalDateTime deliveryDate;
     private int  totalPrice;
     private String productType;
     private List<Tax> taxes = new ArrayList<> ();
@@ -37,6 +39,8 @@ public class BuyDto extends BaseDto {
     private String paymentReceipt;
     private String paymentNotice;
     private String bankStatement;
+
+    private BigDecimal quantity;
 
 
 

@@ -1,7 +1,6 @@
 package com.agrotech.api.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import lombok.*;
@@ -43,8 +42,8 @@ public class Produit extends BaseEntity {
 	private String Fabricant;
 	@Size(max = 250)
 	private String couleur;
-	@Size(max = 250)
-	private String maxdepasse;
+
+	private BigDecimal maxdepasse;
 	@Size(max = 250)
 	private BigDecimal prixUnitaireHt;
 	@Size(max = 250)

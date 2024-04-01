@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
@@ -35,8 +36,12 @@ public class ProductionServiceImpl implements ProductionService {
     @Autowired
     private ProductionMapper productionMapper ;
 
+    private final RestTemplate restTemplate;
+
     @Autowired
-    private FileController fileController;
+    public ProductionServiceImpl(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public Production save(Production dto) {
 

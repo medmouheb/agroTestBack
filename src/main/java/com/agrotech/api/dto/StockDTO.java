@@ -25,9 +25,12 @@ public class StockDTO extends BaseDto {
 
     private String notes ;
 
-    private String typeOfMovement ;
+//    private String typeOfMovement ;
 
     private String product;
+
+    private float quantity;
+
 
     private String warehouse;
 

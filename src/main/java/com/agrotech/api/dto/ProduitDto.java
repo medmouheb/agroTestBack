@@ -46,8 +46,7 @@ public class ProduitDto extends BaseDto {
 	private String Fabricant;
 	@Size(max = 250)
 	private String couleur;
-	@Size(max = 250)
-	private String maxdepasse;
+	private BigDecimal maxdepasse;
 	@Size(max = 250)
 	private BigDecimal prixUnitaireHt;
 	@Size(max = 250)

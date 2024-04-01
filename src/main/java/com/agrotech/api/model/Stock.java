@@ -25,11 +25,13 @@ public class Stock extends BaseEntity{
 
     private String notes ;
 
-    private String typeOfMovement ;
+//    private String typeOfMovement ;
 
     private String product;
 
     private String warehouse;
+
+    private float quantity;
 
 
     private Boolean isDeleted=false;

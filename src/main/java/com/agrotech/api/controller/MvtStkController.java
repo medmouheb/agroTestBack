@@ -1,16 +1,15 @@
 package com.agrotech.api.controller;
 
-
-import com.agrotech.api.Repository.FactureRepository;
-import com.agrotech.api.Repository.ProductionRepository;
-import com.agrotech.api.dto.FactureDto;
-import com.agrotech.api.dto.ProductionDto;
+import com.agrotech.api.Repository.MvtStkRepository;
+import com.agrotech.api.Repository.MvtStkRepository;
+import com.agrotech.api.dto.MvtStkDto;
+import com.agrotech.api.dto.MvtStkDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Facture;
-import com.agrotech.api.model.Production;
+import com.agrotech.api.model.MvtStk;
+import com.agrotech.api.model.MvtStk;
 import com.agrotech.api.model.User;
-import com.agrotech.api.services.FactureService;
-import com.agrotech.api.services.ProductionService;
+import com.agrotech.api.services.MvtStkService;
+import com.agrotech.api.services.MvtStkService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,47 +27,44 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3600)
 @RestController
-@RequestMapping("/production")
+@RequestMapping("/mvt-stk")
 @RequiredArgsConstructor
-public class ProductionController {
+public class MvtStkController {
 
 
-
-    private final ProductionService productionService;
-    private final ProductionRepository productionRepository;
+    private final MvtStkService mvtStkService;
+    private final MvtStkRepository mvtStkRepository;
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody ProductionDto campany) throws DocumentException, FileNotFoundException {
-        ProductionDto response = productionService.create(campany);
-
-
+    public ResponseEntity<?> create(@RequestBody MvtStkDto campany) throws DocumentException, FileNotFoundException {
+        MvtStkDto response = mvtStkService.create(campany);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
-        productionRepository.deleteAll();
+        mvtStkRepository.deleteAll();
     }
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody ProductionDto campany) throws NotFoundException {
-        ProductionDto response = productionService.update(id, campany);
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody MvtStkDto campany) throws NotFoundException {
+        MvtStkDto response = mvtStkService.update(id, campany);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
-        ProductionDto response = productionService.findById(id);
+        MvtStkDto response = mvtStkService.findById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<ProductionDto> response = productionService.findAll();
+        List<MvtStkDto> response = mvtStkService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -93,12 +89,12 @@ public class ProductionController {
         });
 
 
-        Page<Production> response;
+        Page<MvtStk> response;
 
         if(t.get().equals("admin")){
-            response= productionService.getpages1(pageSize, pageNumber, filter);
+            response= mvtStkService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= productionService.getpages(pageSize, pageNumber, filter,farmername);
+            response= mvtStkService.getpages(pageSize, pageNumber, filter,farmername);
         }
 
 
@@ -128,37 +124,37 @@ public class ProductionController {
                 t.set("employee");
             }
         });
-        Page<Production> response;
+        Page<MvtStk> response;
 
         if(t.get().equals("admin")){
-            response= productionService.getpagesarchive(pageSize, pageNumber, filter);
+            response= mvtStkService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= productionService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+            response= mvtStkService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/by-name/{name}")
-    public ResponseEntity<?> findByName(@PathVariable String name) throws NotFoundException {
-        ProductionDto response = productionService.findByName(name);
+    @GetMapping("/by-code/{code}")
+    public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
+        MvtStkDto response = mvtStkService.findByCode(code);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
-        productionService.delete(id);
+        mvtStkService.delete(id);
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/archiver/{id}")
     public ResponseEntity<?> archive(@PathVariable String id) throws NotFoundException {
-        productionService.archive(id);
+        mvtStkService.archive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/desarchiver/{id}")
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
-        productionService.setNotArchive(id);
+        mvtStkService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

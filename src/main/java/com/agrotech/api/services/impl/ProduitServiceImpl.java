@@ -222,7 +222,7 @@ public class ProduitServiceImpl implements ProduitService {
         produit.setMedicamenteux( Boolean.valueOf(record.get("Medicamenteux"))  );
         produit.setFabricant(record.get("Fabricant"));
         produit.setCouleur(record.get("couleur"));
-        produit.setMaxdepasse(record.get("maxdepasse"));
+        produit.setMaxdepasse(new BigDecimal(record.get("maxdepasse")) );
         produit.setPrixUnitaireHt(new BigDecimal(record.get("prixUnitaireHt")));
         produit.setTauxTva(new BigDecimal(record.get("tauxTva")));
         produit.setIsDeleted( Boolean.valueOf(record.get("isDeleted"))  );

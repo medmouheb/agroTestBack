@@ -59,24 +59,24 @@ public class StockController {
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody StockDTO campany) throws JSONException, DocumentException, FileNotFoundException {
         StockDTO response = stockServices.create(campany);
-        System.out.println( ":::"+ produitRepository.findById(campany.getProduct()).get().getTags()  );
+//        System.out.println( ":::"+ produitRepository.findById(campany.getProduct()).get().getTags()  );
+//
+//        List<Buyers> l=buyersRepository.findByTagsIn(produitRepository.findByName(campany.getProduct()).getTags());
+//
+//
+//        for(Buyers singleBuyer:l){
+//            String dto="{\n" +
+//                    "      \"email\":\""+singleBuyer.getEmail()+"\",\n" +
+//                    "      \"title\":\"NEW PRODUCTS\",\n" +
+//                    "      \"subject\":\" "+getCurrentDate()+" NEW PRODUCTS\",\n" +
+//                    "      \"paragraph\":\"we have new products you can be interested in ,\n" +
+//                    produitRepository.findById(campany.getProduct()).get().getName()+"\","+
+//                    "      \"files\":[]\n" +
+//                    "  }";
+//            emailController.sendActivateMAil(dto);
+//        }
 
-        List<Buyers> l=buyersRepository.findByTagsIn(produitRepository.findById(campany.getProduct()).get().getTags());
-
-
-        for(Buyers singleBuyer:l){
-            String dto="{\n" +
-                    "      \"email\":\""+singleBuyer.getEmail()+"\",\n" +
-                    "      \"title\":\"NEW PRODUCTS\",\n" +
-                    "      \"subject\":\" "+getCurrentDate()+" NEW PRODUCTS\",\n" +
-                    "      \"paragraph\":\"we have new products you can be interested in ,\n" +
-                    produitRepository.findById(campany.getProduct()).get().getName()+"\","+
-                    "      \"files\":[]\n" +
-                    "  }";
-            emailController.sendActivateMAil(dto);
-        }
-
-        return new ResponseEntity<>(l, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

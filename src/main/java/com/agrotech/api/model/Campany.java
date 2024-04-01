@@ -55,4 +55,8 @@ public class Campany  extends BaseEntity{
 
 
     private HashSet<User> employees = new HashSet<>();
+
+
+    private String picture;
+
 }

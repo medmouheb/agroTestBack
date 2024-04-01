@@ -1,9 +1,12 @@
 package com.agrotech.api.model;
 
+import com.agrotech.api.utils.ValidationMessages;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +15,7 @@ import com.agrotech.api.enums.TypeMvtStk;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,16 +24,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "mvt_stk")
-public class MvtStk {
-
-	private String id ;
-	private Instant dateMvt;
+public class MvtStk extends BaseEntity {
+	@NotBlank(message = ValidationMessages.CODE_REQUIRED)
+	@Indexed(unique = true)
+	private String code ;
+	private Date dateMvt;
     private BigDecimal quantite;
-	private TypeMvtStk typeMvt;
-	private SourceMvtStk sourceMvt;
+	private String typeMvt;
+	private Stock stock;
 
 	private String farmer;
 
-    @DBRef
-    private Set<Produit> produits = new HashSet<>();
+	private Boolean isDeleted=false;
+
+
+
 }

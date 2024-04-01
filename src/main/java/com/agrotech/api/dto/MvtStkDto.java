@@ -2,9 +2,14 @@ package com.agrotech.api.dto;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.agrotech.api.model.Stock;
+import com.agrotech.api.utils.ValidationMessages;
+import jakarta.validation.constraints.NotBlank;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import com.agrotech.api.enums.SourceMvtStk;
@@ -21,19 +26,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MvtStkDto extends BaseDto{
+	@NotBlank(message = ValidationMessages.CODE_REQUIRED)
+	@Indexed(unique = true)
+	private String code ;
+	private Date dateMvt;
+	private BigDecimal quantite;
+	private String typeMvt;
+	private Stock stock;
 
-	
-	private String id ;
-	private Instant dateMvt;
-    private BigDecimal quantite;
-	private TypeMvtStk typeMvt;
-	private SourceMvtStk sourceMvt;
- 
-
-    @DBRef
-    private Set<Produit> produits = new HashSet<>();
 	private String farmer;
 
-
+	private Boolean isDeleted=false;
 
 }

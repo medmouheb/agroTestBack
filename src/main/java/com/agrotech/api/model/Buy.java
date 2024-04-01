@@ -1,5 +1,6 @@
 package com.agrotech.api.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -44,5 +45,7 @@ public class Buy  extends BaseEntity{
 
     private String farmer;
 
+    private BigDecimal quantity;
+    private LocalDateTime deliveryDate;
 
 }
