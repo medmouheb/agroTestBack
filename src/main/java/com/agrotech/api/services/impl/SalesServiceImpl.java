@@ -1,12 +1,16 @@
 package com.agrotech.api.services.impl;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import com.agrotech.api.Repository.BuyersRepository;
+import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.dto.SalesSkuDto;
-import com.agrotech.api.model.SalesSKU;
+import com.agrotech.api.model.*;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
@@ -17,8 +21,6 @@ import com.agrotech.api.dto.SalesDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.ProduitMapper;
 import com.agrotech.api.mapper.SalesMapper;
-import com.agrotech.api.model.Produit;
-import com.agrotech.api.model.Sales;
 import com.agrotech.api.services.SalesServices;
 
 import lombok.RequiredArgsConstructor;
@@ -32,12 +34,40 @@ public class SalesServiceImpl implements SalesServices {
 	@Autowired
     private final SalesMapper salesMapper;
 
+    @Autowired
+    private final BuyersRepository buyersRepository;
+
+    @Autowired
+    private final ProduitRepository produitRepository;
+
     public Sales save(Sales sales) {
         return salesRepository.save(sales);
     }
 
     @Override
     public SalesDto create(SalesDto dto) {
+        Buyers b= buyersRepository.findById(dto.getBuyer()).get()  ;
+        Produit p= produitRepository.findById(dto.getProduct()).get() ;
+        TurnoverHistory th=new TurnoverHistory();
+
+        BigDecimal bigDecimalValue = new BigDecimal(dto.getQuantity());
+
+        float totalPrice=  bigDecimalValue.multiply( p.getPrixUnitaireHt()).floatValue() ;
+
+        th.setAmount(totalPrice);
+
+        th.setOldTurnver(b.getTurnover());
+        b.setTurnover(b.getTurnover()-totalPrice);
+        th.setNewTurnver(b.getTurnover());
+
+        th.setMovementType("sales");
+        th.setMovementName(dto.getName());
+
+        List<TurnoverHistory> thList=b.getTurnoverHistory();
+        thList.add(th);
+        b.setTurnoverHistory(thList);
+
+        buyersRepository.save(b);
         return salesMapper.toDto(
                 save(
                         salesMapper.toEntity(dto)
@@ -65,9 +95,7 @@ public class SalesServiceImpl implements SalesServices {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Sales>  result =  salesRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
-        return result;
-        // return new PageImpl<>(result);
+        return salesRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
     }
 
     @Override

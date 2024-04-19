@@ -4,6 +4,7 @@ import com.agrotech.api.Repository.BuyersRepository;
 import com.agrotech.api.dto.BuyersDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Buyers;
+import com.agrotech.api.model.Facture;
 import com.agrotech.api.services.BuyersService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +12,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
@@ -70,11 +75,32 @@ public class BuyersController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage(
-            @RequestParam(defaultValue = "3") int pageSize,
+            @RequestParam(defaultValue = "10") int pageSize,
             @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String farmername,
             @RequestParam(defaultValue = "") String filter
     ) {
-        Page<Buyers> response = buyersService.getpages(pageSize, pageNumber, filter);
+        AtomicReference<String> t= new AtomicReference<>("admin");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        userDetails.getAuthorities().forEach(authority -> {
+            if(authority.getAuthority().equals("ROLE_FARMER")){
+                t.set("farmer");
+            }else if(authority.getAuthority().equals("ROLE_ADMIN")){
+                t.set("admin");
+            }else {
+                t.set("employee");
+            }
+        });
+
+        Page<Buyers> response;
+
+        if(t.get().equals("admin")){
+            response= buyersService.getpages(pageSize, pageNumber, filter);
+        }else {
+            response= buyersService.getpages1(pageSize, pageNumber, filter,farmername);
+        }
+
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

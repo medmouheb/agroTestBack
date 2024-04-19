@@ -45,6 +45,7 @@ public class Sales  extends BaseEntity{
 	private String creditNote;
 
 	private String product;
+	private int quantity=0;
 
 	private String farmer;
 

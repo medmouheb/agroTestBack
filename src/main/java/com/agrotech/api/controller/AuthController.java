@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.agrotech.api.Repository.RoleRepository;
 import com.agrotech.api.Repository.UserRepository;
 import com.agrotech.api.model.ERole;
+import com.agrotech.api.model.NewNotification;
 import com.agrotech.api.model.Role;
 import com.agrotech.api.model.User;
 import com.agrotech.api.payload.request.LoginRequest;
@@ -236,8 +237,57 @@ public class AuthController {
         }
         user.setModules(modules);
         userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("employee was updated succefully"));
+        return ResponseEntity.ok(new MessageResponse("employee was updated successfully"));
     }
+
+
+
+
+    @GetMapping("/get-by-id")
+    @PreAuthorize("hasRole('FARMER') or hasRole('ADMIN') or hasRole('EMPLOYEE')")
+    public ResponseEntity<?> GetById(@RequestParam(defaultValue = "") String id){
+        return new ResponseEntity<>(userRepository.findById(id).get(), HttpStatus.OK);
+    }
+
+
+    @PutMapping("/update")
+    @PreAuthorize("hasRole('FARMER') or hasRole('ADMIN') or hasRole('EMPLOYEE')")
+    public ResponseEntity<?> userUpdate(@RequestBody  User user ){
+        return new ResponseEntity<>(userRepository.save(user), HttpStatus.OK);
+    }
+
+    @PutMapping("/add-notif")
+    public ResponseEntity<?> setNotifications(
+            @RequestParam(defaultValue = "") String owner,
+            @RequestParam(defaultValue = "") String content
+    ){
+        System.out.println(owner);
+        System.out.println(content);
+        User u=userRepository.findByUsername(owner).get();
+        List<NewNotification> nList = u.getNotifications();
+        NewNotification n= new NewNotification();
+        n.setContent(content);
+        nList.add(n);
+        u.setNotifications(nList);
+        u.setNotificationsNbr(u.getNotificationsNbr()+1);
+        userRepository.save(u);
+        return ResponseEntity.ok(new MessageResponse("notification sent successfully!"));
+    }
+
+    @GetMapping("/get-notification-number")
+    public ResponseEntity<?> setNotificationNumber(@RequestParam(defaultValue = "") String owner){
+        return ResponseEntity.ok(new MessageResponse("" +userRepository.findByUsername(owner).get().getNotificationsNbr()));
+    }
+
+    @GetMapping("/get-notifications")
+    public ResponseEntity<?> setNotifications(@RequestParam(defaultValue = "") String owner){
+        User u=userRepository.findByUsername(owner).get();
+        u.setNotificationsNbr(0);
+        List<NewNotification> nList=u.getNotifications();
+        userRepository.save(u);
+        return new ResponseEntity<>(nList, HttpStatus.OK);
+    }
+
 }
 
 

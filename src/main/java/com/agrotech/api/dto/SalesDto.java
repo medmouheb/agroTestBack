@@ -16,22 +16,34 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalesDto extends BaseDto {
-    private String farmer;
-
+    @NotBlank(message = ValidationMessages.CODE_REQUIRED)
+    @Indexed(unique = true)
+    @Size(max = 50, message = ValidationMessages.CODE_TOO_LONG)
     private String code ;
+    @NotBlank(message = ValidationMessages.NAME_REQUIRED)
+    @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
     private String name;
     private String type ;
     private String currency ;
-    private List<Tax> taxes = new ArrayList<> ();
-
     private String Payment_Term ;
     private Boolean isDeleted=false;
 
-    private String buyer;
+    private  String buyer;
+
+    private List<Tax> taxes = new ArrayList<>();
 
 
+
+    private String purchaseOrder;
+    private String quotation;
+    private String salesInvoice;
+    private String deliveryNote;
+    private String creditNote;
 
     private String product;
+    private int quantity=0;
+
+    private String farmer;
 
 
     public  String toStrings() {

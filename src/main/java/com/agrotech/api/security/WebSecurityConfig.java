@@ -138,6 +138,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/contact/**").permitAll()
                         .requestMatchers("/production/**").permitAll()
                         .requestMatchers("/mvt-stk/**").permitAll()
+                        .requestMatchers("/task/**").permitAll()
                         .requestMatchers("/potential-client/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated());
 

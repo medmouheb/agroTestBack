@@ -36,12 +36,6 @@ public class ProductionServiceImpl implements ProductionService {
     @Autowired
     private ProductionMapper productionMapper ;
 
-    private final RestTemplate restTemplate;
-
-    @Autowired
-    public ProductionServiceImpl(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
 
     public Production save(Production dto) {
 

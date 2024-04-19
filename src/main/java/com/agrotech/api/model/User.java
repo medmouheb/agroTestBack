@@ -1,10 +1,6 @@
 package com.agrotech.api.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -49,6 +45,8 @@ public class User {
     private String region;
     private String numeroTelephone;
 
+    private String avatar;
+
     private Boolean verified=true;
 
     public Boolean getVerified() {
@@ -61,6 +59,27 @@ public class User {
 
     private HashSet<String> tags = new HashSet<>();
     private HashSet<String> modules = new HashSet<>();
+
+
+    private List<NewNotification> notifications = new ArrayList<>();
+
+    private int notificationsNbr=0;
+
+    public List<NewNotification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<NewNotification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public int getNotificationsNbr() {
+        return notificationsNbr;
+    }
+
+    public void setNotificationsNbr(int notificationsNbr) {
+        this.notificationsNbr = notificationsNbr;
+    }
 
     public User() {
     }
@@ -205,4 +224,34 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+
+    public User(String username, String email, String password, Set<Role> roles, String farmer, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone, String avatar, Boolean verified, HashSet<String> tags, HashSet<String> modules) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+        this.farmer = farmer;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.region = region;
+        this.numeroTelephone = numeroTelephone;
+        this.avatar = avatar;
+        this.verified = verified;
+        this.tags = tags;
+        this.modules = modules;
+    }
 }
+
+

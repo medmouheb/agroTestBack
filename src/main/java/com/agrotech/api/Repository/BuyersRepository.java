@@ -17,6 +17,7 @@ public interface BuyersRepository extends MongoRepository<Buyers, String> {
     Optional<Buyers> findByCode(String code);
     Page<Buyers> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Buyers> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Buyers> findByIsDeletedAndNameContainingIgnoreCaseAndFarmerContainingIgnoreCase(Boolean isDeleted, String name,String farmer, Pageable pageable);
     Page<Buyers> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Buyers findByName(String name );
 

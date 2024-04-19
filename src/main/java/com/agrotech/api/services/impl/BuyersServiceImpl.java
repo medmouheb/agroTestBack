@@ -71,7 +71,6 @@ public class BuyersServiceImpl implements BuyersService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<BuyersDto>  result = buyersRepository.findByNameContainingIgnoreCase(filter, pageable)
                 .stream()
-//				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
                 .map(buyersMapper::toDto)
                 .collect(Collectors.toList());
 
@@ -110,9 +109,15 @@ public class BuyersServiceImpl implements BuyersService {
     @Override
     public Page<Buyers> getpages(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
-        Page<Buyers> result =  buyersRepository.findByIsDeleted(false, pageable);
 
-        return result;    }
+        return buyersRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
+    }
+
+    @Override
+    public Page<Buyers> getpages1(int pageSize, int pageNumber, String filter,String framer) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
+        return buyersRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmerContainingIgnoreCase(false,filter,framer, pageable);
+    }
 
     @Override
     public Page<Buyers> getpagesarchive(int pageSize, int pageNumber, String filter) {

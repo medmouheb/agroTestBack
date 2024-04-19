@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -107,6 +109,25 @@ public class Buyers extends BaseEntity{
 
     private int dueInDays;
 
+    private float turnover=0;
+    private List<TurnoverHistory> turnoverHistory = new ArrayList<>();
+
+
+    public float getTurnover() {
+        return turnover;
+    }
+
+    public void setTurnover(float turnover) {
+        this.turnover = turnover;
+    }
+
+    public List<TurnoverHistory> getTurnoverHistory() {
+        return turnoverHistory;
+    }
+
+    public void setTurnoverHistory(List<TurnoverHistory> turnoverHistory) {
+        this.turnoverHistory = turnoverHistory;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -505,3 +526,5 @@ public class Buyers extends BaseEntity{
     }
 
 }
+
+

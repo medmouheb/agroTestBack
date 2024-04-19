@@ -13,6 +13,7 @@ public interface BuyersService extends BaseService<BuyersDto,String>{
     BuyersDto findByBuyersCode(String BuyersCode) throws NotFoundException;
     Page<BuyersDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Buyers> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<Buyers> getpages1(int pageSize, int pageNumber, String filter, String farmer) ;
     Page<Buyers> getpagesarchive(int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;
