@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface StockRepository extends MongoRepository<Stock, String> {
+public interface StockRepository extends MongoRepository<Stock, String> , StockRepositoryCustom {
     Optional<Stock> findByCode(String code);
     Page<Stock> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Stock> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);

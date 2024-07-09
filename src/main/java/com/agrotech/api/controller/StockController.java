@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 //@CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3600)
 @CrossOrigin(origins = { "*" }, maxAge = 3600)
@@ -154,5 +155,7 @@ public class StockController {
         Page<Stock> response = stockServices.getpagesarchive(pageSize, pageNumber, filter);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 
+import com.agrotech.api.Repository.TaskRepository;
 import com.agrotech.api.dto.TaskDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Task;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
@@ -22,6 +24,8 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+
+    private final TaskRepository taskRepository;
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
@@ -108,6 +112,8 @@ public class TaskController {
         List<Task> response = taskService.findAllByOwnerAndActurDisactive(owner,actur);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
 
 
 }

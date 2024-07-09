@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TaskRepository  extends MongoRepository<Task ,String> {
+public interface TaskRepository  extends MongoRepository<Task ,String> ,  TaskRepositoryCustom{
+
 
     List<Task> findByTasksOwnerContainingIgnoreCaseAndActurContainingIgnoreCaseAndIsDeleted(String owner, String actur , Boolean deleted);
     List<Task> findByTasksOwnerContainingIgnoreCaseAndIsDeleted(String owner, Boolean deleted);

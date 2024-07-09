@@ -139,6 +139,9 @@ public class WebSecurityConfig {
                         .requestMatchers("/production/**").permitAll()
                         .requestMatchers("/mvt-stk/**").permitAll()
                         .requestMatchers("/task/**").permitAll()
+                        .requestMatchers("/statistics/**").permitAll()
+                        .requestMatchers("/deliveryNote/**").permitAll()
+                        .requestMatchers("/releaseDocument/**").permitAll()
                         .requestMatchers("/potential-client/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated());
 
