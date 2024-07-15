@@ -73,7 +73,11 @@ public class CampanyServiceImpl implements CampanyService{
 
 	@Override
 	public List<CampanyDto> findAll() {
-		return campanyRepository.findAll().stream()
+		return null;
+	}
+	@Override
+	public List<CampanyDto> findAll(String farmer)  throws NotFoundException {
+		return campanyRepository.findByFarmer(farmer).stream()
 				.map(campanyMapper::toDto)
 				.collect(Collectors.toList());
 	}
@@ -92,8 +96,8 @@ public class CampanyServiceImpl implements CampanyService{
 
 
 	@Override
-	public CampanyDto findByCode(String code) throws NotFoundException {
-		Optional<Campany> campOptional = campanyRepository.findByCode(code);
+	public CampanyDto findByCode(String code,String farmer) throws NotFoundException {
+		Optional<Campany> campOptional = campanyRepository.findByCodeAndFarmer(code,farmer);
 		if(campOptional.isEmpty()) {
 			throw new NotFoundException("Campany not found ");
 		}

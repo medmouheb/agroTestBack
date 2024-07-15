@@ -1,5 +1,6 @@
 package com.agrotech.api.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -12,7 +13,8 @@ import com.agrotech.api.model.Campany;
 @Repository
 public interface CampanyRepository extends MongoRepository<Campany, String> {
 
-    Optional<Campany> findByCode(String code);
+    Optional<Campany> findByCodeAndFarmer(String code,String farmer);
+    List<Campany> findByFarmer(String farmer);
     Page<Campany> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Campany> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
     Page<Campany> findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(Boolean isDeleted, String name,String farmer, Pageable pageable);

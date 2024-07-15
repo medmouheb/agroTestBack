@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CampanyService extends BaseService<CampanyDto, String> {
 
-	CampanyDto findByCode(String code) throws NotFoundException;
+	CampanyDto findByCode(String code,String farmer) throws NotFoundException;
 		Page<CampanyDto> findPage1(int pageSize, int pageNumber, String filter) ;
 	Page<Campany> getpages(int pageSize, int pageNumber, String filter) ;
 	Page<Campany> getpages1(int pageSize, int pageNumber, String filter, String farmername) ;
@@ -27,4 +27,5 @@ public interface CampanyService extends BaseService<CampanyDto, String> {
 	public Page<CampanyDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
 	List<Campany> findBynamee()throws NotFoundException;
+	List<CampanyDto> findAll(String farmer)throws NotFoundException;
 }

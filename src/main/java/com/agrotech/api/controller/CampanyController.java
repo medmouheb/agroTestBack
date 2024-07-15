@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.model.User;
+import com.agrotech.api.utils.UserSecurity;
 import com.itextpdf.text.DocumentException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -41,6 +42,7 @@ import lombok.RequiredArgsConstructor;
 public class CampanyController {
 	private final CampanyService campanyService;
 	private final CampanyRepository campanyRepository;
+	private  com.agrotech.api.utils.UserSecurity userSecurity;
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@DeleteMapping("/deleteall")
@@ -78,8 +80,8 @@ public class CampanyController {
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("")
-	public ResponseEntity<?> findAll() {
-		List<CampanyDto> response = campanyService.findAll();
+	public ResponseEntity<?> findAll() throws NotFoundException {
+		List<CampanyDto> response = campanyService.findAll(getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -125,7 +127,6 @@ public class CampanyController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-
 		userDetails.getAuthorities().forEach(authority -> {
 			if(authority.getAuthority().equals("ROLE_FARMER")){
 				t.set("farmer");
@@ -144,10 +145,19 @@ public class CampanyController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+	private String getusername(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		return userDetails.getUsername();
+
+	}
+
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		CampanyDto response = campanyService.findByCode(code);
+		System.out.println(getusername());
+
+		CampanyDto response = campanyService.findByCode(code,getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
