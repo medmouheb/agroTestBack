@@ -35,7 +35,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     private String farmer;
-
+    private String resetToken;
 
     private String nom;
     private String prenom;
@@ -46,8 +46,19 @@ public class User {
     private String numeroTelephone;
 
     private String avatar;
+    private String activationToken;
 
-    private Boolean verified=true;
+    private Boolean verified=false;
+    public User() {
+    }
+    public User(String username, String email, String encode) {
+        this.username = username;
+        this.email = email;
+        this.password = encode;
+    }
+
+    public User(String username, String email, String encode, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone) {
+    }
 
     public Boolean getVerified() {
         return verified;
@@ -81,7 +92,8 @@ public class User {
         this.notificationsNbr = notificationsNbr;
     }
 
-    public User() {
+    public User(String resetToken) {
+        this.resetToken = resetToken;
     }
 
 
@@ -110,10 +122,11 @@ public class User {
         this.tags = tags;
     }
 
-    public User(String username, String email, String password, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone) {
+    public User(String username, String email, String password, String resetToken, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.resetToken = resetToken;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
@@ -123,10 +136,11 @@ public class User {
         this.numeroTelephone = numeroTelephone;
     }
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, String resetToken) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.resetToken = resetToken;
     }
 
     public String getNom() {
@@ -232,19 +246,29 @@ public class User {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+    public String getActivationToken() {
+        return activationToken;
+    }
+
+    public void setActivationToken(String activationToken) {
+        this.activationToken = activationToken;
+    }
 
 
-    public User(String username, String email, String password, Set<Role> roles, String farmer, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone, String avatar, Boolean verified, HashSet<String> tags, HashSet<String> modules) {
+
+    public User(String username, String email, String password, Set<Role> roles, String farmer, String resetToken, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone, String avatar, Boolean verified, HashSet<String> tags, HashSet<String> modules) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.roles = roles;
         this.farmer = farmer;
+        this.resetToken = resetToken;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.sexe = sexe;
         this.pays = pays;
+
         this.region = region;
         this.numeroTelephone = numeroTelephone;
         this.avatar = avatar;
