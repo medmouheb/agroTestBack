@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 import java.util.logging.Logger;
+@CrossOrigin(origins = { "*" }, maxAge = 3600)
 
 @RestController
 @RequestMapping("/api/auth")
@@ -76,7 +77,7 @@ public class AuthFrameController {
         userRepository.save(savedUser); // Save updated user with activation token
 
         // Send activation email with token
-        String activationUrl = "http://localhost:4200/activate?token=" + activationToken;
+        String activationUrl = "http://localhost:4200/mail?token=" + activationToken;
         try {
             emailService.sendActivateMail(savedUser.getEmail(), activationUrl);
             logger.info("Activation email sent to " + savedUser.getEmail());
