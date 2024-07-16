@@ -6,7 +6,7 @@ import com.agrotech.api.model.Production;
 import org.springframework.data.domain.Page;
 
 public interface ProductionService  extends BaseService<ProductionDto, String> {
-    ProductionDto findByName(String code) throws NotFoundException;
+    ProductionDto findByName(String code,String farmer) throws NotFoundException;
 
 
     Page<Production> getpages(int pageSize, int pageNumber, String filter, String farmername);

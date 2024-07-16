@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.model.User;
-import com.agrotech.api.utils.UserSecurity;
 import com.itextpdf.text.DocumentException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -42,7 +41,6 @@ import lombok.RequiredArgsConstructor;
 public class CampanyController {
 	private final CampanyService campanyService;
 	private final CampanyRepository campanyRepository;
-	private  com.agrotech.api.utils.UserSecurity userSecurity;
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@DeleteMapping("/deleteall")

@@ -1,5 +1,6 @@
 package com.agrotech.api.services;
 
+import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.DeliveryNoteDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.DeliveryNote;
@@ -7,7 +8,7 @@ import org.springframework.data.domain.Page;
 
 public interface DeliveryNoteService extends BaseService<DeliveryNoteDto, String> {
 
-    DeliveryNoteDto findByCode(String code) throws NotFoundException;
+    DeliveryNoteDto findByCode(String code, String farmer) throws NotFoundException;
 
 
     Page<DeliveryNote> getpages(int pageSize, int pageNumber, String filter, String farmername);

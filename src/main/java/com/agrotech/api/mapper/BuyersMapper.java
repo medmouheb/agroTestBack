@@ -7,5 +7,7 @@ import org.springframework.stereotype.Component;
 
 
 @Mapper
+@Component
+
 public interface BuyersMapper extends BaseMapper<BuyersDto, Buyers>{
 }

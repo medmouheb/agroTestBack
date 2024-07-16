@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public interface StockMapper  extends BaseMapper<StockDTO, Stock> {
 }

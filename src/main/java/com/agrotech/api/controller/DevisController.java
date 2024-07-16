@@ -71,7 +71,7 @@ public class DevisController {
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "") String farmername,
             @RequestParam(defaultValue = "") String filter) {
-
+        System.out.println("hello");
         AtomicReference<String> t= new AtomicReference<>("admin");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -130,10 +130,16 @@ public class DevisController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        DevisDto response = devisService.findByCode(code);
+        DevisDto response = devisService.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

@@ -34,7 +34,12 @@ public class DeliveryNoteController {
 
     private final DeliveryNoteService deliveryNoteService;
     private final DeliveryNoteRepository deliveryNoteRepository;
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
 
+    }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
@@ -136,7 +141,7 @@ public class DeliveryNoteController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        DeliveryNoteDto response = deliveryNoteService.findByCode(code);
+        DeliveryNoteDto response = deliveryNoteService.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

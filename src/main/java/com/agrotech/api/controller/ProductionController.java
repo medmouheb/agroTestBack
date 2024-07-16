@@ -137,10 +137,17 @@ public class ProductionController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-name/{name}")
     public ResponseEntity<?> findByName(@PathVariable String name) throws NotFoundException {
-        ProductionDto response = productionService.findByName(name);
+        ProductionDto response = productionService.findByName(name,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

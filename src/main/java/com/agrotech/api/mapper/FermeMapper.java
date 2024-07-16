@@ -8,6 +8,7 @@ import com.agrotech.api.model.Ferme;
 import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public interface FermeMapper extends BaseMapper<FermeDto, Ferme> {
 
 }

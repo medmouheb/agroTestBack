@@ -98,8 +98,8 @@ public class DeliveryNoteServiceImpl implements DeliveryNoteService {
 
 
     @Override
-    public DeliveryNoteDto findByCode(String code) throws NotFoundException {
-        Optional<DeliveryNote> campOptional = deliveryNoteRepository.findByCode(code);
+    public DeliveryNoteDto findByCode(String code, String farmer) throws NotFoundException {
+        Optional<DeliveryNote> campOptional = deliveryNoteRepository.findByCodeAndFarmer(code,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Crop not found ");
         }

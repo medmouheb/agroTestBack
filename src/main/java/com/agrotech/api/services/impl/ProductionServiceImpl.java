@@ -99,8 +99,8 @@ public class ProductionServiceImpl implements ProductionService {
 
 
     @Override
-    public ProductionDto findByName(String Name) throws NotFoundException {
-        Optional<Production> campOptional = productionRepository.findByName(Name);
+    public ProductionDto findByName(String Name,String farmer) throws NotFoundException {
+        Optional<Production> campOptional = productionRepository.findByNameAndFarmer(Name,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Crop not found ");
         }

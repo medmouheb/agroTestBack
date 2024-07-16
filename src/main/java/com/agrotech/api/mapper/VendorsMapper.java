@@ -6,5 +6,6 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public interface VendorsMapper extends BaseMapper<VendorsDto, Vendors>{
 }

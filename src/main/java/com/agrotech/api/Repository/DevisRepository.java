@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface DevisRepository extends MongoRepository<Devis, String> {
     Optional<Devis> findByCode(String code);
+    Optional<Devis> findByCodeAndFarmer(String code,String farmer);
     Page<Devis> findByCodeContainingIgnoreCase(String code, Pageable pageable);
     Page<Devis> findByIsDeletedAndCodeContainingIgnoreCase(Boolean isDeleted, String code, Pageable pageable);
     Page<Devis> findByIsDeletedAndCodeContainingIgnoreCaseAndFarmer(Boolean isDeleted, String code,String farmer, Pageable pageable);

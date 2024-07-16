@@ -104,8 +104,8 @@ public class DevisServiceImpl implements DevisService {
 
 
     @Override
-    public DevisDto findByCode(String code) throws NotFoundException {
-        Optional<Devis> campOptional = devisRepository.findByCode(code);
+    public DevisDto findByCode(String code,String farmer) throws NotFoundException {
+        Optional<Devis> campOptional = devisRepository.findByCodeAndFarmer(code,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Crop not found ");
         }
