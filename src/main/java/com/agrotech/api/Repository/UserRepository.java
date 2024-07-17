@@ -22,6 +22,11 @@ public interface UserRepository extends MongoRepository<User, String> {
     Page<User> findByFarmerAndUsernameContainingIgnoreCase(String id,String  username,Pageable pageable);
     Page<User>  findByRolesContainingAndUsernameContainingIgnoreCase(Role r , String username,Pageable pageable);
 
+    Optional<User> findByActivationToken(String token);
+
+    Optional<User> findByEmail(String email);
+
+    Optional<User> findByResetToken(String token);
 
 
 //    Page<Campany> findByNameContainingIgnoreCase(String name, Pageable pageable);

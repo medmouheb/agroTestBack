@@ -1,9 +1,7 @@
 package com.agrotech.api.controller;
 
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -19,6 +17,7 @@ import com.agrotech.api.payload.response.JwtResponse;
 import com.agrotech.api.payload.response.MessageResponse;
 import com.agrotech.api.security.jwt.JwtUtils;
 import com.agrotech.api.security.services.UserDetailsImpl;
+import com.agrotech.api.utils.EmailService;
 import jakarta.validation.Valid;
 
 import org.json.JSONArray;
@@ -61,9 +60,17 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    EmailService emailService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+        User user = userRepository.findByUsername(loginRequest.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found."));
+
+        if (!user.getVerified()) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: User account not verified."));
+        }
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -286,6 +293,57 @@ public class AuthController {
         List<NewNotification> nList=u.getNotifications();
         userRepository.save(u);
         return new ResponseEntity<>(nList, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam("email") String email) {
+        // Vérifier si l'utilisateur avec cet e-mail existe
+        System.out.println("here email" + email);
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Générer un jeton temporaire pour la réinitialisation de mot de passe
+            String resetToken = UUID.randomUUID().toString();
+            user.setActivationToken(resetToken);
+            userRepository.save(user);
+
+            // Créer l'URL de réinitialisation
+            String resetUrl = "http://localhost:4200/new-password?token=" + resetToken;
+
+            // Envoyer un e-mail avec le lien de réinitialisation
+            emailService.sendResetPasswordEmail(user.getEmail(), resetUrl);
+
+            return ResponseEntity.ok(new MessageResponse("Un e-mail de réinitialisation de mot de passe a été envoyé à votre adresse e-mail."));
+        } else {
+            return ResponseEntity.badRequest().body(new MessageResponse("Utilisateur non trouvé avec cet e-mail."));
+        }
+    }
+
+
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam("token") String token, @RequestParam("password") String newPassword) {
+        // Trouver l'utilisateur avec le jeton donné
+        System.out.println(newPassword);
+        System.out.println(token);
+        Optional<User> optionalUser = userRepository.findByActivationToken(token);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Utiliser l'encodeur pour hasher le nouveau mot de passe
+            String encodedPassword = encoder.encode(newPassword);
+
+            // Réinitialiser le mot de passe de l'utilisateur
+            user.setPassword(encodedPassword);
+            user.setActivationToken(null);
+            userRepository.save(user);
+
+            return ResponseEntity.ok(new MessageResponse("Le mot de passe a été réinitialisé avec succès."));
+        } else {
+            return ResponseEntity.badRequest().body(new MessageResponse("Le jeton de réinitialisation de mot de passe est invalide."));
+        }
     }
 
 }
