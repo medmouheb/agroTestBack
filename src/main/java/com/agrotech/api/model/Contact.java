@@ -42,7 +42,7 @@ public class Contact extends BaseEntity{
     private String notes;
     private String label;
     private Boolean isDeleted=false;
-    private String Farmer;
+    private String farmer;
 
     private LocalDateTime lastUpdate=LocalDateTime.now();
 

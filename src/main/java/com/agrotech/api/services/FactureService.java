@@ -8,7 +8,7 @@ import com.agrotech.api.model.Facture;
 import org.springframework.data.domain.Page;
 
 public interface FactureService extends BaseService<FactureDto, String> {
-    FactureDto findByCode(String code) throws NotFoundException;
+    FactureDto findByCode(String code,String farmer) throws NotFoundException;
 
 
     Page<Facture> getpages(int pageSize, int pageNumber, String filter, String farmername);

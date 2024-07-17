@@ -9,7 +9,7 @@ import com.agrotech.api.model.Crop;
 import org.springframework.data.domain.Page;
 
 public interface ContactService extends BaseService<ContactDto, String> {
-    ContactDto findByCode(String code) throws NotFoundException;
+    ContactDto findByCode(String code,String farmer) throws NotFoundException;
 
 
     Page<Contact> getpages(int pageSize, int pageNumber, String filter, String farmername);

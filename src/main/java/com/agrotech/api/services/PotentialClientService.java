@@ -7,12 +7,16 @@ import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.PotentialClient;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface PotentialClientService extends BaseService<PotentialClientDto,String>{
 
+    List<PotentialClientDto> findByFarmer(String farmer ) throws NotFoundException;
 
-    PotentialClientDto findByBuyersCode(String BuyersCode) throws NotFoundException;
+    PotentialClientDto findByBuyersCode(String BuyersCode , String farmer ) throws NotFoundException;
     Page<PotentialClientDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<PotentialClient> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<PotentialClient> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<PotentialClient> getpagesarchive(int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;

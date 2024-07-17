@@ -91,8 +91,8 @@ public class ContactServiceImpl  implements ContactService {
 
 
     @Override
-    public ContactDto findByCode(String code) throws NotFoundException {
-        Optional<Contact> campOptional = contactRepository.findByCode(code);
+    public ContactDto findByCode(String code,String farmer) throws NotFoundException {
+        Optional<Contact> campOptional = contactRepository.findByCodeAndFarmer(code,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Contact not found ");
         }

@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface FactureRepository  extends MongoRepository<Facture, String> {
     Optional<Facture> findByCode(String code);
+    Optional<Facture> findByCodeAndFarmer(String code,String farmer);
     Page<Facture> findByCodeContainingIgnoreCase(String code, Pageable pageable);
     Page<Facture> findByIsDeletedAndCodeContainingIgnoreCase(Boolean isDeleted, String code, Pageable pageable);
     Page<Facture> findByIsDeletedAndCodeContainingIgnoreCaseAndFarmer(Boolean isDeleted, String code,String farmer, Pageable pageable);

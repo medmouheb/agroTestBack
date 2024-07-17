@@ -36,6 +36,30 @@ public class ContactController {
     private final ContactRepository contactRepository;
 
 
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
+
+        return role.get();
+    }
+
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
+
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody ContactDto campany) throws DocumentException, FileNotFoundException {
@@ -91,8 +115,11 @@ public class ContactController {
         Page<Contact> response;
 
         if(t.get().equals("admin")){
+            System.out.println("eeee");
             response= contactService.getpages1(pageSize, pageNumber, filter);
         }else {
+            System.out.println(farmername);
+
             response= contactService.getpages(pageSize, pageNumber, filter,farmername);
         }
 
@@ -135,7 +162,7 @@ public class ContactController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        ContactDto response = contactService.findByCode(code);
+        ContactDto response = contactService.findByCode(code , getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

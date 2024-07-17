@@ -35,7 +35,28 @@ public class FactureController {
 
     private final FactureService factureService;
     private final FactureRepository factureRepository;
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
+
+        return role.get();
+    }
+
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
@@ -137,7 +158,7 @@ public class FactureController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        FactureDto response = factureService.findByCode(code);
+        FactureDto response = factureService.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

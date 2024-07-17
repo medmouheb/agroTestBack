@@ -60,9 +60,15 @@ public class DevisController {
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
-    public ResponseEntity<?> findAll() {
-        List<DevisDto> response = devisService.findAll();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<?> findAll() throws NotFoundException {
+        if(getRole().equals("admin")){
+            List<DevisDto> response = devisService.findAll();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            List<Devis> response = devisService.findAllByFarmer(getusername());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
@@ -71,7 +77,6 @@ public class DevisController {
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "") String farmername,
             @RequestParam(defaultValue = "") String filter) {
-        System.out.println("hello");
         AtomicReference<String> t= new AtomicReference<>("admin");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -130,6 +135,23 @@ public class DevisController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
+
+        return role.get();
+    }
+
     private String getusername(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

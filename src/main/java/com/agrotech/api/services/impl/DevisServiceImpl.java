@@ -112,6 +112,11 @@ public class DevisServiceImpl implements DevisService {
         return devisMapper.toDto(campOptional.get());
     }
 
+    @Override
+    public List<Devis> findAllByFarmer(String farmer) throws NotFoundException {
+        return devisRepository.findByFarmer(farmer);
+    }
+
 
     @Override
     public Page<Devis> getpages(int pageSize, int pageNumber, String filter , String farmername) {

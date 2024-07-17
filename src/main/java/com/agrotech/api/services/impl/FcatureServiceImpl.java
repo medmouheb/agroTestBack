@@ -104,8 +104,8 @@ public class FcatureServiceImpl implements FactureService {
 
 
     @Override
-    public FactureDto findByCode(String code) throws NotFoundException {
-        Optional<Facture> campOptional = factureRepository.findByCode(code);
+    public FactureDto findByCode(String code,String farmer) throws NotFoundException {
+        Optional<Facture> campOptional = factureRepository.findByCodeAndFarmer(code,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Crop not found ");
         }

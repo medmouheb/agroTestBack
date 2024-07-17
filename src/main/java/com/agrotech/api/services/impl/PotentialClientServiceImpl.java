@@ -38,7 +38,6 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
 
     @Override
     public PotentialClientDto create(PotentialClientDto dto) {
-        System.out.println("yyyyyyyy");
         return potentialClientMapper.toDto(save(potentialClientMapper.toEntity(dto)));
     }
 
@@ -61,6 +60,14 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
             throw new NotFoundException("PotentialClient not found ");
         }
         return potentialClientMapper.toDto(campOptional.get());
+    }
+
+
+    @Override
+    public List<PotentialClientDto> findByFarmer(String farmer ) {
+        return potentialClientRepository.findByFarmer(farmer).stream()
+                .map(potentialClientMapper::toDto)
+                .collect(Collectors.toList());
     }
 
 
@@ -93,8 +100,8 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
     }
 
     @Override
-    public PotentialClientDto findByBuyersCode(String BuyersCode) throws NotFoundException {
-        Optional<PotentialClient> campOptional = potentialClientRepository.findByCode(BuyersCode);
+    public PotentialClientDto findByBuyersCode(String BuyersCode, String farmer) throws NotFoundException {
+        Optional<PotentialClient> campOptional = potentialClientRepository.findByCodeAndFarmer(BuyersCode , farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("PotentialClient not found ");
         }
@@ -116,8 +123,15 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
     public Page<PotentialClient> getpages(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
         Page<PotentialClient> result =  potentialClientRepository.findByIsDeleted(false, pageable);
+        return result;
+    }
 
-        return result;    }
+    @Override
+    public Page<PotentialClient> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
+        Page<PotentialClient> result =  potentialClientRepository.findByIsDeletedAndFarmer(false,farmer, pageable);
+        return result;
+    }
 
     @Override
     public Page<PotentialClient> getpagesarchive(int pageSize, int pageNumber, String filter) {

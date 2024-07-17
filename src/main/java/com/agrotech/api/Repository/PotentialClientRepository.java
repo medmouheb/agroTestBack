@@ -16,9 +16,13 @@ import java.util.Optional;
 public interface PotentialClientRepository  extends MongoRepository<PotentialClient, String> {
 
     Optional<PotentialClient> findByCode(String code);
+    Optional<PotentialClient> findByCodeAndFarmer(String code, String farmer);
     Page<PotentialClient> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<PotentialClient> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
     Page<PotentialClient> findByIsDeleted(Boolean isDeleted, Pageable pageable);
+    Page<PotentialClient> findByIsDeletedAndFarmer(Boolean isDeleted, String farmer , Pageable pageable);
     PotentialClient findByName(String name );
+
+    List<PotentialClient> findByFarmer(String farmer);
 
 }

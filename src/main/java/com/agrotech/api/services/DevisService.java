@@ -7,8 +7,12 @@ import com.agrotech.api.model.Delivery;
 import com.agrotech.api.model.Devis;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface DevisService extends BaseService<DevisDto, String> {
     DevisDto findByCode(String code,String farmer) throws NotFoundException;
+
+    List<Devis> findAllByFarmer(String farmer) throws NotFoundException;
 
 
         Page<Devis> getpages(int pageSize, int pageNumber, String filter, String farmername);
