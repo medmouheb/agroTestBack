@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Mapper
+@Component
+
 public interface ProduitMapper extends BaseMapper<ProduitDto, Produit> {
   
     @Mapping(target = "prixUnitaireHt", source = ".", qualifiedByName = "toPrixTTC")

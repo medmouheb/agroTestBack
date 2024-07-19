@@ -5,7 +5,10 @@ import com.agrotech.api.dto.ReleaseDocumentDto;
 import com.agrotech.api.model.DeliveryNote;
 import com.agrotech.api.model.ReleaseDocument;
 import org.mapstruct.Mapper;
+import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
+
 public interface ReleaseDocumentMapper extends BaseMapper<ReleaseDocumentDto, ReleaseDocument>  {
 }

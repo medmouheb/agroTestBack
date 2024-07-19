@@ -6,5 +6,7 @@ import com.agrotech.api.model.Warehouse;
 import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
+
 public interface WarehouseMapper extends BaseMapper<WarehouseDto, Warehouse> {
 }

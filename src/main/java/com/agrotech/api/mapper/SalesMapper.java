@@ -7,6 +7,8 @@ import com.agrotech.api.model.Sales;
 import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
+
 
 public interface SalesMapper extends BaseMapper<SalesDto, Sales> {
 
