@@ -7,6 +7,7 @@ import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.model.Campany;
 
 @Mapper
+
 @Component
 
 public interface CampanyMapper extends BaseMapper<CampanyDto, Campany > {

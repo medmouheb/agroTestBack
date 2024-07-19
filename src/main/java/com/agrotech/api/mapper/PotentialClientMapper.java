@@ -7,6 +7,7 @@ import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.PotentialClient;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component;
 
 @Mapper
 @Component

@@ -4,6 +4,7 @@ import com.agrotech.api.dto.ProductionDto;
 import com.agrotech.api.model.Production;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component;
 
 
 @Mapper
