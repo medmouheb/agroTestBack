@@ -80,6 +80,16 @@ public class CostCenterServiceImpl implements CostCenterService {
 	}
 
 	@Override
+	public Page<CostCenter> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		Page<CostCenter>  result =  costCenterRepository.findByfarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
+		return result;
+		// return new PageImpl<>(result);
+	}
+
+	@Override
 	public Page<CostCenter> findArchivedPage1(int pageSize, int pageNumber, String filter) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
 		Page<CostCenter>  result =  costCenterRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);

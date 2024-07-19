@@ -14,6 +14,7 @@ public interface FreightTermsService extends BaseService<FreightTermsDto, String
     Page<FreightTermsDto> findPage1(int pageSize, int pageNumber, String filter);
 
     Page<FreightTerms> getpages(int pageSize, int pageNumber, String filter);
+    Page<FreightTerms> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter);
 
     Page<FreightTerms> getpagesarchive(int pageSize, int pageNumber, String filter);
 

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 public interface DeliveryInstructionService extends BaseService<DeliveryInstructionDto, String>{
     DeliveryInstructionDto findBytypeproduct(String producttype) throws NotFoundException;
     Page<DeliveryInstructionDto> findPage1(int pageSize, int pageNumber, String filter) ;
+    Page<DeliveryInstructionDto> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<DeliveryInstruction> getpages(int pageSize, int pageNumber, String filter) ;
     Page<DeliveryInstruction> getpagesarchive(int pageSize, int pageNumber, String filter) ;
     public void archive(String id) throws NotFoundException;

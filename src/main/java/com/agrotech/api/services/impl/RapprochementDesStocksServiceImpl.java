@@ -119,7 +119,15 @@ public class RapprochementDesStocksServiceImpl implements RapprochementDesStocks
     @Override
     public Page<RapprochementDesStocks> getpages(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
-        Page<RapprochementDesStocks> result =  rapprochementDesStocksRepository.findByIsDeletedAndNomDuProduitContainingIgnoreCase(false, filter,pageable);
+        Page<RapprochementDesStocks> result =  rapprochementDesStocksRepository.findByIsDeletedAndNumeroDeLotContainingIgnoreCase(false, filter,pageable);
+
+        return result;
+    }
+
+    @Override
+    public Page<RapprochementDesStocks> getpagesFarmer(String farmer  ,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
+        Page<RapprochementDesStocks> result =  rapprochementDesStocksRepository.findByFarmerAndIsDeletedAndNumeroDeLotContainingIgnoreCase(farmer,false, filter,pageable);
 
         return result;
     }

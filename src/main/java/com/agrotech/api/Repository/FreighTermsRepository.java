@@ -15,6 +15,7 @@ public interface FreighTermsRepository extends MongoRepository<FreightTerms, Str
     Optional<FreightTerms> findByFreighttermcode(String freighttermcode );
     Page<FreightTerms> findByFreighttermnameContainingIgnoreCase(String freighttermname, Pageable pageable);
     Page<FreightTerms> findByIsDeletedAndFreighttermnameContainingIgnoreCase(Boolean isDeleted, String freighttermname, Pageable pageable);
+    Page<FreightTerms> findByFarmerAndIsDeletedAndFreighttermnameContainingIgnoreCase(String farmer,Boolean isDeleted, String freighttermname, Pageable pageable);
     Page<FreightTerms> findByIsDeleted(Boolean isDeleted, Pageable pageable);
 
 }

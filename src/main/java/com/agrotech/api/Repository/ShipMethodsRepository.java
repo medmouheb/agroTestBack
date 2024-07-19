@@ -12,6 +12,7 @@ public interface ShipMethodsRepository extends MongoRepository<ShipMethods, Stri
     Optional<ShipMethods> findByCode(String code);
     Page<ShipMethods> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<ShipMethods> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<ShipMethods> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
     Page<ShipMethods> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     ShipMethods findByName(String name );
 }

@@ -14,6 +14,7 @@ public interface StockServices extends BaseService<StockDTO, String> {
     StockDTO findByCode(String code) throws NotFoundException;
     Page<StockDTO> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Stock> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<Stock> getpagesfarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<Stock> getpagesarchive(int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;

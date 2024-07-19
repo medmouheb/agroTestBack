@@ -18,6 +18,7 @@ public interface ProduitRepository extends MongoRepository<Produit, String>{
 Page<Produit> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Produit findByName(String name);
     Page<Produit> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Produit> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
 
 
 }

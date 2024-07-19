@@ -114,6 +114,11 @@ public class BuyServiceImpl  implements BuyService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("code").ascending());
         return buyRepository.findByIsDeletedAndCodeContainingIgnoreCase(false,filter, pageable);
     }
+    @Override
+    public Page<Buy> getpagesFarmer(String farmer,  int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("code").ascending());
+        return buyRepository.findByFarmerAndIsDeletedAndCodeContainingIgnoreCase(farmer,false,filter, pageable);
+    }
 
     @Override
     public Page<Buy> getpagesarchive(int pageSize, int pageNumber, String filter) {

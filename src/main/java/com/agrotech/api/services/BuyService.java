@@ -15,6 +15,7 @@ public interface BuyService extends BaseService<BuyDto,String> {
 
     Page<BuyDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Buy> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<Buy> getpagesFarmer( String farmer ,int pageSize, int pageNumber, String filter) ;
     Page<Buy> getpagesarchive(int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;

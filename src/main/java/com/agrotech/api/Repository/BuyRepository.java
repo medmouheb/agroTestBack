@@ -12,6 +12,7 @@ public interface BuyRepository  extends MongoRepository<Buy, String> {
     Optional<Buy> findByCode(String code);
     Page<Buy> findByCodeContainingIgnoreCase(String code, Pageable pageable);
     Page<Buy> findByIsDeletedAndCodeContainingIgnoreCase(Boolean isDeleted, String code, Pageable pageable);
+    Page<Buy> findByFarmerAndIsDeletedAndCodeContainingIgnoreCase(String farmer, Boolean isDeleted, String code, Pageable pageable);
     Page<Buy> findByIsDeleted(Boolean isDeleted, Pageable pageable);
 
 }

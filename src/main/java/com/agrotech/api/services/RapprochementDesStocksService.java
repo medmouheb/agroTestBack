@@ -12,6 +12,7 @@ public interface RapprochementDesStocksService extends BaseService<Rapprochement
     RapprochementDesStocksDto findBynDeReference (String nDeReference) throws NotFoundException;
     Page<RapprochementDesStocksDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<RapprochementDesStocks> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<RapprochementDesStocks> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<RapprochementDesStocks> getpagesarchive(int pageSize, int pageNumber, String filter) ;
     RapprochementDesStocksDto findbynumeroDeLot(String numeroDeLot ) throws NotFoundException;
     public void archive(String id) throws NotFoundException;

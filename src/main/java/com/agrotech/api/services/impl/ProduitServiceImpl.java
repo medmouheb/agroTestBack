@@ -146,6 +146,13 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
+    public Page<Produit> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        Page<Produit>  result =  produitRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
+        return result;
+    }
+
+    @Override
     public Page<Produit> findArchivedPage1(int pageSize, int pageNumber, String filter) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());

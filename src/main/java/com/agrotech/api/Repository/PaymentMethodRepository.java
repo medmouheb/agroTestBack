@@ -13,6 +13,7 @@ public interface PaymentMethodRepository extends MongoRepository<PaymentMethod, 
     Optional<PaymentMethod> findByCode(String code);
     Page<PaymentMethod> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<PaymentMethod> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<PaymentMethod> findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(Boolean isDeleted, String name,String farmer, Pageable pageable);
     Page<PaymentMethod> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     PaymentMethod findByName(String name );
 }

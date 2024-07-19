@@ -14,6 +14,8 @@ public interface RapprochementDesStocksRepository extends MongoRepository<Rappro
     Optional<RapprochementDesStocks> findBynDeReference(String nDeReference);
     Page<RapprochementDesStocks> findByNomDuProduitContainingIgnoreCase(String nomDuProduit, Pageable pageable);
     Page<RapprochementDesStocks> findByIsDeletedAndNomDuProduitContainingIgnoreCase(Boolean isDeleted, String nomDuProduit, Pageable pageable);
+    Page<RapprochementDesStocks> findByIsDeletedAndNumeroDeLotContainingIgnoreCase(Boolean isDeleted, String nomDuProduit, Pageable pageable);
+    Page<RapprochementDesStocks> findByFarmerAndIsDeletedAndNumeroDeLotContainingIgnoreCase(String farmer,Boolean isDeleted, String nomDuProduit, Pageable pageable);
     Page<RapprochementDesStocks> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     RapprochementDesStocks findByNomDuProduit(String nomDuProduit);
     Optional<RapprochementDesStocks> findByNumeroDeLot(String numeroDeLot);

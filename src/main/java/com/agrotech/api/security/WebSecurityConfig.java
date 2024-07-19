@@ -141,6 +141,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/task/**").permitAll()
                         .requestMatchers("/statistics/**").permitAll()
                         .requestMatchers("/deliveryNote/**").permitAll()
+                        .requestMatchers("/freightTerms/**").permitAll()
                         .requestMatchers("/releaseDocument/**").permitAll()
                         .requestMatchers("/potential-client/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll().anyRequest().authenticated());

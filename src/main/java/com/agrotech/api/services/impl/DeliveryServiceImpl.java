@@ -121,6 +121,16 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
+    public Page<Delivery> getpages1Farmer(String farmer,int pageSize, int pageNumber, String filter ) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return  deliveryRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
+
+
+    }
+
+    @Override
     public Page<Delivery> getpagesarchive(int pageSize, int pageNumber, String filter) {
 
 

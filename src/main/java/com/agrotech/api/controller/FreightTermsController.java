@@ -6,6 +6,9 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.FreightTerms;
 import com.agrotech.api.services.FreightTermsService;
 import com.itextpdf.text.DocumentException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,15 +19,42 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @CrossOrigin(origins = {"http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/freightTerms")
 @RequiredArgsConstructor
 public class FreightTermsController {
-      private final FreightTermsService freightTermsService ;
+    private final FreightTermsService freightTermsService ;
 
     private  final FreighTermsRepository freighTermsRepository;
+
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
+
+        return role.get();
+    }
+
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
+
+
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
@@ -33,9 +63,8 @@ public class FreightTermsController {
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid FreightTermsDto freightTerms) throws DocumentException, FileNotFoundException {
-        System.out.println("tad");
-        System.out.println(freightTerms.toString());
+    public ResponseEntity<?> create(@RequestBody FreightTermsDto freightTerms) throws DocumentException, FileNotFoundException {
+
         FreightTermsDto response = freightTermsService.create(freightTerms);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -75,8 +104,14 @@ public class FreightTermsController {
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "") String filter
     ) {
-        Page<FreightTerms> response = freightTermsService.getpages(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if(getRole().equals("admin")){
+            Page<FreightTerms> response = freightTermsService.getpages(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+            Page<FreightTerms> response = freightTermsService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

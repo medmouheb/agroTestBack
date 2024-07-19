@@ -11,6 +11,7 @@ public interface StockRepository extends MongoRepository<Stock, String> , StockR
     Optional<Stock> findByCode(String code);
     Page<Stock> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Stock> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Stock> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
     Page<Stock> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Stock findByName(String name );
 }

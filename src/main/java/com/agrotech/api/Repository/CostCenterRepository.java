@@ -15,5 +15,6 @@ public interface CostCenterRepository extends MongoRepository<CostCenter, String
 	Optional<CostCenter> findByCode(String code);
 	Page<CostCenter> findByNameContainingIgnoreCase(String name, Pageable pageable);
 	Page<CostCenter> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+	Page<CostCenter> findByfarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
 
 }

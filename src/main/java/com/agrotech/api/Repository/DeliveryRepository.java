@@ -15,6 +15,7 @@ public interface DeliveryRepository  extends MongoRepository<Delivery, String> {
     Optional<Delivery> findByCode(String code);
     Page<Delivery> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Delivery> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Delivery> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
     Page<Delivery> findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(Boolean isDeleted, String name,String farmer, Pageable pageable);
     Page<Delivery> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Delivery findByName(String name );

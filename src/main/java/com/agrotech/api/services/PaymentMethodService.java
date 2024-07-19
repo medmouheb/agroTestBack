@@ -9,6 +9,7 @@ public interface PaymentMethodService  extends BaseService<PaymentMethodDto, Str
     PaymentMethodDto findByCode(String code) throws NotFoundException;
     Page<PaymentMethodDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<PaymentMethod> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<PaymentMethod> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<PaymentMethod> getpagesarchive(int pageSize, int pageNumber, String filter) ;
     public void archive(String id) throws NotFoundException;
     public void setNotArchive(String id) throws NotFoundException;

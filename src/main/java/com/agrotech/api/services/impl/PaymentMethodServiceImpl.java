@@ -112,6 +112,13 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     }
 
     @Override
+    public Page<PaymentMethod> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+
+        return paymentMethodRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(false,filter, farmer,pageable);
+    }
+
+    @Override
     public Page<PaymentMethod> getpagesarchive(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
 

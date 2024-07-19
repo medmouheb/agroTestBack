@@ -11,6 +11,7 @@ public interface DeliveryService extends BaseService<DeliveryDto, String> {
 
     Page<Delivery> getpages(int pageSize, int pageNumber, String filter, String farmername);
     Page<Delivery> getpages1(int pageSize, int pageNumber, String filter );
+    Page<Delivery> getpages1Farmer(String farmer,int pageSize, int pageNumber, String filter );
 
     Page<Delivery> getpagesarchive(int pageSize, int pageNumber, String filter);
     Page<Delivery> getpagesarchive1(int pageSize, int pageNumber, String filter, String farmername);

@@ -6,6 +6,7 @@ import com.agrotech.api.Repository.DeliveryRepository;
 import com.agrotech.api.dto.CropDTO;
 import com.agrotech.api.dto.DeliveryDto;
 import com.agrotech.api.exceptions.NotFoundException;
+import com.agrotech.api.model.Buy;
 import com.agrotech.api.model.Crop;
 import com.agrotech.api.model.Delivery;
 import com.agrotech.api.model.User;
@@ -35,6 +36,29 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
     private final DeliveryRepository deliveryRepository;
+
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
+
+        return role.get();
+    }
+
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -73,38 +97,22 @@ public class DeliveryController {
         List<DeliveryDto> response = deliveryService.findAll();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
     public ResponseEntity<?> findPage(
             @RequestParam(defaultValue = "3") int pageSize,
             @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String farmername,
             @RequestParam(defaultValue = "") String filter) {
+        System.out.println("fffff");
 
-        AtomicReference<String> t= new AtomicReference<>("admin");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        userDetails.getAuthorities().forEach(authority -> {
-            if(authority.getAuthority().equals("ROLE_FARMER")){
-                t.set("farmer");
-            }else if(authority.getAuthority().equals("ROLE_ADMIN")){
-                t.set("admin");
-            }else {
-                t.set("employee");
-            }
-        });
-
-
-        Page<Delivery> response;
-
-        if(t.get().equals("admin")){
-            response= deliveryService.getpages1(pageSize, pageNumber, filter);
-        }else {
-            response= deliveryService.getpages(pageSize, pageNumber, filter,farmername);
+        if(getRole().equals("admin")){
+            Page<Delivery> response = deliveryService.getpages1(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            System.out.println("gggg");
+            Page<Delivery> response = deliveryService.getpages1Farmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
