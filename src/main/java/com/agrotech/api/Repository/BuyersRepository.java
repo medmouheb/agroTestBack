@@ -14,7 +14,8 @@ import java.util.Optional;
 @Repository
 public interface BuyersRepository extends MongoRepository<Buyers, String> {
 
-    Optional<Buyers> findByCode(String code);
+    Optional<Buyers> findByCodeAndFarmer(String code, String farmer);
+    List<Buyers> findByFarmer(String farmer);
     Page<Buyers> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Buyers> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
     Page<Buyers> findByIsDeletedAndNameContainingIgnoreCaseAndFarmerContainingIgnoreCase(Boolean isDeleted, String name,String farmer, Pageable pageable);

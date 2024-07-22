@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface BuyService extends BaseService<BuyDto,String> {
 
-    BuyDto findByCode(String code) throws NotFoundException;
+    BuyDto findByCode(String code,String farmer) throws NotFoundException;
 
     Page<BuyDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Buy> getpages(int pageSize, int pageNumber, String filter) ;

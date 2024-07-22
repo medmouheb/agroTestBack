@@ -36,6 +36,14 @@ public class MvtStkController {
     private final MvtStkRepository mvtStkRepository;
 
 
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
+
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody MvtStkDto campany) throws DocumentException, FileNotFoundException {
@@ -136,7 +144,7 @@ public class MvtStkController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        MvtStkDto response = mvtStkService.findByCode(code);
+        MvtStkDto response = mvtStkService.findByCode(code, getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

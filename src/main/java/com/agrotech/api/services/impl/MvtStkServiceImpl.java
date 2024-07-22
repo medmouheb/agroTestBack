@@ -125,8 +125,8 @@ public class MvtStkServiceImpl implements MvtStkService {
 
 
     @Override
-    public MvtStkDto findByCode(String code) throws NotFoundException {
-        Optional<MvtStk> campOptional = mvtStkRepository.findByCode(code);
+    public MvtStkDto findByCode(String code , String farmer) throws NotFoundException {
+        Optional<MvtStk> campOptional = mvtStkRepository.findByCodeAndFarmer(code, farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Crop not found ");
         }

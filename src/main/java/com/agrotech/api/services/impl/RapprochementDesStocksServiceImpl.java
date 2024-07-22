@@ -71,6 +71,13 @@ public class RapprochementDesStocksServiceImpl implements RapprochementDesStocks
     }
 
     @Override
+    public List<RapprochementDesStocksDto> findAllByFarmer(String farmer) {
+        return rapprochementDesStocksRepository.findByFarmer(farmer).stream()
+                .map(rapprochementDesStocksMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Page<RapprochementDesStocksDto> findPage(int pageSize, int pageNumber, String filter) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);

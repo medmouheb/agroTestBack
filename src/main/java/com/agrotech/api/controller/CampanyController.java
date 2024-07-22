@@ -153,8 +153,6 @@ public class CampanyController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		System.out.println(getusername());
-
 		CampanyDto response = campanyService.findByCode(code,getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

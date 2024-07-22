@@ -33,7 +33,12 @@ public class CropController {
 
     private final CropService cropService;
     private final CropRepo cropRepo;
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
 
+    }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
@@ -68,7 +73,7 @@ public class CropController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<CropDTO> response = cropService.findAll();
+        List<CropDTO> response = cropService.findAllByfarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -140,7 +145,7 @@ public class CropController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        CropDTO response = cropService.findByCode(code);
+        CropDTO response = cropService.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

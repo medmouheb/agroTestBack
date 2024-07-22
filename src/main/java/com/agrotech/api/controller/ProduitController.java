@@ -102,7 +102,7 @@ public class ProduitController {
 //	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
-		List<ProduitDto> response = produitService.findAll();
+		List<ProduitDto> response = produitService.findAllByfarmer(getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -127,7 +127,7 @@ public class ProduitController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		ProduitDto response = produitService.findByCode(code);
+		ProduitDto response = produitService.findByCode(code , getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

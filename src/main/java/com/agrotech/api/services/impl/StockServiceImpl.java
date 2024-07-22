@@ -89,8 +89,8 @@ public class StockServiceImpl implements StockServices {
 
 
     @Override
-    public StockDTO findByCode(String code) throws NotFoundException {
-        Optional<Stock> campOptional = stockRepository.findByCode(code);
+    public StockDTO findByCode(String code,String farmer) throws NotFoundException {
+        Optional<Stock> campOptional = stockRepository.findByCodeAndFarmer(code,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Stock not found ");
         }
@@ -198,6 +198,14 @@ public class StockServiceImpl implements StockServices {
         return stockRepository.findAll();
 
 
+
+    }
+
+    @Override
+    public List<StockDTO> findAllByFarmer(String farmer) {
+        return stockRepository.findByFarmer(farmer).stream()
+                .map(stockMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override

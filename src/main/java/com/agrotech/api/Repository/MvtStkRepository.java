@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 public interface MvtStkRepository extends MongoRepository<MvtStk, String>{
-    Optional<MvtStk> findByCode(String code);
+    Optional<MvtStk> findByCodeAndFarmer(String code , String farmer);
     Page<MvtStk> findByCodeContainingIgnoreCase(String code, Pageable pageable);
     Page<MvtStk> findByIsDeletedAndCodeContainingIgnoreCase(Boolean isDeleted, String code, Pageable pageable);
     Page<MvtStk> findByIsDeletedAndCodeContainingIgnoreCaseAndFarmer(Boolean isDeleted, String code,String farmer, Pageable pageable);

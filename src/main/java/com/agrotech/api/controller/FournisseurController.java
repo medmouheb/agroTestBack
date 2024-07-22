@@ -81,7 +81,7 @@ public class FournisseurController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        FournisseurDto response = fournisseurService.findByCode(code);
+        FournisseurDto response = fournisseurService.findByCode(code, getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -146,7 +146,7 @@ public class FournisseurController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<FournisseurDto> response = fournisseurService.findAll();
+        List<FournisseurDto> response = fournisseurService.findAllByfarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

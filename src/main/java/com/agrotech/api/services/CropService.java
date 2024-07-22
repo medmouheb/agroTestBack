@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CropService extends BaseService<CropDTO, String> {
 
-    CropDTO findByCode(String code) throws NotFoundException;
+    CropDTO findByCode(String code,String farmer) throws NotFoundException;
 
 
     Page<Crop> getpages(int pageSize, int pageNumber, String filter, String farmername);
@@ -31,4 +31,5 @@ public interface CropService extends BaseService<CropDTO, String> {
     public Page<CropDTO> findArchivedPage(int pageSize, int pageNumber, String filter);
 
 
+    List<CropDTO> findAllByfarmer(String farmer);
 }

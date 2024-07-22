@@ -92,6 +92,14 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
+    public List<FournisseurDto> findAllByfarmer(String farmer) {
+        return fournisseurRepository.findByFarmer(farmer)
+                .stream()
+                .map(fournisseurMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Page<Fournisseur> findPage1(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
         Page<Fournisseur>  result =  fournisseurRepository.findByNameContainingIgnoreCaseAndIsDeleted(filter,false,pageable);
@@ -133,7 +141,7 @@ public class FournisseurServiceImpl implements FournisseurService {
     }
 
     @Override
-    public FournisseurDto findByCode(String code) throws NotFoundException {
+    public FournisseurDto findByCode(String code , String farmer) throws NotFoundException {
         Optional<Fournisseur> optional = fournisseurRepository.findByCode(code);
         if (optional.isEmpty()) {
             throw new NotFoundException("Fournisseur not found");

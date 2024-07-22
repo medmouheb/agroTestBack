@@ -71,7 +71,7 @@ public class BuyController {
 //    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getbycode/{code}")
     public ResponseEntity<?> findbycode(@PathVariable String code) throws NotFoundException {
-        BuyDto response = buyService.findByCode(code);
+        BuyDto response = buyService.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -115,7 +115,7 @@ public class BuyController {
 //    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        BuyDto response = buyService.findByCode(code);
+        BuyDto response = buyService.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

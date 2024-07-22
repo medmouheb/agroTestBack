@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -13,6 +14,7 @@ public interface UtilisationDuProduitRepository extends MongoRepository<Utilisat
 
 
     Optional<UtilisationDuProduit> findByNumeroDeLot(String codeProduit);
+    List<UtilisationDuProduit> findByFarmer(String farmer);
     Page<UtilisationDuProduit> findByNomDuProduitContainingIgnoreCase(String nomDuProduit, Pageable pageable);
     Page<UtilisationDuProduit> findByIsDeletedAndNomDuProduitContainingIgnoreCase(Boolean isDeleted, String nomDuProduit, Pageable pageable);
     Page<UtilisationDuProduit> findByIsDeletedAndNumeroDeLotContainingIgnoreCase(Boolean isDeleted, String nomDuProduit, Pageable pageable);

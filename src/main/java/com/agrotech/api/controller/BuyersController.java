@@ -27,7 +27,6 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequiredArgsConstructor
 public class BuyersController {
 
-
     private final BuyersService buyersService;
 
     private  final BuyersRepository buyersRepository;
@@ -68,7 +67,7 @@ public class BuyersController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<BuyersDto> response = buyersService.findAll();
+        List<BuyersDto> response = buyersService.findAllByfarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -104,10 +103,18 @@ public class BuyersController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    private String getusername(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userDetails.getUsername();
+
+    }
+
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        BuyersDto response = buyersService.findByBuyersCode(code);
+        BuyersDto response = buyersService.findByBuyersCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

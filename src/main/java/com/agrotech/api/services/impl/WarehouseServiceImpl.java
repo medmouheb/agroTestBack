@@ -78,6 +78,14 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
+    public List<WarehouseDto> findAllByFarmer(String farmer) {
+        return warehouseRepository.findByFarmer(farmer)
+                .stream()
+                .map(warehouseMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Page<Warehouse> findPage1(int pageSize, int pageNumber, String filter) {
 
 

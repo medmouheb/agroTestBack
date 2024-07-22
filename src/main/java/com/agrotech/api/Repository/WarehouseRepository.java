@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.agrotech.api.model.Warehouse;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +19,5 @@ public interface WarehouseRepository extends MongoRepository<Warehouse, String> 
     Page<Warehouse> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String vendorSKUName, Pageable pageable);
 
     Warehouse findByName(String name);
+    List<Warehouse> findByFarmer(String farmer);
 }

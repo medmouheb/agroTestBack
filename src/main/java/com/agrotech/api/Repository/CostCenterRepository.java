@@ -1,5 +1,6 @@
 package com.agrotech.api.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -11,8 +12,10 @@ import com.agrotech.api.model.CostCenter;
 
 @Repository
 public interface CostCenterRepository extends MongoRepository<CostCenter, String>{
+
+	List<CostCenter> findByFarmer(String farmer);
 	CostCenter findByName(String name);
-	Optional<CostCenter> findByCode(String code);
+	Optional<CostCenter> findByCodeAndFarmer(String code, String farmer);
 	Page<CostCenter> findByNameContainingIgnoreCase(String name, Pageable pageable);
 	Page<CostCenter> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
 	Page<CostCenter> findByfarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);

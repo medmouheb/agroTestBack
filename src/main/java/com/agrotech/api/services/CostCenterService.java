@@ -7,9 +7,11 @@ import com.agrotech.api.dto.CostCenterDto;
 import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
+import java.util.List;
+
 public interface CostCenterService extends BaseService<CostCenterDto, String>{
 	
-	CostCenterDto findByCode(String code ) throws NotFoundException;
+	CostCenterDto findByCode(String code , String farmer ) throws NotFoundException;
 	public void archive(String id) throws NotFoundException;
 
 	public void setNotArchive(String id) throws NotFoundException;
@@ -19,4 +21,5 @@ public interface CostCenterService extends BaseService<CostCenterDto, String>{
 	public Page<CostCenter> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 	public Page<CostCenter> findArchivedPage1(int pageSize, int pageNumber, String filter);
 
+    List<CostCenterDto> findAllByFarmer(String getusername);
 }

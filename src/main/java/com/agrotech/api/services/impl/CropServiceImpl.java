@@ -86,8 +86,8 @@ public class CropServiceImpl implements CropService {
 
 
     @Override
-    public CropDTO findByCode(String code) throws NotFoundException {
-        Optional<Crop> campOptional = cropRepository.findByCode(code);
+    public CropDTO findByCode(String code,String farmer) throws NotFoundException {
+        Optional<Crop> campOptional = cropRepository.findByCodeAndFarmer(code , farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Crop not found ");
         }
@@ -190,9 +190,13 @@ public class CropServiceImpl implements CropService {
         return new PageImpl<>(result);
     }
 
+    @Override
+    public List<CropDTO> findAllByfarmer(String farmer) {
 
-
-
+        return cropRepository.findByFarmer(farmer).stream()
+                .map(cropMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
 
 }

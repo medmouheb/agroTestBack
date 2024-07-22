@@ -131,10 +131,10 @@ public class StockController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<StockDTO> response = stockServices.findAll();
+        List<StockDTO> response = stockServices.findAllByFarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -154,10 +154,10 @@ public class StockController {
 
     }
 
-    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        StockDTO response = stockServices.findByCode(code);
+        StockDTO response = stockServices.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

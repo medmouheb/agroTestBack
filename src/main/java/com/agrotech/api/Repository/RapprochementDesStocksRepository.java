@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,5 +20,6 @@ public interface RapprochementDesStocksRepository extends MongoRepository<Rappro
     Page<RapprochementDesStocks> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     RapprochementDesStocks findByNomDuProduit(String nomDuProduit);
     Optional<RapprochementDesStocks> findByNumeroDeLot(String numeroDeLot);
+    List<RapprochementDesStocks> findByFarmer(String farmer);
 
 }

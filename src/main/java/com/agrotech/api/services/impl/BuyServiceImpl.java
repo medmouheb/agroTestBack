@@ -76,8 +76,8 @@ public class BuyServiceImpl  implements BuyService {
     }
 
     @Override
-    public BuyDto findByCode(String code) throws NotFoundException {
-        Optional<Buy> campOptional = buyRepository.findByCode(code);
+    public BuyDto findByCode(String code,String farmer) throws NotFoundException {
+        Optional<Buy> campOptional = buyRepository.findByCodeAndFarmer(code,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Buy not found ");
         }

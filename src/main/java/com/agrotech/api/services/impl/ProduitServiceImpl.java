@@ -104,6 +104,15 @@ public class ProduitServiceImpl implements ProduitService {
                 .collect(Collectors.toList());
     }
 
+
+    @Override
+    public List<ProduitDto> findAllByfarmer(String farmer) {
+        return produitRepository.findByFarmer(farmer)
+                .stream()
+                .map(produitMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Page<ProduitDto> findPage(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(
@@ -127,8 +136,8 @@ public class ProduitServiceImpl implements ProduitService {
     }
 
     @Override
-    public ProduitDto findByCode(String code) throws NotFoundException {
-        Optional<Produit> optional = produitRepository.findByCode(code);
+    public ProduitDto findByCode(String code , String farmer) throws NotFoundException {
+        Optional<Produit> optional = produitRepository.findByCodeAndFarmer(code,farmer);
         if (optional.isEmpty()) {
             throw new NotFoundException("Product not found");
         }
@@ -164,6 +173,15 @@ public class ProduitServiceImpl implements ProduitService {
     public List<Produit> findAllByType(String type) {
 
         return produitRepository.findAll();
+    }
+
+    @Override
+    public ProduitDto findByCode(String code) throws NotFoundException {
+        Optional<Produit> optional = produitRepository.findByCode(code);
+        if (optional.isEmpty()) {
+            throw new NotFoundException("Product not found");
+        }
+        return produitMapper.toDto(optional.get());
     }
 
     @Override

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface StockServices extends BaseService<StockDTO, String> {
 
-    StockDTO findByCode(String code) throws NotFoundException;
+    StockDTO findByCode(String code, String farmer) throws NotFoundException;
     Page<StockDTO> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Stock> getpages(int pageSize, int pageNumber, String filter) ;
     Page<Stock> getpagesfarmer(String farmer,int pageSize, int pageNumber, String filter) ;
@@ -26,4 +26,6 @@ public interface StockServices extends BaseService<StockDTO, String> {
     public Page<StockDTO> findArchivedPage(int pageSize, int pageNumber, String filter);
 
     List<Stock> findBynamee()throws NotFoundException;
+
+    List<StockDTO> findAllByFarmer(String farmer);
 }

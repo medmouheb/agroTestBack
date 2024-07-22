@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.agrotech.api.model.Fournisseur;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -16,8 +17,10 @@ public interface FournisseurRepository extends MongoRepository<Fournisseur, Stri
     Page<Fournisseur> findByFarmerAndNameContainingIgnoreCaseAndIsDeleted(String farmer,String name,Boolean isDeleted, Pageable pageable);
 
     Optional<Fournisseur> findByCode(String code);
+    Optional<Fournisseur> findByCodeAndFarmer(String code, String farmer);
     Page<Fournisseur> findByIsDeleted(Boolean isDeleted,  Pageable pageable);
     Fournisseur findByName(String name);
+    List<Fournisseur> findByFarmer(String farmer);
     Page<Fournisseur> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
 
 }

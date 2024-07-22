@@ -13,8 +13,10 @@ import java.util.Optional;
 
 @Repository
 public interface ProduitRepository extends MongoRepository<Produit, String>{
-	Optional<Produit> findByCode(String code);
+    Optional<Produit> findByCodeAndFarmer(String code , String farmer);
+    Optional<Produit> findByCode(String code );
     List<Produit> findByCategory(String categoryId);
+    List<Produit> findByFarmer(String farmer);
 Page<Produit> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Produit findByName(String name);
     Page<Produit> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);

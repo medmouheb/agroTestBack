@@ -7,6 +7,8 @@ import com.agrotech.api.model.LogisticUnit;
 import com.agrotech.api.model.UtilisationDuProduit;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface UtilisationDuProduitService extends BaseService<UtilisationDuProduitDto,String>{
 
     UtilisationDuProduitDto findByCodeProduit(String codeProduit) throws NotFoundException;
@@ -24,4 +26,5 @@ public interface UtilisationDuProduitService extends BaseService<UtilisationDuPr
     public Page<UtilisationDuProduitDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
     public Page<UtilisationDuProduitDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
+    List<UtilisationDuProduitDto> findAllByFarmer(String getusername);
 }

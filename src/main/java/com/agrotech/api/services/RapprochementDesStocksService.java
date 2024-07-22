@@ -7,6 +7,8 @@ import com.agrotech.api.model.LogisticUnit;
 import com.agrotech.api.model.RapprochementDesStocks;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface RapprochementDesStocksService extends BaseService<RapprochementDesStocksDto,String>{
 
     RapprochementDesStocksDto findBynDeReference (String nDeReference) throws NotFoundException;
@@ -25,4 +27,6 @@ public interface RapprochementDesStocksService extends BaseService<Rapprochement
     public Page<RapprochementDesStocksDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
 
     public Page<RapprochementDesStocksDto> findArchivedPage(int pageSize, int pageNumber, String filter);
+
+    List<RapprochementDesStocksDto> findAllByFarmer(String getusername);
 }

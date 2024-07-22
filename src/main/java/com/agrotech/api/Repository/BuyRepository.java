@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.Optional;
 
 public interface BuyRepository  extends MongoRepository<Buy, String> {
-    Optional<Buy> findByCode(String code);
+    Optional<Buy> findByCodeAndFarmer(String code , String farmer);
     Page<Buy> findByCodeContainingIgnoreCase(String code, Pageable pageable);
     Page<Buy> findByIsDeletedAndCodeContainingIgnoreCase(Boolean isDeleted, String code, Pageable pageable);
     Page<Buy> findByFarmerAndIsDeletedAndCodeContainingIgnoreCase(String farmer, Boolean isDeleted, String code, Pageable pageable);

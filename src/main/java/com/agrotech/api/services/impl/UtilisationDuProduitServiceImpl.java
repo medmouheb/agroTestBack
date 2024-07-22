@@ -75,6 +75,12 @@ public class UtilisationDuProduitServiceImpl implements UtilisationDuProduitServ
                 .collect(Collectors.toList());    }
 
     @Override
+    public List<UtilisationDuProduitDto> findAllByFarmer(String farmer) {
+        return utilisationDuProduitRepository.findByFarmer(farmer).stream()
+                .map(utilisationDuProduitMapper::toDto)
+                .collect(Collectors.toList());    }
+
+    @Override
     public Page<UtilisationDuProduitDto> findPage(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<UtilisationDuProduitDto>  result =  utilisationDuProduitRepository.findByNomDuProduitContainingIgnoreCase(filter, pageable)

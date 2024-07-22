@@ -102,7 +102,7 @@ public class CostCenterController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
-		List<CostCenterDto> response = costCenterService.findAll();
+		List<CostCenterDto> response = costCenterService.findAllByFarmer(getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -126,7 +126,7 @@ public class CostCenterController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		CostCenterDto response = costCenterService.findByCode(code);
+		CostCenterDto response = costCenterService.findByCode(code , getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

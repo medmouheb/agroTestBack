@@ -70,6 +70,12 @@ public class CostCenterServiceImpl implements CostCenterService {
 				.collect(Collectors.toList());
 	}
 	@Override
+	public List<CostCenterDto> findAllByFarmer(String farmer ) {
+		return costCenterRepository.findByFarmer(farmer).stream()
+				.map(costCenterMapper::toDto)
+				.collect(Collectors.toList());
+	}
+	@Override
 	public Page<CostCenter> findPage1(int pageSize, int pageNumber, String filter) {
 
 
@@ -141,8 +147,8 @@ public class CostCenterServiceImpl implements CostCenterService {
 
 
 	@Override
-	public CostCenterDto findByCode(String code) throws NotFoundException {
-		Optional<CostCenter> costOptional = costCenterRepository.findByCode(code);
+	public CostCenterDto findByCode(String code , String farmer) throws NotFoundException {
+		Optional<CostCenter> costOptional = costCenterRepository.findByCodeAndFarmer(code, farmer);
 		if(costOptional.isEmpty()) {
 			throw new NotFoundException("cost center not found ");
 		}

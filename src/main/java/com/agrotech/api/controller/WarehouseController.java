@@ -104,7 +104,7 @@ public class WarehouseController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<WarehouseDto> response = warehouseService.findAll();
+        List<WarehouseDto> response = warehouseService.findAllByFarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

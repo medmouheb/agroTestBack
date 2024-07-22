@@ -95,7 +95,7 @@ public class UtilisationDuProduitController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<UtilisationDuProduitDto> response = utilisationDuProduitService.findAll();
+        List<UtilisationDuProduitDto> response = utilisationDuProduitService.findAllByFarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

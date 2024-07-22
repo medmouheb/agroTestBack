@@ -8,7 +8,7 @@ import com.agrotech.api.model.MvtStk;
 import org.springframework.data.domain.Page;
 
 public interface MvtStkService extends BaseService<MvtStkDto, String> {
-    MvtStkDto findByCode(String code) throws NotFoundException;
+    MvtStkDto findByCode(String code , String farmer) throws NotFoundException;
 
 
     Page<MvtStk> getpages(int pageSize, int pageNumber, String filter, String farmername);

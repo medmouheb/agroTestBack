@@ -13,7 +13,7 @@ import java.util.List;
 public interface FournisseurService extends BaseService<FournisseurDto, String> {
     void importCSV(List<CSVRecord> records);
     Fournisseur savex(Fournisseur fournisseur);
-    FournisseurDto findByCode(String code) throws NotFoundException;
+    FournisseurDto findByCode(String code, String farmer) throws NotFoundException;
     public void archive(String id) throws NotFoundException;
 
     public Page<FournisseurDto> findPage(int pageSize, int pageNumber, String filter);
@@ -24,4 +24,6 @@ Fournisseur findByname(String name)throws NotFoundException;
     public Page<FournisseurDto> findArchivedPage(int pageSize, int pageNumber, String filter);
     public Page<Fournisseur> findPage1(int pageSize, int pageNumber, String filter);
     public Page<Fournisseur> findPage1Farmer(String framer,int pageSize, int pageNumber, String filter);
+
+    List<FournisseurDto> findAllByfarmer(String getusername);
 }

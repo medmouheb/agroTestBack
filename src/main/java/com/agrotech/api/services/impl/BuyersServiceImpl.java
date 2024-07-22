@@ -67,6 +67,13 @@ public class BuyersServiceImpl implements BuyersService {
     }
 
     @Override
+    public List<BuyersDto> findAllByfarmer(String farmer) {
+        return buyersRepository.findByFarmer(farmer).stream()
+                .map(buyersMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Page<BuyersDto> findPage(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<BuyersDto>  result = buyersRepository.findByNameContainingIgnoreCase(filter, pageable)
@@ -87,8 +94,8 @@ public class BuyersServiceImpl implements BuyersService {
     }
 
     @Override
-    public BuyersDto findByBuyersCode(String BuyersCode) throws NotFoundException {
-        Optional<Buyers> campOptional = buyersRepository.findByCode(BuyersCode);
+    public BuyersDto findByBuyersCode(String BuyersCode , String farmer) throws NotFoundException {
+        Optional<Buyers> campOptional = buyersRepository.findByCodeAndFarmer(BuyersCode,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Buyers not found ");
         }

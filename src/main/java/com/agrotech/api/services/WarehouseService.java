@@ -9,6 +9,8 @@ import com.agrotech.api.dto.FournisseurDto;
 import com.agrotech.api.dto.WarehouseDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
+import java.util.List;
+
 public interface WarehouseService extends BaseService<WarehouseDto, String> {
 
     WarehouseDto findByCode(String code) throws NotFoundException;
@@ -23,5 +25,7 @@ public interface WarehouseService extends BaseService<WarehouseDto, String> {
     public Page<Warehouse> findPage1(int pageSize, int pageNumber, String filter);
     public Page<Warehouse> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
     public Page<Warehouse> findArchivedPage1(int pageSize, int pageNumber, String filter);
-Warehouse findByname(String name)throws NotFoundException;
+    Warehouse findByname(String name)throws NotFoundException;
+
+    List<WarehouseDto> findAllByFarmer(String getusername);
 }
