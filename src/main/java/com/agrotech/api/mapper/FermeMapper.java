@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface FermeMapper extends BaseMapper<FermeDto, Ferme> {
 
 }

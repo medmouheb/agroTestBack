@@ -6,7 +6,7 @@ import com.agrotech.api.dto.CommandeFournisseurDto;
 import com.agrotech.api.model.CommandeFournisseur;
 import org.springframework.stereotype.Component;
 
-@Mapper
+@Mapper()
 @Component
 
 public interface CommandeFournisseurMapper extends BaseMapper<CommandeFournisseurDto, CommandeFournisseur> {

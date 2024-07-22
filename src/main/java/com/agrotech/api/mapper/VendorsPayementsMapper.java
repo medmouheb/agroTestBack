@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface VendorsPayementsMapper extends BaseMapper<VendorsPayementDto, VendorsPayments>{
 }

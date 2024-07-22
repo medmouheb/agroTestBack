@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface ReceptionMapper extends  BaseMapper<ReceptionDto, Reception>{
 }

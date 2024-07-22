@@ -6,5 +6,6 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Mapper
+
 public interface ContactMapper  extends BaseMapper<ContactDto, Contact> {
 }

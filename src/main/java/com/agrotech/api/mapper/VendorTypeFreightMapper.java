@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface VendorTypeFreightMapper extends BaseMapper<VendorTypeFreightDto, VendorTypeFreight>{
 }

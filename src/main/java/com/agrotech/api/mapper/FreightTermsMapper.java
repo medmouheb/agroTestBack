@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface FreightTermsMapper extends BaseMapper<FreightTermsDto, FreightTerms>{
 }

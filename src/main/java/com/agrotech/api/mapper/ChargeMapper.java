@@ -8,7 +8,7 @@ import com.agrotech.api.model.Charge;
 import org.springframework.stereotype.Component;
 
 
-@Mapper
+@Mapper()
 @Component
 
 public interface ChargeMapper extends BaseMapper<ChargeDto, Charge> {
