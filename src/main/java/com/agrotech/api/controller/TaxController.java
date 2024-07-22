@@ -10,8 +10,10 @@ import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Tax;
 import com.agrotech.api.services.CampanyService;
 import com.agrotech.api.services.TaxService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("tax")
 @RequiredArgsConstructor
 public class TaxController {
-
+    @Autowired
+    private UserService userService;
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -108,6 +111,11 @@ public class TaxController {
             Page<Tax> response = taxService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
+
+            if(getRole().equals("employee")){
+                Page<Tax> response = taxService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Tax> response = taxService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

@@ -5,6 +5,7 @@ import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Willaya;
 import com.agrotech.api.services.WilayaService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/willaya")
 @RequiredArgsConstructor
 public class WillayaController {
+
+    @Autowired
+    private UserService userService;
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -98,6 +102,12 @@ public class WillayaController {
             Page<Willaya> response = willayaService.findPage1(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
+
+            if(getRole().equals("employee")){
+
+                Page<Willaya> response = willayaService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Willaya> response = willayaService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

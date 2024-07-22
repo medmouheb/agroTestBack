@@ -11,8 +11,10 @@ import com.agrotech.api.model.Crop;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.ContactService;
 import com.agrotech.api.services.CropService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/contact")
 @RequiredArgsConstructor
 public class ContactController {
+
+    @Autowired
+    private UserService userService;
 
     private final ContactService contactService;
     private final ContactRepository contactRepository;
@@ -118,9 +123,14 @@ public class ContactController {
             System.out.println("eeee");
             response= contactService.getpages1(pageSize, pageNumber, filter);
         }else {
+
+            if(t.get().equals("employee")){
+                System.out.println("eeee");
+                response= contactService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
             System.out.println(farmername);
 
-            response= contactService.getpages(pageSize, pageNumber, filter,farmername);
+            response= contactService.getpages(pageSize, pageNumber, filter,farmername);}
         }
 
 
@@ -155,7 +165,12 @@ public class ContactController {
         if(t.get().equals("admin")){
             response= contactService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= contactService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+            if(t.get().equals("employee")){
+                response= contactService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get() );
+            }else {
+
+
+            response= contactService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.Growoutrepository;
 import com.agrotech.api.model.Growout;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +29,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GrowoutController {
 
-
+	@Autowired
+	private UserService userService;
 	private String getRole() {
 		AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -106,6 +108,11 @@ public class GrowoutController {
 			Page<Growout> response = growoutService.findPage1(pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
+
+			if(getRole().equals("employee")){
+				Page<Growout> response = growoutService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
 			Page<Growout> response = growoutService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}

@@ -9,6 +9,7 @@ import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.model.Vendors;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import com.opencsv.CSVWriter;
 import jakarta.servlet.http.HttpServletResponse;
@@ -51,6 +52,9 @@ public class FournisseurController {
     private final FournisseurService fournisseurService;
     private final FournisseurRepository fournisseurRepository;
     private final VendorSKURepository vendorSKURepository;
+
+    @Autowired
+    private UserService userService;
 
 
     private String getRole() {
@@ -162,6 +166,11 @@ public class FournisseurController {
             Page<Fournisseur> response = fournisseurService.findPage1(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else{
+
+            if(getRole().equals("employee")){
+                Page<Fournisseur> response = fournisseurService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Fournisseur> response = fournisseurService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

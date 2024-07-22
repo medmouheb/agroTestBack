@@ -7,8 +7,10 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Buy;
 import com.agrotech.api.model.Campany;
 import com.agrotech.api.services.BuyService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +22,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 @CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3600)
 @RestController
 @RequestMapping("/buy")
 @RequiredArgsConstructor
-public class BuyController {
 
+
+public class BuyController {
+    @Autowired
+    private UserService userService;
     private final BuyService buyService;
     private final BuyRepository buyRepository;
 
@@ -53,6 +59,8 @@ public class BuyController {
         return userDetails.getUsername();
 
     }
+
+
 
 
     //    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -105,7 +113,12 @@ public class BuyController {
         if(getRole().equals("admin")){
             Page<Buy> response = buyService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }else{
+        }
+        else{
+            if(getRole().equals("employee")){
+                Page<Buy> response = buyService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get()   ,pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Buy> response = buyService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
@@ -148,5 +161,14 @@ public class BuyController {
             @RequestParam(defaultValue = "") String filter) {
         Page<Buy> response = buyService.getpagesarchive(pageSize, pageNumber, filter);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
+    @GetMapping("/{username}/farmer")
+    public ResponseEntity<String> getFarmerByUsername(@PathVariable String username) {
+        Optional<String> farmer = userService.getFarmerByUsername(username);
+        return farmer.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

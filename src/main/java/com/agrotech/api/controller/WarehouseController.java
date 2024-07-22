@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.WarehouseRepository;
 import com.agrotech.api.model.Warehouse;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +61,8 @@ public class WarehouseController {
         return userDetails.getUsername();
 
     }
-
+    @Autowired
+    private UserService userService;
 
 
     @Autowired
@@ -120,6 +122,11 @@ public class WarehouseController {
             Page<Warehouse> response = warehouseService.findPage1(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
+
+            if(getRole().equals("employee")){
+                Page<Warehouse> response = warehouseService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Warehouse> response = warehouseService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

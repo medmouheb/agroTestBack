@@ -12,8 +12,10 @@ import com.agrotech.api.model.Delivery;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.CropService;
 import com.agrotech.api.services.DeliveryService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,9 @@ public class DeliveryController {
 
     private final DeliveryService deliveryService;
     private final DeliveryRepository deliveryRepository;
+
+    @Autowired
+    private UserService userService;
 
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
@@ -108,6 +113,11 @@ public class DeliveryController {
             Page<Delivery> response = deliveryService.getpages1(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else{
+
+            if(getRole().equals("employee")){
+                Page<Delivery> response = deliveryService.getpages1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             System.out.println("gggg");
             Page<Delivery> response = deliveryService.getpages1Farmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -143,7 +153,11 @@ public class DeliveryController {
         if(t.get().equals("admin")){
             response= deliveryService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= deliveryService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= deliveryService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
+            response= deliveryService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

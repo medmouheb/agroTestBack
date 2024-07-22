@@ -5,8 +5,10 @@ import com.agrotech.api.dto.VendorSKUDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.services.VendorSKUService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/vendorSku")
 @RequiredArgsConstructor
 public class VendorSKUController {
+
+    @Autowired
+    private UserService userService;
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -100,6 +105,11 @@ public class VendorSKUController {
             Page<VendorSKU> response = vendorSKUService.findPage1(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
+
+            if(getRole().equals("employee")){
+                Page<VendorSKU> response = vendorSKUService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get() ,pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<VendorSKU> response = vendorSKUService.findPage1Farmer(getusername() ,pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

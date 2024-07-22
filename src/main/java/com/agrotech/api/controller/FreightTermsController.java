@@ -5,7 +5,9 @@ import com.agrotech.api.dto.FreightTermsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.FreightTerms;
 import com.agrotech.api.services.FreightTermsService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +29,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequiredArgsConstructor
 public class FreightTermsController {
     private final FreightTermsService freightTermsService ;
+
+    @Autowired
+    private UserService userService;
 
     private  final FreighTermsRepository freighTermsRepository;
 
@@ -108,6 +113,12 @@ public class FreightTermsController {
             Page<FreightTerms> response = freightTermsService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else {
+
+
+            if(getRole().equals("employee")){
+                Page<FreightTerms> response = freightTermsService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<FreightTerms> response = freightTermsService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

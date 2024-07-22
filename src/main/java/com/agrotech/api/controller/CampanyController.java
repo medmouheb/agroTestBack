@@ -4,8 +4,10 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
-import com.agrotech.api.model.User;
+
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.agrotech.api.Repository.CampanyRepository;
@@ -39,6 +41,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/campany")
 @RequiredArgsConstructor
 public class CampanyController {
+
+	@Autowired
+	private UserService userService;
 	private final CampanyService campanyService;
 	private final CampanyRepository campanyRepository;
 
@@ -109,7 +114,12 @@ public class CampanyController {
 		if(t.get().equals("admin")){
 			response= campanyService.getpages(pageSize, pageNumber, filter);
 		}else {
-			response= campanyService.getpages1(pageSize, pageNumber, filter,farmername);
+
+			if(t.get().equals("employee")){
+				response= campanyService.getpages1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+			}else {
+
+			response= campanyService.getpages1(pageSize, pageNumber, filter,farmername);}
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -138,7 +148,11 @@ public class CampanyController {
 		if(t.get().equals("admin")){
 			response= campanyService.getpagesarchive(pageSize, pageNumber, filter);
 		}else {
-			response= campanyService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+			if(t.get().equals("employee")){
+				response= campanyService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+			}else{
+			response= campanyService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
 		}
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

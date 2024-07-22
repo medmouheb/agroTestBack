@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface LogisticUnitMapper extends BaseMapper<LogisticUnitDto, LogisticUnit>{
 }

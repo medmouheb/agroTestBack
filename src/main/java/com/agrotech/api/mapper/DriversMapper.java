@@ -8,5 +8,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface DriversMapper extends BaseMapper<DriversDto, Drivers>{
 }

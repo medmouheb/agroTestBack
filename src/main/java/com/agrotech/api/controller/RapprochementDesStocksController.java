@@ -6,6 +6,7 @@ import com.agrotech.api.dto.RapprochementDesStocksDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.RapprochementDesStocks;
 import com.agrotech.api.services.RapprochementDesStocksService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/rapprochement-des-stocks")
 @RequiredArgsConstructor
 public class RapprochementDesStocksController {
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private final RapprochementDesStocksService rapprochementDesStocksService;
     private  final RapprochementDesStocksRepository rapprochementDesStocksRepository;
@@ -111,6 +113,11 @@ public class RapprochementDesStocksController {
             Page<RapprochementDesStocks> response = rapprochementDesStocksService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else{
+
+            if(getRole().equals("employee")){
+                Page<RapprochementDesStocks> response = rapprochementDesStocksService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<RapprochementDesStocks> response = rapprochementDesStocksService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

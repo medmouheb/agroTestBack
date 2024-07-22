@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface CommandeMapper extends BaseMapper<CommandeDto, Commande> {
 
 }

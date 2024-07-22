@@ -12,8 +12,9 @@ import java.math.BigDecimal;
 
 @Mapper
 @Component
-public interface ProduitMapper extends BaseMapper<ProduitDto, Produit> {
 
+public interface ProduitMapper extends BaseMapper<ProduitDto, Produit> {
+  
     @Mapping(target = "prixUnitaireHt", source = ".", qualifiedByName = "toPrixTTC")
     @Override
     ProduitDto toDto(Produit entity);
@@ -29,5 +30,5 @@ public interface ProduitMapper extends BaseMapper<ProduitDto, Produit> {
         }
         return produit.getPrixUnitaireHt().add(produit.getPrixUnitaireHt().multiply(produit.getTauxTva().divide(new BigDecimal(100))));
     }
-
+    
 }

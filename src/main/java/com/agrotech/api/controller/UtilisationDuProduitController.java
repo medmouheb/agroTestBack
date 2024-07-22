@@ -8,8 +8,10 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.UtilisationDuProduit;
 import com.agrotech.api.services.ProduitService;
 import com.agrotech.api.services.UtilisationDuProduitService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/UtilisationDuProduit")
 @RequiredArgsConstructor
 public class UtilisationDuProduitController {
+
+    @Autowired
+    private UserService userService;
 
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
@@ -111,6 +116,11 @@ public class UtilisationDuProduitController {
             Page<UtilisationDuProduit> response = utilisationDuProduitService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else{
+
+            if(getRole().equals("employee")){
+                Page<UtilisationDuProduit> response = utilisationDuProduitService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<UtilisationDuProduit> response = utilisationDuProduitService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

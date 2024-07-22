@@ -6,8 +6,10 @@ import com.agrotech.api.dto.PaymentMethodDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.PaymentMethod;
 import com.agrotech.api.services.PaymentMethodService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/paymentmethod")
 @RequiredArgsConstructor
 public class PayementMethodController {
-
+    @Autowired
+    private UserService userService;
     private final PaymentMethodService paymentMethodService;
 
     private  final PaymentMethodRepository paymentMethodRepository;
@@ -105,6 +108,11 @@ public class PayementMethodController {
             Page<PaymentMethod> response = paymentMethodService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else {
+
+            if(getRole().equals("employee")){
+                Page<PaymentMethod> response = paymentMethodService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<PaymentMethod> response = paymentMethodService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

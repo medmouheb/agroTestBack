@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface WillayaMapper extends BaseMapper<WillayaDto, Willaya>{
 }

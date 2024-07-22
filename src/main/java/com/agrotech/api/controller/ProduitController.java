@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.model.Produit;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
@@ -39,6 +40,9 @@ public class ProduitController {
 	@Autowired
 	private final ProduitService produitService;
 	private  final ProduitRepository produitRepository;
+
+	@Autowired
+	private UserService userService;
 
 	private String getRole() {
 		AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
@@ -118,6 +122,11 @@ public class ProduitController {
 			Page<Produit> response = produitService.findPage1(pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}else{
+
+			if(getRole().equals("employee")){
+				Page<Produit> response = produitService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
 			Page<Produit> response = produitService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}

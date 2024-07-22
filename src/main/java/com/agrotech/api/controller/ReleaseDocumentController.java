@@ -7,8 +7,10 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.ReleaseDocument;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.ReleaseDocumentService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/releaseDocument")
 @RequiredArgsConstructor
 public class ReleaseDocumentController {
-
+    @Autowired
+    private UserService userService;
 
     private final ReleaseDocumentService releaseDocumentService;
     private final ReleaseDocumentRepository releaseDocumentRepository;
@@ -91,7 +94,11 @@ public class ReleaseDocumentController {
         if(t.get().equals("admin")){
             response= releaseDocumentService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= releaseDocumentService.getpages(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= releaseDocumentService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
+            response= releaseDocumentService.getpages(pageSize, pageNumber, filter,farmername);}
         }
 
 
@@ -126,7 +133,11 @@ public class ReleaseDocumentController {
         if(t.get().equals("admin")){
             response= releaseDocumentService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= releaseDocumentService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= releaseDocumentService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else{
+            response= releaseDocumentService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

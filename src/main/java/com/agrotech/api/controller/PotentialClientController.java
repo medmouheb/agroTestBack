@@ -10,8 +10,10 @@ import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.PotentialClient;
 import com.agrotech.api.services.BuyersService;
 import com.agrotech.api.services.PotentialClientService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/potential-client")
 @RequiredArgsConstructor
 public class PotentialClientController {
+
+    @Autowired
+    private UserService userService;
 
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
@@ -110,6 +115,11 @@ public class PotentialClientController {
             Page<PotentialClient> response = potentialClientService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else{
+
+            if(getRole().equals("employee")){
+                Page<PotentialClient> response = potentialClientService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<PotentialClient> response = potentialClientService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

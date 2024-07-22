@@ -5,8 +5,10 @@ import com.agrotech.api.dto.VehiculeDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Vehicule;
 import com.agrotech.api.services.VehiculeService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/vehicule")
 @RequiredArgsConstructor
 public class VehiculeController  {
-
+    @Autowired
+    private UserService userService;
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -106,6 +109,11 @@ public class VehiculeController  {
             Page<Vehicule> response = vehiculeService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else {
+
+            if(getRole().equals("employee")){
+                Page<Vehicule> response = vehiculeService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Vehicule> response = vehiculeService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

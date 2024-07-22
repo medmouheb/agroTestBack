@@ -6,5 +6,6 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Mapper
+
 public interface FactureMapper extends BaseMapper<FactureDto, Facture> {
 }

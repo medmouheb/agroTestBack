@@ -7,5 +7,6 @@ import org.springframework.stereotype.Component;
 
 @Mapper
 @Component
+
 public interface ShipMethodsMapper extends  BaseMapper <ShipMethodsDto, ShipMethods> {
 }

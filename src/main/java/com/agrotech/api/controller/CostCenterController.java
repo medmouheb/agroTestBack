@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.CostCenterRepository;
 import com.agrotech.api.model.CostCenter;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,8 @@ public class CostCenterController {
 	@Autowired
 	private final CostCenterService costCenterService ;
 	private  final CostCenterRepository costCenterRepository;
+    @Autowired
+    private UserService userService;
 
 
 	private String getRole() {
@@ -117,6 +120,13 @@ public class CostCenterController {
 			Page<CostCenter> response = costCenterService.findPage1(pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}else {
+
+			if(getRole().equals("employee")){
+				Page<CostCenter> response = costCenterService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+
+			}
+
 			Page<CostCenter> response = costCenterService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}

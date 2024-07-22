@@ -4,6 +4,7 @@ import com.agrotech.api.Repository.DeliveryInstructionRepository;
 import com.agrotech.api.dto.DeliveryInstructionDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.services.DeliveryInstructionService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/delivery")
 @RequiredArgsConstructor
 public class DeliveryInstructionController {
-
+    @Autowired
+    private UserService userService;
 
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
@@ -99,6 +101,11 @@ public class DeliveryInstructionController {
             Page<DeliveryInstructionDto> response = deliveryInstructionService.findPage1(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
+
+            if(getRole().equals("employee")){
+                Page<DeliveryInstructionDto> response = deliveryInstructionService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<DeliveryInstructionDto> response = deliveryInstructionService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

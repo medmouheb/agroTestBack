@@ -13,9 +13,11 @@ import com.agrotech.api.model.Stock;
 import com.agrotech.api.model.Tax;
 import com.agrotech.api.services.StockServices;
 import com.agrotech.api.services.TaxService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("stock")
 @RequiredArgsConstructor
 public class StockController {
-
+    @Autowired
+    private UserService userService;
     private final StockServices stockServices;
     private final StockRepository stockRepository;
     private final ProduitRepository produitRepository;
@@ -46,6 +49,8 @@ public class StockController {
     private final EmailController emailController;
 
     private String getRole() {
+
+
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -148,6 +153,10 @@ public class StockController {
             Page<Stock> response = stockServices.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else{
+            if(getRole().equals("employee")){
+                Page<Stock> response = stockServices.getpagesfarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Stock> response = stockServices.getpagesfarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
