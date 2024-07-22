@@ -12,6 +12,7 @@ public interface InventaireInitialService extends BaseService<InventaireInitialD
     InventaireInitialDto findByCodeProduit(String codeProduit) throws NotFoundException;
     Page<InventaireInitialDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<InventaireInitial> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<InventaireInitial> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<InventaireInitial> getpagesarchive(int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;

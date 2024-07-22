@@ -21,7 +21,8 @@ import org.springframework.data.domain.Page;
 
     public Page<VendorSKUDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
-    public Page<VendorSKU> findPage1(int pageSize, int pageNumber, String filter);
+     public Page<VendorSKU> findPage1(int pageSize, int pageNumber, String filter);
+     public Page<VendorSKU> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
     public Page<VendorSKU> findArchivedPage1(int pageSize, int pageNumber, String filter);
 
 VendorSKU findByname(String name)throws NotFoundException;

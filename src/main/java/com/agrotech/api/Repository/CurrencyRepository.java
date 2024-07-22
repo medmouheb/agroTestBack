@@ -12,6 +12,8 @@ public interface CurrencyRepository extends MongoRepository<Currency, String>{
     Optional<Currency> findByCode(String code);
     Page<Currency> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Currency> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Currency> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
+
     Currency findByName(String name);
 
 

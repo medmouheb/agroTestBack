@@ -11,6 +11,7 @@ public interface VehicleTypeService extends BaseService<VehicleTypeDto,String> {
     VehicleTypeDto findByVehicleTypeCode(String vehicleTypeCode) throws NotFoundException;
     Page<VehicleTypeDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<VehicleType> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<VehicleType> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<VehicleType> getpagesarchive(int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;

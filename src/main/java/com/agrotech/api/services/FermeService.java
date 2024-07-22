@@ -20,5 +20,6 @@ public interface FermeService extends BaseService<FermeDto, String> {
 	public Page<Ferme> findArchivedPage1(int pageSize, int pageNumber, String filter);
 	Ferme findByname(String name)throws NotFoundException;
 	public Page<Ferme> findPage1(int pageSize, int pageNumber, String filter);
+	public Page<Ferme> findPage1Farmer( String farmer ,int pageSize, int pageNumber, String filter);
 //	public Page<FermeDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 }

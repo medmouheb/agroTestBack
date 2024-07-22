@@ -12,6 +12,7 @@ public interface VendorSKURepository extends MongoRepository<VendorSKU, String> 
 
     Page<VendorSKU> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<VendorSKU> findByIsDeletedAndVendorSKUNameContainingIgnoreCase(Boolean isDeleted, String vendorSKUName, Pageable pageable);
+    Page<VendorSKU> findByFarmerAndIsDeletedAndVendorSKUNameContainingIgnoreCase(String farmer,Boolean isDeleted, String vendorSKUName, Pageable pageable);
 
     Optional<VendorSKU> findByCode(String code);
     VendorSKU findByName(String name);

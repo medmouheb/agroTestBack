@@ -72,9 +72,15 @@ public class VendorSKUServiceImp implements VendorSKUService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("vendorSKUName").ascending());
-        Page<VendorSKU>  result =  vendorSKURepository.findByIsDeletedAndVendorSKUNameContainingIgnoreCase(false,filter, pageable);
-        return result;
-        // return new PageImpl<>(result);
+        return vendorSKURepository.findByIsDeletedAndVendorSKUNameContainingIgnoreCase(false,filter, pageable);
+    }
+
+    @Override
+    public Page<VendorSKU> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("vendorSKUName").ascending());
+        return vendorSKURepository.findByFarmerAndIsDeletedAndVendorSKUNameContainingIgnoreCase(farmer,false,filter, pageable);
     }
 
     @Override

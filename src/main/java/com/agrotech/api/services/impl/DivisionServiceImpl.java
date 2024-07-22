@@ -48,6 +48,15 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
+	public Page<Division> findPage1Farmer(String farmer ,int pageSize, int pageNumber, String filter) {
+
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		Page<Division>  result =  divisionRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
+		return result;
+	}
+
+	@Override
 	public Division findByname(String name) throws NotFoundException {
 		return divisionRepository.findByName(name);
 	}

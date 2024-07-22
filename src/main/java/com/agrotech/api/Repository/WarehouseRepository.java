@@ -15,6 +15,7 @@ public interface WarehouseRepository extends MongoRepository<Warehouse, String> 
 
     Optional<Warehouse> findByCode(String code);
     Page<Warehouse> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String vendorSKUName, Pageable pageable);
+    Page<Warehouse> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String vendorSKUName, Pageable pageable);
 
     Warehouse findByName(String name);
 }

@@ -82,9 +82,15 @@ public class WarehouseServiceImpl implements WarehouseService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Warehouse>  result =  warehouseRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
-        return result;
-        // return new PageImpl<>(result);
+        return warehouseRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
+    }
+
+    @Override
+    public Page<Warehouse> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return warehouseRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
     }
 
     @Override

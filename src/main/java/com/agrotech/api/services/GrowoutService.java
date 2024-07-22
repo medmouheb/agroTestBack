@@ -22,4 +22,5 @@ public interface GrowoutService extends BaseService<GrowoutDto, String> {
     public Page<GrowoutDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
     public Page<Growout> findPage1(int pageSize, int pageNumber, String filter);
+    public Page<Growout> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 }

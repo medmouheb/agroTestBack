@@ -24,6 +24,7 @@ public interface DivisionService extends BaseService<DivisionDTO, String> {
 	public Page<Division> findArchivedPage1(int pageSize, int pageNumber, String filter);
 
 	public Page<Division> findPage1(int pageSize, int pageNumber, String filter);
+	public Page<Division> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 	Division findByname(String name)throws NotFoundException;
 
 	List<Division> findBynamee()throws NotFoundException;

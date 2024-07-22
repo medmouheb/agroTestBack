@@ -112,6 +112,14 @@ public class InventaireInitialServiceImpl implements InventaireInitialService {
     }
 
     @Override
+    public Page<InventaireInitial> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
+        Page<InventaireInitial> result =  inventaireInitialRepository.findByFarmerAndIsDeletedAndNomDuProduitContainingIgnoreCase(farmer,false, filter,pageable);
+
+        return result;
+    }
+
+    @Override
     public Page<InventaireInitial> getpagesarchive(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
         Page<InventaireInitial> result =  inventaireInitialRepository.findByIsDeletedAndNomDuProduitContainingIgnoreCase(true, filter,pageable);

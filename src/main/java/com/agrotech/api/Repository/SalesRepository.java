@@ -17,6 +17,7 @@ public interface SalesRepository extends MongoRepository<Sales, String> {
 	Page<Sales> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
 	Page<Sales> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+	Page<Sales> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
 
 	Sales findByName(String name);
 }

@@ -68,6 +68,16 @@ public class GrowoutServiceImpl  implements GrowoutService{
 	}
 
 	@Override
+	public Page<Growout> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		Page<Growout>  result =  growoutrepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
+		return result;
+		// return new PageImpl<>(result);
+	}
+
+	@Override
 	public List<GrowoutDto> findAll() {
 		return growoutrepository.findAll().stream()
 				.map(growoutMapper::toDto)

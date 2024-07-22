@@ -15,5 +15,6 @@ public interface FermeRepository extends MongoRepository<Ferme, String> {
     Optional<Ferme> findByCode(String code);
     Page<Ferme> findByNomContainingIgnoreCase(String name, Pageable pageable);
     Page<Ferme> findByIsDeletedAndNomContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Ferme> findByFarmerAndIsDeletedAndNomContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
     Ferme findByNom(String nom);
 }

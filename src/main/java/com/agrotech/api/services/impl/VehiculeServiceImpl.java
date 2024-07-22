@@ -102,6 +102,10 @@ public class VehiculeServiceImpl implements VehiculeService {
         return vehiculeRepository.findByIsDeletedAndVehiculeNameContainingIgnoreCase(false,filter,PageRequest.of(pageNumber, pageSize));
     }
 
+    public Page<Vehicule> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        return vehiculeRepository.findByFarmerAndIsDeletedAndVehiculeNameContainingIgnoreCase(farmer,false,filter,PageRequest.of(pageNumber, pageSize));
+    }
+
     public Page<Vehicule> getpagesarchive(int pageSize, int pageNumber, String filter) {
         return vehiculeRepository.findAll(PageRequest.of(pageNumber, pageSize));
 

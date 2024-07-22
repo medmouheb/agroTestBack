@@ -11,6 +11,7 @@ public interface TaxRepository extends MongoRepository<Tax, String> {
     Optional<Tax> findByCode(String code);
     Page<Tax> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Tax> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Tax> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmed,Boolean isDeleted, String name, Pageable pageable);
     Page<Tax> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Tax findByName(String name );
 }

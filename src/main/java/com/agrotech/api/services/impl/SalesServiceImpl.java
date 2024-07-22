@@ -51,13 +51,15 @@ public class SalesServiceImpl implements SalesServices {
         TurnoverHistory th=new TurnoverHistory();
 
         BigDecimal bigDecimalValue = new BigDecimal(dto.getQuantity());
+        try {
+            float totalPrice=  bigDecimalValue.multiply( p.getPrixUnitaireHt()).floatValue() ;
+            th.setAmount(totalPrice);
 
-        float totalPrice=  bigDecimalValue.multiply( p.getPrixUnitaireHt()).floatValue() ;
+            th.setOldTurnver(b.getTurnover());
+            b.setTurnover(b.getTurnover()-totalPrice);
+        }catch (Exception e){}
 
-        th.setAmount(totalPrice);
 
-        th.setOldTurnver(b.getTurnover());
-        b.setTurnover(b.getTurnover()-totalPrice);
         th.setNewTurnver(b.getTurnover());
 
         th.setMovementType("sales");
@@ -96,6 +98,13 @@ public class SalesServiceImpl implements SalesServices {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
         return salesRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
+    }
+    @Override
+    public Page<Sales> findPage1Farmer( String farmer,int pageSize, int pageNumber, String filter) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return salesRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
     }
 
     @Override

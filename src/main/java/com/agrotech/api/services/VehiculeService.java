@@ -10,6 +10,7 @@ public interface VehiculeService extends BaseService<VehiculeDto, String>{
     VehiculeDto findByVehiculeCode(String vehiculeCode) throws NotFoundException;
     Page<VehiculeDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Vehicule> getpages(int pageSize, int pageNumber, String filter) ;
+    Page<Vehicule> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<Vehicule> getpagesarchive(int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;

@@ -22,4 +22,5 @@ public interface VehiculeRepository extends MongoRepository<Vehicule, String> {
     Vehicule findByVehiculeName(String vehiculeName);
 
     Page<Vehicule> findByIsDeletedAndVehiculeNameContainingIgnoreCase(boolean b, String filter, PageRequest of);
+    Page<Vehicule> findByFarmerAndIsDeletedAndVehiculeNameContainingIgnoreCase(String farmer,boolean b, String filter, PageRequest of);
 }

@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.Growoutrepository;
 import com.agrotech.api.model.Growout;
@@ -10,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.agrotech.api.dto.GrowoutDto;
@@ -23,6 +27,31 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/growout")
 @RequiredArgsConstructor
 public class GrowoutController {
+
+
+	private String getRole() {
+		AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+		userDetails.getAuthorities().forEach(authority -> {
+			if (authority.getAuthority().equals("ROLE_FARMER")) {
+				role.set("farmer");
+			} else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+				role.set("admin");
+			}
+		});
+
+		return role.get();
+	}
+
+	private String getusername(){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		return userDetails.getUsername();
+
+	}
+
 
 	@Autowired
 	private GrowoutService growoutService ;
@@ -73,8 +102,14 @@ public class GrowoutController {
 			@RequestParam(defaultValue = "0") int pageNumber,
 			@RequestParam(defaultValue = "") String filter
 	) {
-		Page<Growout> response = growoutService.findPage1(pageSize, pageNumber, filter);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		if(getRole().equals("admin")){
+			Page<Growout> response = growoutService.findPage1(pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			Page<Growout> response = growoutService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

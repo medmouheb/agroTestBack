@@ -22,6 +22,7 @@ public interface WilayaService extends BaseService<WillayaDto, String>{
     public Page<WillayaDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
     public Page<Willaya> findPage1(int pageSize, int pageNumber, String filter);
+    public Page<Willaya> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
     public Page<Willaya> findArchivedPage1(int pageSize, int pageNumber, String filter);
 Willaya findByname(String name)throws NotFoundException;
 }

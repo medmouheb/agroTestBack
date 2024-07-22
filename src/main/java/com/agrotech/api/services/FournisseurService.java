@@ -23,4 +23,5 @@ Fournisseur findByname(String name)throws NotFoundException;
 
     public Page<FournisseurDto> findArchivedPage(int pageSize, int pageNumber, String filter);
     public Page<Fournisseur> findPage1(int pageSize, int pageNumber, String filter);
+    public Page<Fournisseur> findPage1Farmer(String framer,int pageSize, int pageNumber, String filter);
 }

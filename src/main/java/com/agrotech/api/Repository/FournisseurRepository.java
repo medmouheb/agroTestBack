@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface FournisseurRepository extends MongoRepository<Fournisseur, String> {
     Page<Fournisseur> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Fournisseur> findByNameContainingIgnoreCaseAndIsDeleted(String name,Boolean isDeleted, Pageable pageable);
+    Page<Fournisseur> findByFarmerAndNameContainingIgnoreCaseAndIsDeleted(String farmer,String name,Boolean isDeleted, Pageable pageable);
 
     Optional<Fournisseur> findByCode(String code);
     Page<Fournisseur> findByIsDeleted(Boolean isDeleted,  Pageable pageable);

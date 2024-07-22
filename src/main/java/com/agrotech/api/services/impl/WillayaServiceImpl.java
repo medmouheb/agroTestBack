@@ -68,9 +68,12 @@ public class WillayaServiceImpl implements WilayaService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Willaya>  result =  willayaRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
-        return result;
-        // return new PageImpl<>(result);
+        return willayaRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
+    }
+    @Override
+    public Page<Willaya> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return willayaRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
     }
 
     @Override

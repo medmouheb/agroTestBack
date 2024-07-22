@@ -72,8 +72,15 @@ public class CurrencyServiceImpl implements CurrencyService {
 
 
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Currency>  result =  currencyRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
-		return result;
+        return currencyRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
+		// return new PageImpl<>(result);
+	}
+	@Override
+	public Page<Currency> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return currencyRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
 		// return new PageImpl<>(result);
 	}
 

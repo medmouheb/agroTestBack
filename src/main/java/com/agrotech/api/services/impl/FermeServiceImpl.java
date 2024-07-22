@@ -59,7 +59,14 @@ public class FermeServiceImpl implements FermeService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
         Page<Ferme>  result =  fermeRepository.findByIsDeletedAndNomContainingIgnoreCase(false,filter,pageable);
         return result;
-        // return new PageImpl<>(result);
+    }
+    @Override
+    public Page<Ferme> findPage1Farmer( String farmer ,int pageSize, int pageNumber, String filter) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        Page<Ferme>  result =  fermeRepository.findByFarmerAndIsDeletedAndNomContainingIgnoreCase(farmer,false,filter,pageable);
+        return result;
     }
     @Override
     public FermeDto update(String id, FermeDto dto) throws NotFoundException {

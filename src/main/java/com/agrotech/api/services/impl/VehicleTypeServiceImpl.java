@@ -108,9 +108,16 @@ public class VehicleTypeServiceImpl implements VehicleTypeService {
     public Page<VehicleType> getpages(int pageSize, int pageNumber, String filter) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("vehicleTypeName").ascending());
-        Page<VehicleType> result =  vehicleTypeRepository.findByVehicleTypeNameContainingIgnoreCaseAndIsDeleted(filter,false, pageable);
 
-        return result;
+        return vehicleTypeRepository.findByVehicleTypeNameContainingIgnoreCaseAndIsDeleted(filter,false, pageable);
+    }
+
+    @Override
+    public Page<VehicleType> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("vehicleTypeName").ascending());
+
+        return vehicleTypeRepository.findByFarmerAndVehicleTypeNameContainingIgnoreCaseAndIsDeleted(farmer,filter,false, pageable);
     }
 
     @Override

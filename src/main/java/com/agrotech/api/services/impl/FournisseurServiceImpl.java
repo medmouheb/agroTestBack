@@ -96,7 +96,13 @@ public class FournisseurServiceImpl implements FournisseurService {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
         Page<Fournisseur>  result =  fournisseurRepository.findByNameContainingIgnoreCaseAndIsDeleted(filter,false,pageable);
         return result;
-        // return new PageImpl<>(result);
+    }
+
+    @Override
+    public Page<Fournisseur> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        Page<Fournisseur>  result =  fournisseurRepository.findByFarmerAndNameContainingIgnoreCaseAndIsDeleted(farmer,filter,false,pageable);
+        return result;
     }
 
     @Override

@@ -21,6 +21,7 @@ public interface WarehouseService extends BaseService<WarehouseDto, String> {
     public Page<WarehouseDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
     public Page<Warehouse> findPage1(int pageSize, int pageNumber, String filter);
+    public Page<Warehouse> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
     public Page<Warehouse> findArchivedPage1(int pageSize, int pageNumber, String filter);
 Warehouse findByname(String name)throws NotFoundException;
 }

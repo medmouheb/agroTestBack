@@ -14,6 +14,7 @@ public interface InventaireInitialRepository extends MongoRepository<InventaireI
     Optional<InventaireInitial> findByCodeProduit(String codeProduit);
     Page<InventaireInitial> findByNomDuProduitContainingIgnoreCase(String NomDuProduit, Pageable pageable);
     Page<InventaireInitial> findByIsDeletedAndNomDuProduitContainingIgnoreCase(Boolean isDeleted, String NomDuProduit, Pageable pageable);
+    Page<InventaireInitial> findByFarmerAndIsDeletedAndNomDuProduitContainingIgnoreCase(String farmer,Boolean isDeleted, String NomDuProduit, Pageable pageable);
     Page<InventaireInitial> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     InventaireInitial findByNomDuProduit(String NomDuProduit);
 

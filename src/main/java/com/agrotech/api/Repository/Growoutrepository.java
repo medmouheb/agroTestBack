@@ -17,6 +17,7 @@ public interface Growoutrepository extends MongoRepository<Growout, String> {
 	Optional<Growout> findByCode(String code );
     Page<Growout> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Growout> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
+    Page<Growout> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
     Growout findByName(String name);
 
 }

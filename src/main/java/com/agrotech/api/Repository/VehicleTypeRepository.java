@@ -15,5 +15,6 @@ public interface VehicleTypeRepository extends MongoRepository<VehicleType, Stri
 
     Page<VehicleType> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Page<VehicleType> findByVehicleTypeNameContainingIgnoreCaseAndIsDeleted(String vehicleTypeName,Boolean isDeleted, Pageable pageable);
+    Page<VehicleType> findByFarmerAndVehicleTypeNameContainingIgnoreCaseAndIsDeleted(String farmer,String vehicleTypeName,Boolean isDeleted, Pageable pageable);
 
 }
