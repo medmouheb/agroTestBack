@@ -119,7 +119,7 @@ public class AuthController {
                 signUpRequest.getNumeroTelephone());
 
 
-
+        System.out.println(user.toString());
         Set<String> strRoles = signUpRequest.getRoles();
 
         Set<Role> roles = new HashSet<>();

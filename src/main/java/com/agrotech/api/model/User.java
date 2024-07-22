@@ -57,7 +57,17 @@ public class User {
         this.password = encode;
     }
 
-    public User(String username, String email, String encode, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone) {
+    public User(String username, String email, String password,  String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String numeroTelephone) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.region = region;
+        this.numeroTelephone = numeroTelephone;
     }
 
     public Boolean getVerified() {
@@ -275,6 +285,33 @@ public class User {
         this.verified = verified;
         this.tags = tags;
         this.modules = modules;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                ", farmer='" + farmer + '\'' +
+                ", resetToken='" + resetToken + '\'' +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", sexe='" + sexe + '\'' +
+                ", pays='" + pays + '\'' +
+                ", region='" + region + '\'' +
+                ", numeroTelephone='" + numeroTelephone + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", activationToken='" + activationToken + '\'' +
+                ", verified=" + verified +
+                ", tags=" + tags +
+                ", modules=" + modules +
+                ", notifications=" + notifications +
+                ", notificationsNbr=" + notificationsNbr +
+                '}';
     }
 }
 
