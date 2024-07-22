@@ -7,8 +7,10 @@ import com.agrotech.api.model.InventaireInitial;
 import com.agrotech.api.model.Produit;
 import com.agrotech.api.services.InventaireInitialService;
 import com.agrotech.api.services.ProduitService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/InventaireInitial")
 @RequiredArgsConstructor
 public class InventaireInitialController {
-
+    @Autowired
+    private UserService userService;
     private final InventaireInitialService inventaireInitialService;
 
     private final ProduitService produitService;
@@ -102,6 +105,11 @@ public class InventaireInitialController {
             Page<InventaireInitial> response = inventaireInitialService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
+
+            if(getRole().equals("employee")){
+                Page<InventaireInitial> response = inventaireInitialService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<InventaireInitial> response = inventaireInitialService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

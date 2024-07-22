@@ -7,8 +7,10 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Devis;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.DevisService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/devis")
 @RequiredArgsConstructor
 public class DevisController {
-
+    @Autowired
+    private UserService userService;
 
     private final DevisService devisService;
     private final DevisRepository devisRepository;
@@ -96,7 +99,11 @@ public class DevisController {
         if(t.get().equals("admin")){
             response= devisService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= devisService.getpages(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= devisService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
+            response= devisService.getpages(pageSize, pageNumber, filter,farmername);}
         }
 
 
@@ -131,7 +138,11 @@ public class DevisController {
         if(t.get().equals("admin")){
             response= devisService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= devisService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= devisService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
+            response= devisService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

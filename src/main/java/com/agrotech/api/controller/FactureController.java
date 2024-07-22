@@ -11,8 +11,10 @@ import com.agrotech.api.model.Facture;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.DevisService;
 import com.agrotech.api.services.FactureService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/facture")
 @RequiredArgsConstructor
 public class FactureController {
-
+    @Autowired
+    private UserService userService;
 
     private final FactureService factureService;
     private final FactureRepository factureRepository;
@@ -116,7 +119,11 @@ public class FactureController {
         if(t.get().equals("admin")){
             response= factureService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= factureService.getpages(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= factureService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
+            response= factureService.getpages(pageSize, pageNumber, filter,farmername);}
         }
 
 

@@ -113,7 +113,12 @@ public class BuyController {
         if(getRole().equals("admin")){
             Page<Buy> response = buyService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }else{
+        }
+        else{
+            if(getRole().equals("employee")){
+                Page<Buy> response = buyService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get()   ,pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<Buy> response = buyService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

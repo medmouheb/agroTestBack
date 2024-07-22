@@ -8,6 +8,7 @@ import com.agrotech.api.Repository.FermeRepository;
 import com.agrotech.api.dto.PropertyDTO;
 import com.agrotech.api.model.Ferme;
 import com.agrotech.api.model.Property;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +45,8 @@ public class fermeController {
 	@Autowired
 	private final FermeService fermeService ;
 	private  final FermeRepository fermeRepository;
-
+	@Autowired
+	private UserService userService;
 	private String getRole() {
 		AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -126,7 +128,7 @@ public class fermeController {
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/page")
+	@GetMapping("/page")
 	public ResponseEntity<?> findPage(
 			@RequestParam(defaultValue = "10") int pageSize,
 			@RequestParam(defaultValue = "0") int pageNumber,
@@ -137,8 +139,14 @@ public class fermeController {
 			Page<Ferme> response = fermeService.findPage1(pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
-			Page<Ferme> response = fermeService.findPage1Farmer(getusername() ,pageSize, pageNumber, filter);
-			return new ResponseEntity<>(response, HttpStatus.OK);
+			if(getRole().equals("employee")){
+				Page<Ferme> response = fermeService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get()    ,pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}else {
+				Page<Ferme> response = fermeService.findPage1Farmer(getusername() ,pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+
 		}
 
 	}

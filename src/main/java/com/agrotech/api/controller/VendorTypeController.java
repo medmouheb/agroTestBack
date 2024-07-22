@@ -92,6 +92,7 @@ public class VendorTypeController {
     public ResponseEntity<?> setNotArchive(@PathVariable String id) throws NotFoundException {
         vendorTypesService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

@@ -10,8 +10,10 @@ import com.agrotech.api.model.Crop;
 import com.agrotech.api.model.ERole;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.CropService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,8 @@ public class CropController {
 
     private final CropService cropService;
     private final CropRepo cropRepo;
+    @Autowired
+    private UserService userService;
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -98,7 +102,12 @@ public class CropController {
         if(t.get().equals("admin")){
             response= cropService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= cropService.getpages(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")) {
+                response = cropService.getpages(pageSize, pageNumber, filter, userService.getFarmerByUsername(farmername).get());
+            }else{
+               response= cropService.getpages(pageSize, pageNumber, filter,farmername);
+                }
         }
 
 
@@ -133,7 +142,11 @@ public class CropController {
         if(t.get().equals("admin")){
             response= cropService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= cropService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= cropService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else{
+            response= cropService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

@@ -5,8 +5,10 @@ import com.agrotech.api.dto.ShipMethodsDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.ShipMethods;
 import com.agrotech.api.services.ShipMethodsService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/shipmethods")
 @RequiredArgsConstructor
 public class ShipMethodController {
-
+    @Autowired
+    private UserService userService;
 
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
@@ -105,6 +108,11 @@ public class ShipMethodController {
             Page<ShipMethods> response = shipMethodsService.getpages(pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }else{
+
+            if(getRole().equals("employee")){
+                Page<ShipMethods> response = shipMethodsService.getpagesFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
             Page<ShipMethods> response = shipMethodsService.getpagesFarmer(getusername(),pageSize, pageNumber, filter);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

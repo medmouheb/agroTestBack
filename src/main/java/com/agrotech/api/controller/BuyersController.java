@@ -6,8 +6,10 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.Facture;
 import com.agrotech.api.services.BuyersService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,10 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/buyers")
 @RequiredArgsConstructor
 public class BuyersController {
+
+
+    @Autowired
+    private UserService userService;
 
 
     private final BuyersService buyersService;
@@ -98,7 +104,13 @@ public class BuyersController {
         if(t.get().equals("admin")){
             response= buyersService.getpages(pageSize, pageNumber, filter);
         }else {
-            response= buyersService.getpages1(pageSize, pageNumber, filter,farmername);
+
+
+            if(t.get().equals("employee")){
+                response= buyersService.getpages1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }
+            else {
+            response= buyersService.getpages1(pageSize, pageNumber, filter,farmername);}
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);

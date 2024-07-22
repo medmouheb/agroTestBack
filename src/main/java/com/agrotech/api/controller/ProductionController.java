@@ -11,8 +11,10 @@ import com.agrotech.api.model.Production;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.FactureService;
 import com.agrotech.api.services.ProductionService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +35,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ProductionController {
 
 
-
+    @Autowired
+    private UserService userService;
     private final ProductionService productionService;
     private final ProductionRepository productionRepository;
 
@@ -98,7 +101,11 @@ public class ProductionController {
         if(t.get().equals("admin")){
             response= productionService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= productionService.getpages(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= productionService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
+            response= productionService.getpages(pageSize, pageNumber, filter,farmername);}
         }
 
 
@@ -133,7 +140,11 @@ public class ProductionController {
         if(t.get().equals("admin")){
             response= productionService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= productionService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= productionService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else{
+            response= productionService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

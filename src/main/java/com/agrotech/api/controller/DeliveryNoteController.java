@@ -10,8 +10,10 @@ import com.agrotech.api.model.DeliveryNote;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.DeliveryNoteService;
 import com.agrotech.api.services.DeliveryNoteService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/deliveryNote")
 @RequiredArgsConstructor
 public class DeliveryNoteController {
-
+    @Autowired
+    private UserService userService;
 
     private final DeliveryNoteService deliveryNoteService;
     private final DeliveryNoteRepository deliveryNoteRepository;
@@ -99,7 +102,11 @@ public class DeliveryNoteController {
         if(t.get().equals("admin")){
             response= deliveryNoteService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= deliveryNoteService.getpages(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= deliveryNoteService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else {
+            response= deliveryNoteService.getpages(pageSize, pageNumber, filter,farmername);}
         }
 
 
@@ -134,7 +141,11 @@ public class DeliveryNoteController {
         if(t.get().equals("admin")){
             response= deliveryNoteService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= deliveryNoteService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= deliveryNoteService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else{
+            response= deliveryNoteService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

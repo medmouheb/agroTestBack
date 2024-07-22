@@ -10,8 +10,10 @@ import com.agrotech.api.model.MvtStk;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.MvtStkService;
 import com.agrotech.api.services.MvtStkService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,8 @@ import java.util.concurrent.atomic.AtomicReference;
 @RequestMapping("/mvt-stk")
 @RequiredArgsConstructor
 public class MvtStkController {
-
+    @Autowired
+    private UserService userService;
 
     private final MvtStkService mvtStkService;
     private final MvtStkRepository mvtStkRepository;
@@ -94,7 +97,11 @@ public class MvtStkController {
         if(t.get().equals("admin")){
             response= mvtStkService.getpages1(pageSize, pageNumber, filter);
         }else {
-            response= mvtStkService.getpages(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= mvtStkService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else{
+            response= mvtStkService.getpages(pageSize, pageNumber, filter,farmername);}
         }
 
 
@@ -129,7 +136,11 @@ public class MvtStkController {
         if(t.get().equals("admin")){
             response= mvtStkService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
-            response= mvtStkService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
+
+            if(t.get().equals("employee")){
+                response= mvtStkService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+            }else{
+            response= mvtStkService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

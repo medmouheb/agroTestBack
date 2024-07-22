@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.CurrencyRepository;
 import com.agrotech.api.model.Currency;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/currency")
 @RequiredArgsConstructor
 public class CurrencyController {
-
+	@Autowired
+	private UserService userService;
 
 	private String getRole() {
 		AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
@@ -111,6 +113,11 @@ public class CurrencyController {
 			Page<Currency> response = currencyService.findPage1(pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
+
+			if(getRole().equals("employee")){
+				Page<Currency> response = currencyService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get() ,pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
 			Page<Currency> response = currencyService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}

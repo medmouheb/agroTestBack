@@ -13,6 +13,7 @@ import com.agrotech.api.model.Sales;
 import com.agrotech.api.model.Tax;
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.BuyersService;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,6 +45,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/sales")
 @RequiredArgsConstructor
 public class SalesController {
+
+	@Autowired
+	private UserService userService;
 	private String getRole() {
 		AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -145,6 +149,11 @@ public class SalesController {
 			Page<Sales> response = salesServices.findPage1(pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
+
+			if(getRole().equals("employee")){
+				Page<Sales> response = salesServices.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
 			Page<Sales> response = salesServices.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}

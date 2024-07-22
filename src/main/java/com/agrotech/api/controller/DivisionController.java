@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.DivisionRepository;
 import com.agrotech.api.model.Division;
+import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,7 +42,8 @@ public class DivisionController {
 	@Autowired
 	private final DivisionService divisionService ;
 	private final DivisionRepository divisionRepository;
-
+	@Autowired
+	private UserService userService;
 
 
 	private String getRole() {
@@ -117,6 +119,11 @@ public class DivisionController {
 			Page<Division> response = divisionService.findPage1(pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
+
+			if(getRole().equals("employee")){
+				Page<Division> response = divisionService.findPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
 			Page<Division> response = divisionService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
