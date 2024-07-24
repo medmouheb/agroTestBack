@@ -84,8 +84,14 @@ public class CampanyController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("")
 	public ResponseEntity<?> findAll() throws NotFoundException {
-		List<CampanyDto> response = campanyService.findAll(getusername());
-		return new ResponseEntity<>(response, HttpStatus.OK);
+
+		if(getRole().equals("employee")){
+			List<CampanyDto> response = campanyService.findAll(userService.getFarmerByUsername(getusername()).get());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			List<CampanyDto> response = campanyService.findAll(getusername());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -116,7 +122,7 @@ public class CampanyController {
 		}else {
 
 			if(t.get().equals("employee")){
-				response= campanyService.getpages1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+				response= campanyService.getpages1(pageSize, pageNumber, filter,farmername);
 			}else {
 
 			response= campanyService.getpages1(pageSize, pageNumber, filter,farmername);}
@@ -148,9 +154,8 @@ public class CampanyController {
 		if(t.get().equals("admin")){
 			response= campanyService.getpagesarchive(pageSize, pageNumber, filter);
 		}else {
-
 			if(t.get().equals("employee")){
-				response= campanyService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+				response= campanyService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
 			}else{
 			response= campanyService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
 		}
@@ -163,12 +168,33 @@ public class CampanyController {
 		return userDetails.getUsername();
 
 	}
+	private String getRole() {
+		AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+		userDetails.getAuthorities().forEach(authority -> {
+			if (authority.getAuthority().equals("ROLE_FARMER")) {
+				role.set("farmer");
+			} else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+				role.set("admin");
+			}
+		});
+
+		return role.get();
+	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		CampanyDto response = campanyService.findByCode(code,getusername());
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		if(getRole().equals("employee")){
+			CampanyDto response = campanyService.findByCode(code,userService.getFarmerByUsername(getusername()).get()  );
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			CampanyDto response = campanyService.findByCode(code,getusername());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

@@ -136,6 +136,15 @@ public class BuyersServiceImpl implements BuyersService {
     }
 
     @Override
+    public Page<Buyers> getpagesarchiveFarmer(String farmer  ,int pageSize, int pageNumber, String filter) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
+        Page<Buyers> result =  buyersRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmerContainingIgnoreCase(true,filter,farmer, pageable);
+
+        return result;
+    }
+
+    @Override
     public void archive(String id) throws NotFoundException {
         Optional<Buyers> groOptional =  buyersRepository.findById(id);
         if(groOptional.isEmpty()) {

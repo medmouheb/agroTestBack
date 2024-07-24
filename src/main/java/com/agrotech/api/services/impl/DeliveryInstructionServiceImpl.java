@@ -140,7 +140,18 @@ public class DeliveryInstructionServiceImpl implements DeliveryInstructionServic
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BreedCodeName").ascending());
         List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByIsDeletedAndInstructiuonNameContainingIgnoreCase(true,filter, pageable)
                 .stream()
-////				.filter(g->(g.getIsDeleted() == null || !g.getIsDeleted()))
+                .map(deliveryInstructionMapper::toDto)
+                .collect(Collectors.toList());
+        //return result;
+        return new PageImpl<>(result);
+
+    }
+
+    @Override
+    public Page<DeliveryInstructionDto> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BreedCodeName").ascending());
+        List<DeliveryInstructionDto> result =  deliveryInstructionRepository.findByFarmerAndIsDeletedAndInstructiuonNameContainingIgnoreCase(farmer,true,filter, pageable)
+                .stream()
                 .map(deliveryInstructionMapper::toDto)
                 .collect(Collectors.toList());
         //return result;

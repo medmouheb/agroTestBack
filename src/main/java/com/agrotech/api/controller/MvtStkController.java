@@ -107,7 +107,7 @@ public class MvtStkController {
         }else {
 
             if(t.get().equals("employee")){
-                response= mvtStkService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= mvtStkService.getpages(pageSize, pageNumber, filter,farmername);
             }else{
             response= mvtStkService.getpages(pageSize, pageNumber, filter,farmername);}
         }
@@ -146,7 +146,7 @@ public class MvtStkController {
         }else {
 
             if(t.get().equals("employee")){
-                response= mvtStkService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= mvtStkService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
             }else{
             response= mvtStkService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }

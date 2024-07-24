@@ -134,6 +134,28 @@ public class ProduitController {
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+	@GetMapping("/archived/page")
+	public ResponseEntity<?> findArchivedPage(
+			@RequestParam(defaultValue = "10") int pageSize,
+			@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "") String filter
+	) {
+
+		if(getRole().equals("admin")){
+			Page<Produit> response = produitService.findArchivedPage1(pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}else{
+
+			if(getRole().equals("employee")){
+				Page<Produit> response = produitService.findArchivedPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+			Page<Produit> response = produitService.findArchivedPage1Farmer(getusername(),pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+	}
+
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		ProduitDto response = produitService.findByCode(code , getusername());
@@ -177,15 +199,6 @@ public class ProduitController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-	public ResponseEntity<?> findArchivedPage(
-			@RequestParam(defaultValue = "10") int pageSize,
-			@RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "") String filter
-	) {
-		Page<Produit> response = produitService.findArchivedPage1(pageSize, pageNumber, filter);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+
 
 }

@@ -125,6 +125,29 @@ public class RapprochementDesStocksController {
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String filter
+    ) {
+
+
+        if(getRole().equals("admin")){
+            Page<RapprochementDesStocks> response = rapprochementDesStocksService.getpagesarchive(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else{
+
+            if(getRole().equals("employee")){
+                Page<RapprochementDesStocks> response = rapprochementDesStocksService.getpagesarchiveFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            Page<RapprochementDesStocks> response = rapprochementDesStocksService.getpagesarchiveFarmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
         RapprochementDesStocksDto response = rapprochementDesStocksService.findBynDeReference(code);
@@ -153,18 +176,5 @@ public class RapprochementDesStocksController {
         rapprochementDesStocksService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<?> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter
-    ) {
-        Page<RapprochementDesStocks> response = rapprochementDesStocksService.getpagesarchive(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-
 
 }

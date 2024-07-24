@@ -18,6 +18,7 @@ public interface DeliveryInstructionService extends BaseService<DeliveryInstruct
 
     public void setNotArchive(String id) throws NotFoundException;
     public Page<DeliveryInstructionDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
+    public Page<DeliveryInstructionDto> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
     public Page<DeliveryInstructionDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
 

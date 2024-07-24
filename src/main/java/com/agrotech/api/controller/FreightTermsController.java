@@ -126,6 +126,28 @@ public class FreightTermsController {
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String filter
+    ) {
+        if(getRole().equals("admin")){
+            Page<FreightTerms> response = freightTermsService.getpagesarchive(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+
+
+            if(getRole().equals("employee")){
+                Page<FreightTerms> response = freightTermsService.getpagesarchiveFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            Page<FreightTerms> response = freightTermsService.getpagesarchiveFarmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-freighttermcode/{freighttermcode}")
     public ResponseEntity<?> findByfreighttermcode (@PathVariable String freighttermcode ) throws NotFoundException {
         FreightTermsDto response = freightTermsService.findByfreighttermcode(freighttermcode);
@@ -155,16 +177,7 @@ public class FreightTermsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<?> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter
-    ) {
-        Page<FreightTerms> response = freightTermsService.getpagesarchive(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
 
 
 }

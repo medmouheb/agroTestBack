@@ -126,6 +126,13 @@ public class PaymentMethodServiceImpl implements PaymentMethodService {
     }
 
     @Override
+    public Page<PaymentMethod> getpagesarchiveFarmer(String farmer ,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+
+        return paymentMethodRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(true,filter,farmer, pageable);
+    }
+
+    @Override
     public void archive(String id) throws NotFoundException {
         Optional<PaymentMethod> groOptional =  paymentMethodRepository.findById(id);
         if(groOptional.isEmpty()) {

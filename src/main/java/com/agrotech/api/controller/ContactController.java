@@ -126,7 +126,7 @@ public class ContactController {
 
             if(t.get().equals("employee")){
                 System.out.println("eeee");
-                response= contactService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= contactService.getpages(pageSize, pageNumber, filter,farmername);
             }else {
             System.out.println(farmername);
 
@@ -166,7 +166,7 @@ public class ContactController {
             response= contactService.getpagesarchive(pageSize, pageNumber, filter);
         }else {
             if(t.get().equals("employee")){
-                response= contactService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get() );
+                response= contactService.getpagesarchive1(pageSize, pageNumber, filter,farmername );
             }else {
 
 

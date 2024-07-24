@@ -104,7 +104,7 @@ public class DeliveryNoteController {
         }else {
 
             if(t.get().equals("employee")){
-                response= deliveryNoteService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= deliveryNoteService.getpages(pageSize, pageNumber, filter,farmername);
             }else {
             response= deliveryNoteService.getpages(pageSize, pageNumber, filter,farmername);}
         }
@@ -143,7 +143,7 @@ public class DeliveryNoteController {
         }else {
 
             if(t.get().equals("employee")){
-                response= deliveryNoteService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= deliveryNoteService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
             }else{
             response= deliveryNoteService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }

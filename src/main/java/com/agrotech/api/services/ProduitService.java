@@ -30,6 +30,7 @@ public interface ProduitService extends BaseService<ProduitDto, String> {
     public Page<Produit> findPage1(int pageSize, int pageNumber, String filter);
     public Page<Produit> findPage1Farmer(String farmer, int pageSize, int pageNumber, String filter);
     public Page<Produit> findArchivedPage1(int pageSize, int pageNumber, String filter);
+    public Page<Produit> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 
     public List<Produit> findAllByType(String type);
     ProduitDto findByCode(String code , String farmer) throws NotFoundException;

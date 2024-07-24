@@ -16,6 +16,7 @@ public interface UtilisationDuProduitService extends BaseService<UtilisationDuPr
     Page<UtilisationDuProduit> getpages(int pageSize, int pageNumber, String filter) ;
     Page<UtilisationDuProduit> getpagesFarmer(String farmer ,int pageSize, int pageNumber, String filter) ;
     Page<UtilisationDuProduit> getpagesarchive(int pageSize, int pageNumber, String filter) ;
+    Page<UtilisationDuProduit> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;
 

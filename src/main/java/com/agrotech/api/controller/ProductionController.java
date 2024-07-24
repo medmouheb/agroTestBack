@@ -103,7 +103,7 @@ public class ProductionController {
         }else {
 
             if(t.get().equals("employee")){
-                response= productionService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= productionService.getpages(pageSize, pageNumber, filter,farmername);
             }else {
             response= productionService.getpages(pageSize, pageNumber, filter,farmername);}
         }
@@ -142,7 +142,7 @@ public class ProductionController {
         }else {
 
             if(t.get().equals("employee")){
-                response= productionService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= productionService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
             }else{
             response= productionService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }

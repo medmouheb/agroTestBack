@@ -11,6 +11,7 @@ public interface PaymentMethodService  extends BaseService<PaymentMethodDto, Str
     Page<PaymentMethod> getpages(int pageSize, int pageNumber, String filter) ;
     Page<PaymentMethod> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<PaymentMethod> getpagesarchive(int pageSize, int pageNumber, String filter) ;
+    Page<PaymentMethod> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     public void archive(String id) throws NotFoundException;
     public void setNotArchive(String id) throws NotFoundException;
     PaymentMethod findByname(String name)throws NotFoundException;

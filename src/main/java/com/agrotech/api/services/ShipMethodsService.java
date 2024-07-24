@@ -13,6 +13,7 @@ public interface ShipMethodsService extends BaseService<ShipMethodsDto, String> 
     Page<ShipMethods> getpages(int pageSize, int pageNumber, String filter) ;
     Page<ShipMethods> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<ShipMethods> getpagesarchive(int pageSize, int pageNumber, String filter) ;
+    Page<ShipMethods> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     public void archive(String id) throws NotFoundException;
     public void setNotArchive(String id) throws NotFoundException;
     ShipMethods findByname(String name)throws NotFoundException;

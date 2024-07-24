@@ -18,6 +18,7 @@ public interface PotentialClientService extends BaseService<PotentialClientDto,S
     Page<PotentialClient> getpages(int pageSize, int pageNumber, String filter) ;
     Page<PotentialClient> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<PotentialClient> getpagesarchive(int pageSize, int pageNumber, String filter) ;
+    Page<PotentialClient> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;
 

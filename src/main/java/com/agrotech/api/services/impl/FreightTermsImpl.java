@@ -121,8 +121,14 @@ public class FreightTermsImpl implements FreightTermsService {
     @Override
     public Page<FreightTerms> getpagesarchive(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<FreightTerms> freightTermsPage = freighTermsRepository.findByIsDeleted(true,pageable);
-        return freightTermsPage;
+        return freighTermsRepository.findByIsDeletedAndFreighttermnameContainingIgnoreCase(true,filter,pageable);
+
+    }
+
+    @Override
+    public Page<FreightTerms> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        return freighTermsRepository.findByFarmerAndIsDeletedAndFreighttermnameContainingIgnoreCase(farmer,true,filter,pageable);
 
     }
 

@@ -123,9 +123,15 @@ public class ShipsMethodsImpl implements ShipMethodsService {
     @Override
     public Page<ShipMethods> getpagesarchive(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<ShipMethods> result =  shipMethodsRepository.findByIsDeleted(true, pageable);
 
-        return result;
+        return shipMethodsRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
+    }
+
+    @Override
+    public Page<ShipMethods> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+
+        return shipMethodsRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
     }
 
     @Override

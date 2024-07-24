@@ -20,6 +20,7 @@ public interface CostCenterService extends BaseService<CostCenterDto, String>{
 	public Page<CostCenter> findPage1(int pageSize, int pageNumber, String filter);
 	public Page<CostCenter> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 	public Page<CostCenter> findArchivedPage1(int pageSize, int pageNumber, String filter);
+	public Page<CostCenter> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 
     List<CostCenterDto> findAllByFarmer(String getusername);
 }

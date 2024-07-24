@@ -127,6 +127,12 @@ public class BuyServiceImpl  implements BuyService {
     }
 
     @Override
+    public Page<Buy> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("code").ascending());
+        return buyRepository.findByFarmerAndIsDeletedAndCodeContainingIgnoreCase(farmer,true,filter, pageable);
+    }
+
+    @Override
     public void archive(String id) throws NotFoundException {
         Optional<Buy> groOptional =  buyRepository.findById(id);
         if(groOptional.isEmpty()) {

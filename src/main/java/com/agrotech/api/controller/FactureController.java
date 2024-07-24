@@ -121,7 +121,7 @@ public class FactureController {
         }else {
 
             if(t.get().equals("employee")){
-                response= factureService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= factureService.getpages(pageSize, pageNumber, filter,farmername);
             }else {
             response= factureService.getpages(pageSize, pageNumber, filter,farmername);}
         }

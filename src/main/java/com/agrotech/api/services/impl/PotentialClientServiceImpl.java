@@ -142,6 +142,15 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
     }
 
     @Override
+    public Page<PotentialClient> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter ) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("BuyersName").ascending());
+        Page<PotentialClient> result =  potentialClientRepository.findByIsDeletedAndFarmer(true,farmer, pageable);
+
+        return result;
+    }
+
+
+    @Override
     public void archive(String id) throws NotFoundException {
         Optional<PotentialClient> groOptional =  potentialClientRepository.findById(id);
         if(groOptional.isEmpty()) {

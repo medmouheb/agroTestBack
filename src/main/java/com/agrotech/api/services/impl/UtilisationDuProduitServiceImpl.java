@@ -122,13 +122,12 @@ public class UtilisationDuProduitServiceImpl implements UtilisationDuProduitServ
 
     @Override
     public Page<UtilisationDuProduit> getpages(int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
-
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("numeroDeLot").ascending());
         return utilisationDuProduitRepository.findByIsDeletedAndNumeroDeLotContainingIgnoreCase(false, filter,pageable);
     }
     @Override
     public Page<UtilisationDuProduit> getpagesFarmer(String farmer, int pageSize, int pageNumber, String filter) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("numeroDeLot").ascending());
 
         return utilisationDuProduitRepository.findByFarmerAndIsDeletedAndNumeroDeLotContainingIgnoreCase(farmer,false, filter,pageable);
     }
@@ -136,10 +135,16 @@ public class UtilisationDuProduitServiceImpl implements UtilisationDuProduitServ
     @Override
     public Page<UtilisationDuProduit> getpagesarchive(int pageSize, int pageNumber, String filter) {
 
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
-        Page<UtilisationDuProduit> result =  utilisationDuProduitRepository.findByIsDeletedAndNomDuProduitContainingIgnoreCase(true, filter,pageable);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("numeroDeLot").ascending());
 
-        return result;    }
+        return utilisationDuProduitRepository.findByIsDeletedAndNumeroDeLotContainingIgnoreCase(true, filter,pageable);    }
+
+    @Override
+    public Page<UtilisationDuProduit> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("numeroDeLot").ascending());
+
+        return utilisationDuProduitRepository.findByFarmerAndIsDeletedAndNumeroDeLotContainingIgnoreCase(farmer,true, filter,pageable);    }
 
     @Override
     public void archive(String id) throws NotFoundException {

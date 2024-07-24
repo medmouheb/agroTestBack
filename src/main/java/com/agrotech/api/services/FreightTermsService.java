@@ -17,6 +17,7 @@ public interface FreightTermsService extends BaseService<FreightTermsDto, String
     Page<FreightTerms> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter);
 
     Page<FreightTerms> getpagesarchive(int pageSize, int pageNumber, String filter);
+    Page<FreightTerms> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter);
 
     public void archive(String id) throws NotFoundException;
 

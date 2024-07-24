@@ -101,7 +101,7 @@ public class DevisController {
         }else {
 
             if(t.get().equals("employee")){
-                response= devisService.getpages(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= devisService.getpages(pageSize, pageNumber, filter,farmername);
             }else {
             response= devisService.getpages(pageSize, pageNumber, filter,farmername);}
         }
@@ -140,7 +140,7 @@ public class DevisController {
         }else {
 
             if(t.get().equals("employee")){
-                response= devisService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= devisService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
             }else {
             response= devisService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }

@@ -108,10 +108,66 @@ public class BuyersController {
 
 
             if(t.get().equals("employee")){
-                response= buyersService.getpages1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= buyersService.getpages1(pageSize, pageNumber, filter,farmername );
             }
             else {
             response= buyersService.getpages1(pageSize, pageNumber, filter,farmername);}
+        }
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
+
+        return role.get();
+    }
+
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String farmername,
+            @RequestParam(defaultValue = "") String filter
+    ) {
+        AtomicReference<String> t= new AtomicReference<>("admin");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        userDetails.getAuthorities().forEach(authority -> {
+            if(authority.getAuthority().equals("ROLE_FARMER")){
+                t.set("farmer");
+            }else if(authority.getAuthority().equals("ROLE_ADMIN")){
+                t.set("admin");
+            }else {
+                t.set("employee");
+            }
+        });
+
+        Page<Buyers> response;
+
+        if(t.get().equals("admin")){
+            response= buyersService.getpagesarchive(pageSize, pageNumber, filter);
+        }else {
+
+
+            if(t.get().equals("employee")){
+                response= buyersService.getpagesarchiveFarmer(farmername,pageSize, pageNumber, filter );
+            }
+            else {
+                response= buyersService.getpagesarchiveFarmer(farmername,pageSize, pageNumber, filter);
+            }
         }
 
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -155,15 +211,6 @@ public class BuyersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<?> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter
-    ) {
-        Page<Buyers> response = buyersService.getpagesarchive(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
 
 }

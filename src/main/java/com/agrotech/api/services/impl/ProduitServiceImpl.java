@@ -149,24 +149,27 @@ public class ProduitServiceImpl implements ProduitService {
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Produit>  result =  produitRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
-        return result;
+        return produitRepository.findByIsDeletedAndNameContainingIgnoreCase(false,filter, pageable);
         // return new PageImpl<>(result);
     }
 
     @Override
     public Page<Produit> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Produit>  result =  produitRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
-        return result;
+        return produitRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,false,filter, pageable);
     }
 
     @Override
     public Page<Produit> findArchivedPage1(int pageSize, int pageNumber, String filter) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Produit>  result =  produitRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
-        return result;
+        return produitRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
+    }
+    @Override
+    public Page<Produit> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return produitRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
     }
 
     @Override

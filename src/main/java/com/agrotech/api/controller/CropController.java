@@ -111,7 +111,7 @@ public class CropController {
         }else {
 
             if(t.get().equals("employee")) {
-                response = cropService.getpages(pageSize, pageNumber, filter, userService.getFarmerByUsername(farmername).get());
+                response = cropService.getpages(pageSize, pageNumber, filter, farmername);
             }else{
                response= cropService.getpages(pageSize, pageNumber, filter,farmername);
                 }
@@ -151,7 +151,7 @@ public class CropController {
         }else {
 
             if(t.get().equals("employee")){
-                response= cropService.getpagesarchive1(pageSize, pageNumber, filter,userService.getFarmerByUsername(farmername).get());
+                response= cropService.getpagesarchive1(pageSize, pageNumber, filter,farmername);
             }else{
             response= cropService.getpagesarchive1(pageSize, pageNumber, filter,farmername);}
         }

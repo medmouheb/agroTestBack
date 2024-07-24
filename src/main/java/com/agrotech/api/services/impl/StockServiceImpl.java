@@ -137,6 +137,15 @@ public class StockServiceImpl implements StockServices {
     }
 
     @Override
+    public Page<Stock> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+
+        return stockRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
+    }
+
+    @Override
     public Page<StockDTO> findPage(int pageSize, int pageNumber, String filter) {
 
 
