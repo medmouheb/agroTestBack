@@ -1,11 +1,8 @@
 package com.agrotech.api.services;
 
-import com.agrotech.api.model.Currency;
-import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.Growout;
 import org.springframework.data.domain.Page;
 
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
@@ -13,7 +10,7 @@ import java.util.List;
 
 public interface GrowoutService extends BaseService<GrowoutDto, String> {
 
-    GrowoutDto findByCode(String code) throws NotFoundException;
+    GrowoutDto findByCode(String code, String farmer) throws NotFoundException;
 
 //    public Page<GrowoutDto> findPage(int pageSize, int pageNumber, String filter);
     public void archive(String id) throws NotFoundException;
@@ -28,4 +25,6 @@ public interface GrowoutService extends BaseService<GrowoutDto, String> {
     public Page<Growout> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 
     List<GrowoutDto> findAllByFarmer(String getusername);
+
+    List<GrowoutDto> findAllByfarmer(String getusername);
 }

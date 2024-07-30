@@ -74,7 +74,13 @@ public class CurrencyServiceImpl implements CurrencyService {
 				.map(currencyMapper::toDto)
 				.collect(Collectors.toList());
 	}
+	@Override
+	public List<CurrencyDto> findAllByfarmer(String farmer) {
 
+		return currencyRepository.findByFarmer(farmer).stream()
+				.map(currencyMapper::toDto)
+				.collect(Collectors.toList());
+	}
 
 	@Override
 	public Page<Currency> findPage1(int pageSize, int pageNumber, String filter) {
@@ -132,6 +138,15 @@ public class CurrencyServiceImpl implements CurrencyService {
 		}
 
 		currencyRepository.deleteById(id);
+	}
+
+	@Override
+	public CurrencyDto findByCode(String code, String farmer) throws NotFoundException {
+		Optional<Currency> groOptional = currencyRepository.findByCodeAndFarmer(code , farmer);
+		if(groOptional.isEmpty()) {
+			throw new NotFoundException("Currency not found ");
+		}
+		return currencyMapper.toDto(groOptional.get());
 	}
 
 	@Override

@@ -1,17 +1,17 @@
 package com.agrotech.api.services;
 
-import com.agrotech.api.dto.CampanyDto;
-import com.agrotech.api.dto.CurrencyDto;
-import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Currency;
 import com.agrotech.api.model.Willaya;
 import org.springframework.data.domain.Page;
 
-public interface WilayaService extends BaseService<WillayaDto, String>{
-    WillayaDto findByCode(String code) throws NotFoundException;
+import java.util.List;
 
+public interface WilayaService extends BaseService<WillayaDto, String>{
+    WillayaDto findByCode(String code, String getusername) throws NotFoundException;
+
+
+    List<WillayaDto> findAllByfarmer(String farmer);
 
     public void archive(String id) throws NotFoundException;
 

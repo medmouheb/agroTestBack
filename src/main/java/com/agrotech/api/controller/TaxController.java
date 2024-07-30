@@ -94,12 +94,15 @@ public class TaxController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<TaxDto> response = taxService.findAll();
+        List<TaxDto> response = taxService.findAllByfarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
@@ -144,7 +147,7 @@ public class TaxController {
     //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        TaxDto response = taxService.findByCode(code);
+        TaxDto response = taxService.findByCode(code,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

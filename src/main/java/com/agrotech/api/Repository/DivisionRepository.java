@@ -3,6 +3,7 @@ package com.agrotech.api.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.agrotech.api.model.Crop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -12,6 +13,7 @@ import com.agrotech.api.model.Division;
 
 @Repository
 public interface DivisionRepository extends MongoRepository<Division, String> {
+    Optional<Division> findByCodeAndFarmer(String code, String farmer);
 
     Optional<Division> findByCode(String code);
     Page<Division> findByNameContainingIgnoreCase(String name, Pageable pageable);

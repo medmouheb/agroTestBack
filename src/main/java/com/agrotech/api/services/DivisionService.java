@@ -12,13 +12,15 @@ import java.util.List;
 
 public interface DivisionService extends BaseService<DivisionDTO, String> {
 
-	DivisionDTO findByCode(String code) throws NotFoundException;
+	DivisionDTO findByCode(String code, String getusername) throws NotFoundException;
 
 	public void archive(String id) throws NotFoundException;
 
 	public Page<DivisionDTO> findPage(int pageSize, int pageNumber, String filter);
 
 	public void setNotArchive(String id) throws NotFoundException;
+
+	List<DivisionDTO> findAllByfarmer(String farmer);
 
 	public Page<DivisionDTO> findArchivedPage(int pageSize, int pageNumber, String filter);
 	public Page<Division> findArchivedPage1(int pageSize, int pageNumber, String filter);

@@ -1,14 +1,16 @@
 package com.agrotech.api.services;
 
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VehicleTypeDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.VehicleType;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface VehicleTypeService extends BaseService<VehicleTypeDto,String> {
-    VehicleTypeDto findByVehicleTypeCode(String vehicleTypeCode) throws NotFoundException;
+    List<VehicleTypeDto> findAllByfarmer(String farmer);
+
+    VehicleTypeDto findByVehicleTypeCode(String vehicleTypeCode, String getusername) throws NotFoundException;
     Page<VehicleTypeDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<VehicleType> getpages(int pageSize, int pageNumber, String filter) ;
     Page<VehicleType> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;

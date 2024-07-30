@@ -100,17 +100,17 @@ public class DivisionController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+
+
+
+
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("")
+	@GetMapping("")
 	public ResponseEntity<?> findAll() {
-		if(getRole().equals("admin")){
-			List<DivisionDTO> response = divisionService.findAll();
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}else{
-			List<DivisionDTO> response = divisionService.findAllByFarmer(getusername());
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}
+		List<DivisionDTO> response = divisionService.findAllByfarmer(getusername());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
 
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -156,7 +156,7 @@ public class DivisionController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		DivisionDTO response = divisionService.findByCode(code);
+		DivisionDTO response = divisionService.findByCode(code,getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

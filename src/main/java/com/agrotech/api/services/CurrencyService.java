@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface CurrencyService extends BaseService<CurrencyDto, String> {
 
-	CurrencyDto findByCode(String code) throws NotFoundException;
+	CurrencyDto findByCode(String code ,String farmer) throws NotFoundException;
 
 	public void archive(String id) throws NotFoundException;
 
@@ -21,6 +21,9 @@ public interface CurrencyService extends BaseService<CurrencyDto, String> {
 	public void setNotArchive(String id) throws NotFoundException;
 
 	public Page<CurrencyDto> findArchivedPage(int pageSize, int pageNumber, String filter);
+
+	List<CurrencyDto> findAllByfarmer(String farmer);
+
 	public Page<Currency> findPage1(int pageSize, int pageNumber, String filter);
 	public Page<Currency> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 	public Page<Currency> findArchivedPage1(int pageSize, int pageNumber, String filter);
@@ -30,4 +33,6 @@ public interface CurrencyService extends BaseService<CurrencyDto, String> {
 
 
 	List<CurrencyDto> findAllByFarmer(String getusername);
+
+	CurrencyDto findByCode(String code) throws NotFoundException;
 }

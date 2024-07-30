@@ -1,17 +1,13 @@
 package com.agrotech.api.services.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import com.agrotech.api.Repository.BuyersRepository;
 import com.agrotech.api.Repository.ProduitRepository;
-import com.agrotech.api.dto.SalesSkuDto;
 import com.agrotech.api.model.*;
-import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -19,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.agrotech.api.Repository.SalesRepository;
 import com.agrotech.api.dto.SalesDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.mapper.ProduitMapper;
 import com.agrotech.api.mapper.SalesMapper;
 import com.agrotech.api.services.SalesServices;
 
@@ -142,6 +137,14 @@ public class SalesServiceImpl implements SalesServices {
     }
 
     @Override
+    public List<SalesDto> findAllByfarmer(String farmer) {
+
+        return salesRepository.findByFarmer(farmer).stream()
+                .map(salesMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Page<SalesDto> findPage(int pageSize, int pageNumber, String filter) {
 
         Pageable pageable = PageRequest.of(
@@ -170,8 +173,8 @@ public class SalesServiceImpl implements SalesServices {
     }
 
     @Override
-    public SalesDto findByCode(String code) throws NotFoundException {
-        Optional<Sales> optional = salesRepository.findByCode(code);
+    public SalesDto findByCode(String code, String farmer) throws NotFoundException {
+        Optional<Sales> optional = salesRepository.findByCodeAndFarmer(code,farmer);
         if (optional.isEmpty()) {
             throw new NotFoundException("Sales not found");
         }

@@ -148,22 +148,19 @@ public class CurrencyController {
 		}
 	}
 
-	//@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("")
+
+
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+	@GetMapping("")
 	public ResponseEntity<?> findAll() {
-		if(getRole().equals("admin")){
-			List<CurrencyDto> response = currencyService.findAll();
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}else{
-			List<CurrencyDto> response = currencyService.findAllByFarmer(getusername());
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}
+		List<CurrencyDto> response = currencyService.findAllByfarmer(getusername());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	//@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		CurrencyDto response = currencyService.findByCode(code);
+		CurrencyDto response = currencyService.findByCode(code,getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

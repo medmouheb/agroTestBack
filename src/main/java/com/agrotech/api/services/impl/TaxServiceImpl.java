@@ -1,14 +1,10 @@
 package com.agrotech.api.services.impl;
 
 
-import com.agrotech.api.Repository.CampanyRepository;
 import com.agrotech.api.Repository.TaxRepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.TaxDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.mapper.CampanyMapper;
 import com.agrotech.api.mapper.TaxMapper;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Tax;
 import com.agrotech.api.services.TaxService;
 import lombok.RequiredArgsConstructor;
@@ -78,6 +74,14 @@ public class TaxServiceImpl implements TaxService {
     }
 
     @Override
+    public List<TaxDto> findAllByfarmer(String farmer) {
+
+        return taxRepository.findByFarmer(farmer).stream()
+                .map(taxMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public void delete(String id) throws NotFoundException {
 
         if(!taxRepository.existsById(id)) {
@@ -91,8 +95,8 @@ public class TaxServiceImpl implements TaxService {
 
 
     @Override
-    public TaxDto findByCode(String code) throws NotFoundException {
-        Optional<Tax> campOptional = taxRepository.findByCode(code);
+    public TaxDto findByCode(String code, String farmer) throws NotFoundException {
+        Optional<Tax> campOptional = taxRepository.findByCodeAndFarmer(code,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Tax not found ");
         }
@@ -132,6 +136,8 @@ public class TaxServiceImpl implements TaxService {
 
     @Override
     public Page<Tax> getpagesarchive(int pageSize, int pageNumber, String filter) {
+
+
 
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());

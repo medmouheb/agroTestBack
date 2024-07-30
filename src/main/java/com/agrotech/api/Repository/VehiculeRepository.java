@@ -1,5 +1,6 @@
 package com.agrotech.api.Repository;
 
+import com.agrotech.api.model.Crop;
 import com.agrotech.api.model.Vehicule;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -23,4 +25,9 @@ public interface VehiculeRepository extends MongoRepository<Vehicule, String> {
 
     Page<Vehicule> findByIsDeletedAndVehiculeNameContainingIgnoreCase(boolean b, String filter, PageRequest of);
     Page<Vehicule> findByFarmerAndIsDeletedAndVehiculeNameContainingIgnoreCase(String farmer,boolean b, String filter, PageRequest of);
+
+    Optional<Vehicule> findByCodeAndFarmer(String vehiculeCode, String farmer);
+
+
+    List<Vehicule> findByFarmer(String farmer);
 }

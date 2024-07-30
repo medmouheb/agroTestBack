@@ -1,9 +1,7 @@
 package com.agrotech.api.services;
 
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.TaxDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Tax;
 import org.springframework.data.domain.Page;
 
@@ -11,7 +9,9 @@ import java.util.List;
 
 public interface TaxService extends BaseService<TaxDto, String> {
 
-    TaxDto findByCode(String code) throws NotFoundException;
+    List<TaxDto> findAllByfarmer(String farmer);
+
+    TaxDto findByCode(String code, String farmer) throws NotFoundException;
     Page<TaxDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Tax> getpages(int pageSize, int pageNumber, String filter) ;
     Page<Tax> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;

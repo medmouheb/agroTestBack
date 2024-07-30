@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,4 +18,7 @@ public interface WillayaRepository extends MongoRepository<Willaya, String> {
     Page<Willaya> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String vendorSKUName, Pageable pageable);
     Willaya findByName(String name);
 
+    Optional<Willaya> findByCodeAndFarmer(String code, String farmer);
+
+    List<Willaya> findByFarmer(String farmer);
 }

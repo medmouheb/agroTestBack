@@ -1,11 +1,9 @@
 package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.VehicleTypeRepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VehicleTypeDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.VehicleTypeMapper;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.VehicleType;
 import com.agrotech.api.services.VehicleTypeService;
 import lombok.RequiredArgsConstructor;
@@ -73,6 +71,15 @@ public class VehicleTypeServiceImpl implements VehicleTypeService {
     }
 
 
+    @Override
+    public List<VehicleTypeDto> findAllByfarmer(String farmer) {
+
+        return vehicleTypeRepository.findByFarmer(farmer).stream()
+                .map(vehicleTypeMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+
 
     @Override
     public Page<VehicleTypeDto> findPage(int pageSize, int pageNumber, String filter) {
@@ -91,8 +98,8 @@ public class VehicleTypeServiceImpl implements VehicleTypeService {
     }
 
     @Override
-    public VehicleTypeDto findByVehicleTypeCode(String vehicleTypeCode) throws NotFoundException {
-        Optional<VehicleType> campOptional = vehicleTypeRepository.findByVehicleTypeCode(vehicleTypeCode);
+    public VehicleTypeDto findByVehicleTypeCode(String vehicleTypeCode, String farmer) throws NotFoundException {
+        Optional<VehicleType> campOptional = vehicleTypeRepository.findByVehicleTypeCode(vehicleTypeCode,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("vehicleType not found ");
         }

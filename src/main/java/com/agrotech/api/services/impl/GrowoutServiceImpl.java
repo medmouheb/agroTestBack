@@ -9,7 +9,6 @@ import com.agrotech.api.Repository.Growoutrepository;
 import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.GrowoutMapper;
-import com.agrotech.api.model.Division;
 import com.agrotech.api.model.Growout;
 import com.agrotech.api.services.GrowoutService;
 
@@ -85,12 +84,22 @@ public class GrowoutServiceImpl  implements GrowoutService{
 	}
 
 
+
+
 	@Override
 	public List<GrowoutDto> findAllByFarmer(String farmer) {
 		return growoutrepository.findByFarmer(farmer).stream()
 				.map(growoutMapper::toDto)
 				.collect(Collectors.toList());
 	}
+	@Override
+	public List<GrowoutDto> findAllByfarmer(String farmer) {
+
+		return growoutrepository.findByFarmer(farmer).stream()
+				.map(growoutMapper::toDto)
+				.collect(Collectors.toList());
+	}
+
 
 	@Override
 	public void delete(String id) throws NotFoundException {
@@ -102,8 +111,8 @@ public class GrowoutServiceImpl  implements GrowoutService{
 	}
 
 	@Override
-	public GrowoutDto findByCode(String code) throws NotFoundException {
-		Optional<Growout> optional = growoutrepository.findByCode(code);
+	public GrowoutDto findByCode(String code, String farmer) throws NotFoundException {
+		Optional<Growout> optional = growoutrepository.findByCodeAndFarmer(code,farmer);
         if (optional.isEmpty()) {
             throw new NotFoundException("Growout not found");
         }

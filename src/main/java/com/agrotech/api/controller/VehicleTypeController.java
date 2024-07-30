@@ -3,6 +3,7 @@ package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.VehicleTypeRepository;
 import com.agrotech.api.dto.VehicleTypeDto;
+import com.agrotech.api.dto.VehiculeDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VehicleType;
 import com.agrotech.api.services.VehicleTypeService;
@@ -85,6 +86,16 @@ public class VehicleTypeController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("")
+    public ResponseEntity<?> findAllByfarmer() {
+        List<VehicleTypeDto> response = vehicleTypeService.findAllByfarmer(getusername());
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> findAll(@PathVariable String id) throws NotFoundException {
@@ -95,7 +106,7 @@ public class VehicleTypeController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{vehicleTypeCode}")
     public ResponseEntity<?> findByVehicleTypeCode(@PathVariable String vehicleTypeCode) throws NotFoundException {
-        VehicleTypeDto response = vehicleTypeService.findByVehicleTypeCode(vehicleTypeCode);
+        VehicleTypeDto response = vehicleTypeService.findByVehicleTypeCode(vehicleTypeCode ,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -23,4 +23,5 @@ public interface Growoutrepository extends MongoRepository<Growout, String> {
 
     List<Growout> findByFarmer(String farmer);
 
+    Optional<Growout> findByCodeAndFarmer(String code, String farmer);
 }

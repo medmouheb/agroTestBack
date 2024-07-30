@@ -1,20 +1,19 @@
 package com.agrotech.api.services;
 
 import com.agrotech.api.dto.SalesDto;
-import com.agrotech.api.dto.SalesSkuDto;
-import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Currency;
-import com.agrotech.api.model.Produit;
 import com.agrotech.api.model.Sales;
-import com.agrotech.api.model.SalesSKU;
 import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 
 public interface  SalesServices extends BaseService<SalesDto, String>{
 	Sales saves (Sales sales);
-    SalesDto findByCode(String code) throws NotFoundException;
+    SalesDto findByCode(String code, String farmer) throws NotFoundException;
 //    public void archive(String id) throws NotFoundException;
+
+    List<SalesDto> findAllByfarmer(String farmer);
 
     public Page<SalesDto> findPage(int pageSize, int pageNumber, String filter);
 

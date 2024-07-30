@@ -135,8 +135,8 @@ public class DivisionServiceImpl implements DivisionService {
 	}
 
 	@Override
-	public DivisionDTO findByCode(String code) throws NotFoundException {
-		Optional<Division> divisionOptional = divisionRepository.findByCode(code);
+	public DivisionDTO findByCode(String code, String farmer) throws NotFoundException {
+		Optional<Division> divisionOptional = divisionRepository.findByCodeAndFarmer(code ,farmer);
 		if(divisionOptional.isEmpty()) {
 			throw new NotFoundException("Division not found ");
 		}
@@ -165,6 +165,14 @@ public class DivisionServiceImpl implements DivisionService {
 		groExisting.setIsDeleted(false);
 		divisionRepository.save(groExisting);
 
+	}
+
+	@Override
+	public List<DivisionDTO> findAllByfarmer(String farmer) {
+
+		return divisionRepository.findByFarmer(farmer).stream()
+				.map(divisionMapper::toDto)
+				.collect(Collectors.toList());
 	}
 
 	@Override

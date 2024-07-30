@@ -130,12 +130,16 @@ public class SalesController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+
+
+
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("")
+	@GetMapping("")
 	public ResponseEntity<?> findAll() {
-		List<SalesDto> response = salesServices.findAll();
+		List<SalesDto> response = salesServices.findAllByfarmer(getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
@@ -186,7 +190,7 @@ public class SalesController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		SalesDto response = salesServices.findByCode(code);
+		SalesDto response = salesServices.findByCode(code ,getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 

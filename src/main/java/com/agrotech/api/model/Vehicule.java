@@ -38,6 +38,7 @@ public class Vehicule extends BaseEntity {
     private Boolean active;
     private Boolean yardBuggy;
     private Boolean external;
+    private String farmer;
 
 
     private String bioSecurityLevelCode;
@@ -67,10 +68,11 @@ public class Vehicule extends BaseEntity {
     private Number bin;
 
     private Double capacity2;
+    private String code;
 
 
     private Boolean isDeleted = false;
 
-    private String farmer;
+
 
 }

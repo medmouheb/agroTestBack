@@ -90,17 +90,16 @@ public class GrowoutController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
+
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("")
-	public ResponseEntity<?> findAll() {
-		if(getRole().equals("admin")){
-			List<GrowoutDto> response = growoutService.findAll();
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}else{
-			List<GrowoutDto> response = growoutService.findAllByFarmer(getusername());
-			return new ResponseEntity<>(response, HttpStatus.OK);
-		}
+	@GetMapping("")
+	public ResponseEntity<?> findAllByfarmer() {
+		List<GrowoutDto> response = growoutService.findAllByfarmer(getusername());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
+
+
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
@@ -149,7 +148,7 @@ public class GrowoutController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-		GrowoutDto response = growoutService.findByCode(code);
+		GrowoutDto response = growoutService.findByCode(code,getusername());
 		return new ResponseEntity<>(response, HttpStatus.OK);
 
 	}

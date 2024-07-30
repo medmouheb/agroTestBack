@@ -103,8 +103,8 @@ public class WillayaServiceImpl implements WilayaService {
     }
 
     @Override
-    public WillayaDto findByCode(String code) throws NotFoundException {
-        Optional<Willaya> willayaOptional = willayaRepository.findByCode(code);
+    public WillayaDto findByCode(String code, String farmer) throws NotFoundException {
+        Optional<Willaya> willayaOptional = willayaRepository.findByCodeAndFarmer(code,farmer);
         if(willayaOptional.isEmpty()) {
             throw new NotFoundException("Willaya not found ");
         }
@@ -114,6 +114,14 @@ public class WillayaServiceImpl implements WilayaService {
     @Override
     public List<WillayaDto> findAll() {
         return willayaRepository.findAll().stream()
+                .map(willayaMappery::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<WillayaDto> findAllByfarmer(String farmer) {
+
+        return willayaRepository.findByFarmer(farmer).stream()
                 .map(willayaMappery::toDto)
                 .collect(Collectors.toList());
     }

@@ -64,6 +64,15 @@ public class VehiculeServiceImpl implements VehiculeService {
                 .collect(Collectors.toList());
     }
 
+
+    @Override
+    public List<VehiculeDto> findAllByfarmer(String farmer) {
+
+        return vehiculeRepository.findByFarmer(farmer).stream()
+                .map(vehiculeMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     public Page<VehiculeDto> findPage(int pageSize, int pageNumber, String filter) {
         return vehiculeRepository.findAll(PageRequest.of(pageNumber, pageSize)).map(vehiculeMapper::toDto);
 
@@ -80,10 +89,10 @@ public class VehiculeServiceImpl implements VehiculeService {
 
     }
 
-
-    public VehiculeDto findByVehiculeCode(String vehiculeCode) throws NotFoundException {
+@Override
+    public VehiculeDto findByVehiculeCode(String vehiculeCode, String farmer) throws NotFoundException {
         Optional<Vehicule> campanyOptional =
-                vehiculeRepository.findByVehiculeCode(vehiculeCode);
+                vehiculeRepository.findByCodeAndFarmer(vehiculeCode,farmer);
 
         if (campanyOptional.isEmpty()) {
             throw new NotFoundException("Campany not found ");
@@ -105,6 +114,9 @@ public class VehiculeServiceImpl implements VehiculeService {
     public Page<Vehicule> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) {
         return vehiculeRepository.findByFarmerAndIsDeletedAndVehiculeNameContainingIgnoreCase(farmer,false,filter,PageRequest.of(pageNumber, pageSize));
     }
+
+
+
 
     public Page<Vehicule> getpagesarchive(int pageSize, int pageNumber, String filter) {
         return vehiculeRepository.findAll(PageRequest.of(pageNumber, pageSize));

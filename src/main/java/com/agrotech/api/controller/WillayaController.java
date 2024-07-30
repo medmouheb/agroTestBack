@@ -136,17 +136,21 @@ public class WillayaController {
         }
     }
 
+
+
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
-    public ResponseEntity<?> findAll() {
-        List<WillayaDto> response = willayaService.findAll();
+    public ResponseEntity<?> findAllByfarmer() {
+        List<WillayaDto> response = willayaService.findAllByfarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
-        WillayaDto response = willayaService.findByCode(code);
+        WillayaDto response = willayaService.findByCode(code , getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -91,12 +91,14 @@ public class VehiculeController  {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
-    public ResponseEntity<?> findAll() {
-        List<VehiculeDto> response = vehiculeService.findAll();
+    public ResponseEntity<?> findAllByfarmer() {
+        List<VehiculeDto> response = vehiculeService.findAllByfarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
@@ -146,7 +148,7 @@ public class VehiculeController  {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<VehiculeDto> findByVehiculeCode(@PathVariable String vehiculeCode) throws NotFoundException {
-        VehiculeDto response = vehiculeService.findByVehiculeCode(vehiculeCode);
+        VehiculeDto response = vehiculeService.findByVehiculeCode(vehiculeCode,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

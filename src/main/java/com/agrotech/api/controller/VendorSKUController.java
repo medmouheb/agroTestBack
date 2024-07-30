@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.VendorSKURepository;
 import com.agrotech.api.dto.VendorSKUDto;
+import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.services.VendorSKUService;
@@ -86,10 +87,11 @@ public class VendorSKUController {
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
-    public ResponseEntity<?> findAll() {
-        List<VendorSKUDto> response = vendorSKUService.findAll();
+    public ResponseEntity<?> findAllByfarmer() {
+        List<VendorSKUDto> response = vendorSKUService.findAllByfarmer(getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/page")
@@ -143,7 +145,7 @@ public class VendorSKUController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String vendorSKUCode) throws NotFoundException {
-        VendorSKUDto response = vendorSKUService.findByCode(vendorSKUCode);
+        VendorSKUDto response = vendorSKUService.findByCode(vendorSKUCode,getusername());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -1,7 +1,6 @@
 package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.VendorSKURepository;
-import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VendorSKUDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.VendorSKUMapper;
@@ -67,6 +66,15 @@ public class VendorSKUServiceImp implements VendorSKUService {
                 .collect(Collectors.toList());
     }
 
+
+    @Override
+    public List<VendorSKUDto> findAllByfarmer(String farmer) {
+
+        return vendorSKURepository.findByFarmer(farmer).stream()
+                .map(vendorSKUMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public Page<VendorSKU> findPage1(int pageSize, int pageNumber, String filter) {
 
@@ -124,8 +132,8 @@ public class VendorSKUServiceImp implements VendorSKUService {
     }
 
     @Override
-    public VendorSKUDto findByCode(String vendorSKUCode) throws NotFoundException {
-        Optional<VendorSKU> campOptional = vendorSKURepository.findByCode(vendorSKUCode);
+    public VendorSKUDto findByCode(String vendorSKUCode, String farmer) throws NotFoundException {
+        Optional<VendorSKU> campOptional = vendorSKURepository.findByCodeAndFarmer(vendorSKUCode,farmer);
         if(campOptional.isEmpty()) {
             throw new NotFoundException("Campany not found ");
         }

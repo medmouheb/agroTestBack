@@ -5,9 +5,13 @@ import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Vehicule;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface VehiculeService extends BaseService<VehiculeDto, String>{
 
-    VehiculeDto findByVehiculeCode(String vehiculeCode) throws NotFoundException;
+    List<VehiculeDto> findAllByfarmer(String farmer);
+
+    VehiculeDto findByVehiculeCode(String vehiculeCode, String farmer) throws NotFoundException;
     Page<VehiculeDto> findPage1(int pageSize, int pageNumber, String filter) ;
     Page<Vehicule> getpages(int pageSize, int pageNumber, String filter) ;
     Page<Vehicule> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
