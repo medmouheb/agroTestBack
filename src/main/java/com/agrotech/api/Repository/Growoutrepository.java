@@ -1,5 +1,6 @@
 package com.agrotech.api.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -19,5 +20,7 @@ public interface Growoutrepository extends MongoRepository<Growout, String> {
     Page<Growout> findByIsDeletedAndNameContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
     Page<Growout> findByFarmerAndIsDeletedAndNameContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
     Growout findByName(String name);
+
+    List<Growout> findByFarmer(String farmer);
 
 }

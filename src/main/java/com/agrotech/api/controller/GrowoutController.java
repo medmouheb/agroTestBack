@@ -93,8 +93,13 @@ public class GrowoutController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
-		List<GrowoutDto> response = growoutService.findAll();
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		if(getRole().equals("admin")){
+			List<GrowoutDto> response = growoutService.findAll();
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}else{
+			List<GrowoutDto> response = growoutService.findAllByFarmer(getusername());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -119,11 +124,34 @@ public class GrowoutController {
 
 	}
 
+
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+	@GetMapping("/archived/page")
+	public ResponseEntity<?> findArchivedPage(
+			@RequestParam(defaultValue = "10") int pageSize,
+			@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "") String filter
+	) {
+		if(getRole().equals("admin")){
+			Page<Growout> response = growoutService.findArchivedPage1(pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+
+			if(getRole().equals("employee")){
+				Page<Growout> response = growoutService.findArchivedPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+			Page<Growout> response = growoutService.findArchivedPage1Farmer(getusername(),pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+	}
+
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
 	public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
 		GrowoutDto response = growoutService.findByCode(code);
 		return new ResponseEntity<>(response, HttpStatus.OK);
+
 	}
 
 
@@ -149,15 +177,5 @@ public class GrowoutController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-	public ResponseEntity<?> findArchivedPage(
-			@RequestParam(defaultValue = "10") int pageSize,
-			@RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "") String filter
-	) {
-		Page<Growout> response = growoutService.findArchivedPage1(pageSize, pageNumber, filter);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
 
 }

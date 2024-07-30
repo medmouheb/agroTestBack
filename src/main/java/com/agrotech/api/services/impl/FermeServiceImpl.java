@@ -101,6 +101,14 @@ public class FermeServiceImpl implements FermeService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<FermeDto> findAllByFarmer(String farmer) {
+        return fermeRepository.findByFarmer(farmer)
+                .stream()
+                .map(fermeMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public Page<FermeDto> findPage(int pageSize, int pageNumber, String filter) {
@@ -160,8 +168,13 @@ public class FermeServiceImpl implements FermeService {
     @Override
     public Page<Ferme> findArchivedPage1(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Ferme>  result =  fermeRepository.findByIsDeletedAndNomContainingIgnoreCase(true,filter,pageable);
-        return result;
+        return fermeRepository.findByIsDeletedAndNomContainingIgnoreCase(true,filter,pageable);
+    }
+
+    @Override
+    public Page<Ferme> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return fermeRepository.findByFarmerAndIsDeletedAndNomContainingIgnoreCase(farmer,true,filter,pageable);
     }
 
     @Override

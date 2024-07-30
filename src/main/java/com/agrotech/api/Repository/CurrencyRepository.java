@@ -1,5 +1,6 @@
 
 package com.agrotech.api.Repository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,5 @@ public interface CurrencyRepository extends MongoRepository<Currency, String>{
 
     Currency findByName(String name);
 
-
+    List<Currency> findByFarmer(String farmer);
 }

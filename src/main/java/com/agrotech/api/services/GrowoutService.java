@@ -9,6 +9,8 @@ import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.GrowoutDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
+import java.util.List;
+
 public interface GrowoutService extends BaseService<GrowoutDto, String> {
 
     GrowoutDto findByCode(String code) throws NotFoundException;
@@ -16,6 +18,7 @@ public interface GrowoutService extends BaseService<GrowoutDto, String> {
 //    public Page<GrowoutDto> findPage(int pageSize, int pageNumber, String filter);
     public void archive(String id) throws NotFoundException;
     public Page<Growout> findArchivedPage1(int pageSize, int pageNumber, String filter);
+    public Page<Growout> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
     Growout findByname(String name)throws NotFoundException;
     public void setNotArchive(String id) throws NotFoundException;
 
@@ -23,4 +26,6 @@ public interface GrowoutService extends BaseService<GrowoutDto, String> {
 
     public Page<Growout> findPage1(int pageSize, int pageNumber, String filter);
     public Page<Growout> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
+
+    List<GrowoutDto> findAllByFarmer(String getusername);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.CurrencyRepository;
+import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.model.Currency;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
@@ -124,11 +125,39 @@ public class CurrencyController {
 
 	}
 
+
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+	@GetMapping("/archived/page")
+	public ResponseEntity<?> findArchivedPage(
+			@RequestParam(defaultValue = "10") int pageSize,
+			@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "") String filter
+	) {
+
+		if(getRole().equals("admin")){
+			Page<Currency> response = currencyService.findArchivedPage1(pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+
+			if(getRole().equals("employee")){
+				Page<Currency> response = currencyService.findArchivedPage1Farmer(userService.getFarmerByUsername(getusername()).get() ,pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+			Page<Currency> response = currencyService.findArchivedPage1Farmer(getusername(),pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+	}
+
 	//@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
-		List<CurrencyDto> response = currencyService.findAll();
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		if(getRole().equals("admin")){
+			List<CurrencyDto> response = currencyService.findAll();
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}else{
+			List<CurrencyDto> response = currencyService.findAllByFarmer(getusername());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 
 	//@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -159,14 +188,5 @@ public class CurrencyController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	//@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-	public ResponseEntity<?> findArchivedPage(
-			@RequestParam(defaultValue = "10") int pageSize,
-			@RequestParam(defaultValue = "0") int pageNumber,
-			@RequestParam(defaultValue = "") String filter
-	) {
-		Page<Currency> response = currencyService.findArchivedPage1(pageSize, pageNumber, filter);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+
 }

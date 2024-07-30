@@ -1,5 +1,6 @@
 package com.agrotech.api.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -17,4 +18,6 @@ public interface FermeRepository extends MongoRepository<Ferme, String> {
     Page<Ferme> findByIsDeletedAndNomContainingIgnoreCase(Boolean isDeleted, String name, Pageable pageable);
     Page<Ferme> findByFarmerAndIsDeletedAndNomContainingIgnoreCase(String farmer,Boolean isDeleted, String name, Pageable pageable);
     Ferme findByNom(String nom);
+
+    List<Ferme> findByFarmer(String farmer);
 }

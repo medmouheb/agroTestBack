@@ -22,6 +22,7 @@ public interface DivisionService extends BaseService<DivisionDTO, String> {
 
 	public Page<DivisionDTO> findArchivedPage(int pageSize, int pageNumber, String filter);
 	public Page<Division> findArchivedPage1(int pageSize, int pageNumber, String filter);
+	public Page<Division> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 
 	public Page<Division> findPage1(int pageSize, int pageNumber, String filter);
 	public Page<Division> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
@@ -32,12 +33,5 @@ public interface DivisionService extends BaseService<DivisionDTO, String> {
 	List<Division> findByCompanyName()throws  NotFoundException;
 
 
-
-
-
-
-
-
-
-
+    List<DivisionDTO> findAllByFarmer(String getusername);
 }

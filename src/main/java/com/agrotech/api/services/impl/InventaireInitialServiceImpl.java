@@ -65,6 +65,12 @@ public class InventaireInitialServiceImpl implements InventaireInitialService {
                 .collect(Collectors.toList());    }
 
     @Override
+    public List<InventaireInitialDto> findAllByFarmer(String farmer) {
+        return inventaireInitialRepository.findByFarmer(farmer).stream()
+                .map(inventaireInitialMapper::toDto)
+                .collect(Collectors.toList());    }
+
+    @Override
     public Page<InventaireInitialDto> findPage(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         List<InventaireInitialDto>  result =  inventaireInitialRepository.findByNomDuProduitContainingIgnoreCase(filter, pageable)
@@ -122,9 +128,14 @@ public class InventaireInitialServiceImpl implements InventaireInitialService {
     @Override
     public Page<InventaireInitial> getpagesarchive(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
-        Page<InventaireInitial> result =  inventaireInitialRepository.findByIsDeletedAndNomDuProduitContainingIgnoreCase(true, filter,pageable);
 
-        return result;    }
+        return inventaireInitialRepository.findByIsDeletedAndNomDuProduitContainingIgnoreCase(true, filter,pageable);    }
+
+    @Override
+    public Page<InventaireInitial> getpagesarchiveFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("nomDuProduit").ascending());
+
+        return inventaireInitialRepository.findByFarmerAndIsDeletedAndNomDuProduitContainingIgnoreCase(farmer,true, filter,pageable);    }
 
     @Override
     public void archive(String id) throws NotFoundException {

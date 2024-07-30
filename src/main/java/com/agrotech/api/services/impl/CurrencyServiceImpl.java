@@ -67,6 +67,15 @@ public class CurrencyServiceImpl implements CurrencyService {
 				.collect(Collectors.toList());
 	}
 
+
+	@Override
+	public List<CurrencyDto> findAllByFarmer(String farmer) {
+		return currencyRepository.findByFarmer(farmer).stream()
+				.map(currencyMapper::toDto)
+				.collect(Collectors.toList());
+	}
+
+
 	@Override
 	public Page<Currency> findPage1(int pageSize, int pageNumber, String filter) {
 
@@ -87,8 +96,13 @@ public class CurrencyServiceImpl implements CurrencyService {
 	@Override
 	public Page<Currency> findArchivedPage1(int pageSize, int pageNumber, String filter) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Currency>  result =  currencyRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
-		return result;
+		return currencyRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
+	}
+
+	@Override
+	public Page<Currency> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		return currencyRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
 	}
 
 	@Override

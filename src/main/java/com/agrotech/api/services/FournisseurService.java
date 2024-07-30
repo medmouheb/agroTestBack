@@ -20,6 +20,7 @@ public interface FournisseurService extends BaseService<FournisseurDto, String> 
 Fournisseur findByname(String name)throws NotFoundException;
     public void setNotArchive(String id) throws NotFoundException;
     public Page<Fournisseur> findArchivedPage1(int pageSize, int pageNumber, String filter);
+    public Page<Fournisseur> findArchivedPage1Farmer( String farmer,int pageSize, int pageNumber, String filter);
 
     public Page<FournisseurDto> findArchivedPage(int pageSize, int pageNumber, String filter);
     public Page<Fournisseur> findPage1(int pageSize, int pageNumber, String filter);

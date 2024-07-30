@@ -16,6 +16,7 @@ public interface TaxService extends BaseService<TaxDto, String> {
     Page<Tax> getpages(int pageSize, int pageNumber, String filter) ;
     Page<Tax> getpagesFarmer(String farmer,int pageSize, int pageNumber, String filter) ;
     Page<Tax> getpagesarchive(int pageSize, int pageNumber, String filter) ;
+    Page<Tax> getpagesarchivefarmer(String farmer,int pageSize, int pageNumber, String filter) ;
 
     public void archive(String id) throws NotFoundException;
 

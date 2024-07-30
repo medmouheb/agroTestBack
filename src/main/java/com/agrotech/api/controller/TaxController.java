@@ -122,6 +122,25 @@ public class TaxController {
 
     }
 
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String filter) {
+        if(getRole().equals("admin")){
+            Page<Tax> response = taxService.getpagesarchive(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+
+            if(getRole().equals("employee")){
+                Page<Tax> response = taxService.getpagesarchivefarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            Page<Tax> response = taxService.getpagesarchivefarmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
     //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<?> findByCode(@PathVariable String code) throws NotFoundException {
@@ -150,13 +169,4 @@ public class TaxController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<?> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter) {
-        Page<Tax> response = taxService.getpagesarchive(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 }

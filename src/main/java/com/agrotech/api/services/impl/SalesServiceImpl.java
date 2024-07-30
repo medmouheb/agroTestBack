@@ -110,8 +110,12 @@ public class SalesServiceImpl implements SalesServices {
     @Override
     public Page<Sales> findArchivedPage1(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Sales>  result =  salesRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
-        return result;
+        return salesRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
+    }
+    @Override
+    public Page<Sales> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return salesRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
     }
 
     @Override

@@ -140,6 +140,15 @@ public class TaxServiceImpl implements TaxService {
     }
 
     @Override
+    public Page<Tax> getpagesarchivefarmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+
+        return taxRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
+    }
+
+    @Override
     public Page<TaxDto> findPage(int pageSize, int pageNumber, String filter) {
 
         // Pageable pageable = PageRequest.of(

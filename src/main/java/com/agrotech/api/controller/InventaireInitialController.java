@@ -1,8 +1,10 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.InventaireInitialRepository;
+import com.agrotech.api.dto.DevisDto;
 import com.agrotech.api.dto.InventaireInitialDto;
 import com.agrotech.api.exceptions.NotFoundException;
+import com.agrotech.api.model.Devis;
 import com.agrotech.api.model.InventaireInitial;
 import com.agrotech.api.model.Produit;
 import com.agrotech.api.services.InventaireInitialService;
@@ -89,8 +91,13 @@ public class InventaireInitialController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<InventaireInitialDto> response = inventaireInitialService.findAll();
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if(getRole().equals("admin")){
+            List<InventaireInitialDto> response = inventaireInitialService.findAll();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            List<InventaireInitialDto> response = inventaireInitialService.findAllByFarmer(getusername());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -114,6 +121,29 @@ public class InventaireInitialController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String filter
+    ) {
+
+        if(getRole().equals("admin")){
+            Page<InventaireInitial> response = inventaireInitialService.getpagesarchive(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+
+            if(getRole().equals("employee")){
+                Page<InventaireInitial> response = inventaireInitialService.getpagesarchiveFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+
+            Page<InventaireInitial> response = inventaireInitialService.getpagesarchiveFarmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -151,16 +181,7 @@ public class InventaireInitialController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<?> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter
-    ) {
-        Page<InventaireInitial> response = inventaireInitialService.getpagesarchive(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

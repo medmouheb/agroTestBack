@@ -178,6 +178,29 @@ public class FournisseurController {
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String filter
+    ) {
+
+
+        if(getRole().equals("admin")){
+            Page<Fournisseur> response = fournisseurService.findArchivedPage1(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+
+            if(getRole().equals("employee")){
+                Page<Fournisseur> response = fournisseurService.findArchivedPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            Page<Fournisseur> response = fournisseurService.findArchivedPage1Farmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         fournisseurService.delete(id);
@@ -208,16 +231,7 @@ public class FournisseurController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<?> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter
-    ) {
-        Page<Fournisseur> response = fournisseurService.findArchivedPage1(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/entityCSV")

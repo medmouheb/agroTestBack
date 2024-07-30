@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 import com.agrotech.api.Repository.FermeRepository;
+import com.agrotech.api.dto.InventaireInitialDto;
 import com.agrotech.api.dto.PropertyDTO;
 import com.agrotech.api.model.Ferme;
 import com.agrotech.api.model.Property;
@@ -123,8 +124,13 @@ public class fermeController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
 	public ResponseEntity<?> findAll() {
-		List<FermeDto> response = fermeService.findAll();
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		if(getRole().equals("admin")){
+			List<FermeDto> response = fermeService.findAll();
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}else{
+			List<FermeDto> response = fermeService.findAllByFarmer(getusername());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -149,6 +155,29 @@ public class fermeController {
 
 		}
 
+	}
+
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+	@GetMapping("/archived/page")
+	public ResponseEntity<?> findArchivedPage(
+			@RequestParam(defaultValue = "10") int pageSize,
+			@RequestParam(defaultValue = "0") int pageNumber,
+			@RequestParam(defaultValue = "") String filter
+	) {
+
+		if(getRole().equals("admin")){
+			Page<Ferme> response = fermeService.findArchivedPage1(pageSize, pageNumber, filter);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			if(getRole().equals("employee")){
+				Page<Ferme> response = fermeService.findArchivedPage1Farmer(userService.getFarmerByUsername(getusername()).get()    ,pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}else {
+				Page<Ferme> response = fermeService.findArchivedPage1Farmer(getusername() ,pageSize, pageNumber, filter);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+
+		}
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -181,15 +210,6 @@ public class fermeController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-	public ResponseEntity<?> findArchivedPage(
-			@RequestParam(defaultValue = "10") int pageSize,
-			@RequestParam(defaultValue = "0") int pageNumber,
-		@RequestParam(defaultValue = "") String filter
-) {
-		Page<Ferme> response = fermeService.findArchivedPage1(pageSize, pageNumber, filter);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
+
 
 }

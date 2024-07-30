@@ -8,6 +8,8 @@ import com.agrotech.api.dto.DivisionDTO;
 import com.agrotech.api.dto.FermeDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
+import java.util.List;
+
 public interface FermeService extends BaseService<FermeDto, String> {
 	Ferme saveferme(Ferme ferme);
 	FermeDto findByCode(String code) throws NotFoundException;
@@ -18,8 +20,12 @@ public interface FermeService extends BaseService<FermeDto, String> {
 
 	public void setNotArchive(String id) throws NotFoundException;
 	public Page<Ferme> findArchivedPage1(int pageSize, int pageNumber, String filter);
+	public Page<Ferme> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
+
 	Ferme findByname(String name)throws NotFoundException;
 	public Page<Ferme> findPage1(int pageSize, int pageNumber, String filter);
 	public Page<Ferme> findPage1Farmer( String farmer ,int pageSize, int pageNumber, String filter);
+
+    List<FermeDto> findAllByFarmer(String getusername);
 //	public Page<FermeDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 }

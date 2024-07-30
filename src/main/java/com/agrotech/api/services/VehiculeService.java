@@ -20,4 +20,5 @@ public interface VehiculeService extends BaseService<VehiculeDto, String>{
     Vehicule findByVehiculeName(String vehiculeName)throws NotFoundException;
     public Page<VehiculeDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
     public Page<VehiculeDto> findArchivedPage(int pageSize, int pageNumber, String filter);
+    public Page<Vehicule> findArchivedPageFarmer(String farmer,int pageSize, int pageNumber, String filter);
 }

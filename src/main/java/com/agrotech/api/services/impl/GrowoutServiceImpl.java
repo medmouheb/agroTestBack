@@ -84,6 +84,14 @@ public class GrowoutServiceImpl  implements GrowoutService{
 				.collect(Collectors.toList());
 	}
 
+
+	@Override
+	public List<GrowoutDto> findAllByFarmer(String farmer) {
+		return growoutrepository.findByFarmer(farmer).stream()
+				.map(growoutMapper::toDto)
+				.collect(Collectors.toList());
+	}
+
 	@Override
 	public void delete(String id) throws NotFoundException {
 		if(!growoutrepository.existsById(id)) {
@@ -133,8 +141,13 @@ public class GrowoutServiceImpl  implements GrowoutService{
 	@Override
 	public Page<Growout> findArchivedPage1(int pageSize, int pageNumber, String filter) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Growout>  result =  growoutrepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
-		return result;
+		return growoutrepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
+	}
+
+	@Override
+	public Page<Growout> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		return growoutrepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
 	}
 
 	@Override

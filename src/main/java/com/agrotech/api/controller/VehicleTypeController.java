@@ -152,8 +152,20 @@ public class VehicleTypeController {
             @RequestParam(defaultValue = "0") int pageNumber,
             @RequestParam(defaultValue = "") String filter
     ) {
-        Page<VehicleType> response = vehicleTypeService.getpagesarchive(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if(getRole().equals("admin")){
+
+            Page<VehicleType> response = vehicleTypeService.getpagesarchive(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+
+            if(getRole().equals("employee")){
+
+                Page<VehicleType> response = vehicleTypeService.getpagesarchiveFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            Page<VehicleType> response = vehicleTypeService.getpagesarchiveFarmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
 

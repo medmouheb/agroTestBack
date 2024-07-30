@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.WarehouseRepository;
+import com.agrotech.api.dto.DivisionDTO;
 import com.agrotech.api.model.Warehouse;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
@@ -106,8 +107,14 @@ public class WarehouseController {
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<?> findAll() {
-        List<WarehouseDto> response = warehouseService.findAllByFarmer(getusername());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+
+        if(getRole().equals("admin")){
+            List<WarehouseDto> response = warehouseService.findAll();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            List<WarehouseDto> response = warehouseService.findAllByFarmer(getusername());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -134,6 +141,28 @@ public class WarehouseController {
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String filter
+    ) {
+
+        if(getRole().equals("admin")){
+            Page<Warehouse> response = warehouseService.findArchivedPage1(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+
+            if(getRole().equals("employee")){
+                Page<Warehouse> response = warehouseService.findArchivedPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            Page<Warehouse> response = warehouseService.findArchivedPage1Farmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) throws NotFoundException {
         warehouseService.delete(id);
@@ -154,16 +183,7 @@ public class WarehouseController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<?> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter
-    ) {
-        Page<Warehouse> response = warehouseService.findArchivedPage1(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

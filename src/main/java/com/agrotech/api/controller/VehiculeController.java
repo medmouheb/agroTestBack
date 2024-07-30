@@ -122,6 +122,28 @@ public class VehiculeController  {
     }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+    @GetMapping("/archived/page")
+    public ResponseEntity<?> findArchivedPage(
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "0") int pageNumber,
+            @RequestParam(defaultValue = "") String filter
+    ) {
+
+        if(getRole().equals("admin")){
+            Page<VehiculeDto> response = vehiculeService.findArchivedPage(pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else {
+
+            if(getRole().equals("employee")){
+                Page<Vehicule> response = vehiculeService.findArchivedPageFarmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+            Page<Vehicule> response = vehiculeService.findArchivedPageFarmer(getusername(),pageSize, pageNumber, filter);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+    }
+
+    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-code/{code}")
     public ResponseEntity<VehiculeDto> findByVehiculeCode(@PathVariable String vehiculeCode) throws NotFoundException {
         VehiculeDto response = vehiculeService.findByVehiculeCode(vehiculeCode);
@@ -150,14 +172,5 @@ public class VehiculeController  {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-    @GetMapping("/archived/page")
-    public ResponseEntity<Page<VehiculeDto>> findArchivedPage(
-            @RequestParam(defaultValue = "10") int pageSize,
-            @RequestParam(defaultValue = "0") int pageNumber,
-            @RequestParam(defaultValue = "") String filter
-    ) {
-        Page<VehiculeDto> response = vehiculeService.findArchivedPage(pageSize, pageNumber, filter);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+
 }

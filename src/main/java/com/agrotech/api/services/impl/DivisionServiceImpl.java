@@ -104,6 +104,12 @@ public class DivisionServiceImpl implements DivisionService {
 				.map(divisionMapper::toDto)
 				.collect(Collectors.toList());
 	}
+	@Override
+	public List<DivisionDTO> findAllByFarmer(String farmer) {
+		return divisionRepository.findByFarmer(farmer).stream()
+				.map(divisionMapper::toDto)
+				.collect(Collectors.toList());
+	}
 
 	@Override
     public Page<DivisionDTO> findPage(int pageSize, int pageNumber, String filter) {
@@ -180,8 +186,13 @@ public class DivisionServiceImpl implements DivisionService {
 	public Page<Division> findArchivedPage1(int pageSize, int pageNumber, String filter) {
 
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Division>  result =  divisionRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
-		return result;
+		return divisionRepository.findByIsDeletedAndNameContainingIgnoreCase(true,filter, pageable);
+	}
+	@Override
+	public Page<Division> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+
+		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+		return divisionRepository.findByFarmerAndIsDeletedAndNameContainingIgnoreCase(farmer,true,filter, pageable);
 	}
 
 

@@ -176,8 +176,13 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     public Page<Fournisseur> findArchivedPage1(int pageSize, int pageNumber, String filter) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-        Page<Fournisseur>  result =  fournisseurRepository.findByNameContainingIgnoreCaseAndIsDeleted(filter,true,pageable);
-        return result;
+        return fournisseurRepository.findByNameContainingIgnoreCaseAndIsDeleted(filter,true,pageable);
+    }
+
+    @Override
+    public Page<Fournisseur> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
+        return fournisseurRepository.findByFarmerAndNameContainingIgnoreCaseAndIsDeleted(farmer,filter,true,pageable);
     }
 
     @Override

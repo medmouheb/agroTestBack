@@ -163,7 +163,10 @@ public class VehiculeServiceImpl implements VehiculeService {
                 .collect(Collectors.toList());
 
         return new PageImpl<>(result);
+    }
 
+    public Page<Vehicule> findArchivedPageFarmer(String farmer,int pageSize, int pageNumber, String filter) {
+        return vehiculeRepository.findByFarmerAndIsDeletedAndVehiculeNameContainingIgnoreCase(farmer,true,filter,PageRequest.of(pageNumber, pageSize));
 
     }
 }

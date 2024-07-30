@@ -8,6 +8,8 @@ import com.agrotech.api.dto.CategoryDto;
 import com.agrotech.api.dto.CurrencyDto;
 import com.agrotech.api.exceptions.NotFoundException;
 
+import java.util.List;
+
 public interface CurrencyService extends BaseService<CurrencyDto, String> {
 
 	CurrencyDto findByCode(String code) throws NotFoundException;
@@ -22,11 +24,10 @@ public interface CurrencyService extends BaseService<CurrencyDto, String> {
 	public Page<Currency> findPage1(int pageSize, int pageNumber, String filter);
 	public Page<Currency> findPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 	public Page<Currency> findArchivedPage1(int pageSize, int pageNumber, String filter);
+	public Page<Currency> findArchivedPage1Farmer(String farmer,int pageSize, int pageNumber, String filter);
 
 	Currency findByname(String name)throws NotFoundException;
 
 
-
-
-
+	List<CurrencyDto> findAllByFarmer(String getusername);
 }
