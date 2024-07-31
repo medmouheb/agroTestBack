@@ -63,8 +63,8 @@ public class MvtStkServiceImpl implements MvtStkService {
             s.setQuantity(s.getQuantity() -  dto.getQuantite().floatValue());
         }
         StockRepository.save(s);
-
-
+        System.out.println("ttt:::");
+        System.out.println(dto.getStock().getProduct());
 
         Produit p =produitRepository.findByName(dto.getStock().getProduct());
         if(s.getQuantity()<p.getStockMinimumAlert().floatValue() ){

@@ -11,6 +11,7 @@ public interface TaskService extends BaseService<TaskDto,String> {
     public void archive(String id) throws NotFoundException;
 
     List<Task> findAllByOwnerActive(String owner);
+    List<Task> findAllByDeletee(boolean isdeleted);
     List<Task> findAllByOwnerAndActurActive(String owner,String actur);
 
     List<Task> findAllByOwnerDisactive(String owner);

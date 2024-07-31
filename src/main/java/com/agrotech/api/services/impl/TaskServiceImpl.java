@@ -69,6 +69,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List findAllByDeletee(boolean isdeleted) {
+        return taskRepository.findByIsDeleted(isdeleted);
+    }
+
+    @Override
     public Page<TaskDto> findPage(int pageSize, int pageNumber, String filter) {
         return null;
     }
