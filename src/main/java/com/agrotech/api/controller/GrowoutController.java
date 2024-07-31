@@ -119,6 +119,9 @@ public class GrowoutController {
 			}
 			Page<Growout> response = growoutService.findPage1Farmer(getusername(),pageSize, pageNumber, filter);
 			return new ResponseEntity<>(response, HttpStatus.OK);
+
+
+
 		}
 
 	}
@@ -137,6 +140,7 @@ public class GrowoutController {
 		} else {
 
 			if(getRole().equals("employee")){
+
 				Page<Growout> response = growoutService.findArchivedPage1Farmer(userService.getFarmerByUsername(getusername()).get(),pageSize, pageNumber, filter);
 				return new ResponseEntity<>(response, HttpStatus.OK);
 			}
