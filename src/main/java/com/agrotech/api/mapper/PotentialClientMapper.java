@@ -12,4 +12,9 @@ import org.springframework.stereotype.Component;
 @Component
 
 public interface PotentialClientMapper  extends BaseMapper<PotentialClientDto, PotentialClient>{
+
+    BuyersDto toDto(Buyers buyers);
+
+    // Conversion de BuyersDto à PotentialClient
+    PotentialClient toEntity(PotentialClientDto dto);
 }

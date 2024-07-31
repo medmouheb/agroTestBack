@@ -3,14 +3,12 @@ package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.BuyersRepository;
 import com.agrotech.api.Repository.PotentialClientRepository;
-import com.agrotech.api.dto.BuyersDto;
 import com.agrotech.api.dto.PotentialClientDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.BuyersMapper;
 import com.agrotech.api.mapper.PotentialClientMapper;
 import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.PotentialClient;
-import com.agrotech.api.services.BuyersService;
 import com.agrotech.api.services.PotentialClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,11 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
 
     @Autowired
     private PotentialClientMapper potentialClientMapper ;
+    @Autowired
+
+    private final BuyersMapper buyersMapper;
+    @Autowired
+    private final BuyersRepository buyersRepository;
 
 
     public PotentialClient save(PotentialClient dto) {
@@ -40,6 +43,8 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
     public PotentialClientDto create(PotentialClientDto dto) {
         return potentialClientMapper.toDto(save(potentialClientMapper.toEntity(dto)));
     }
+
+
 
     @Override
     public PotentialClientDto update(String id, PotentialClientDto dto) throws NotFoundException {
@@ -60,6 +65,24 @@ public class PotentialClientServiceImpl  implements PotentialClientService {
             throw new NotFoundException("PotentialClient not found ");
         }
         return potentialClientMapper.toDto(campOptional.get());
+    }
+
+
+    @Override
+    public void moveToBuyersAndDelete(String id) throws NotFoundException {
+        Optional<PotentialClient> optionalClient = potentialClientRepository.findById(id);
+        if (optionalClient.isEmpty()) {
+            throw new NotFoundException("PotentialClient not found ");
+        }
+
+        PotentialClient potentialClient = optionalClient.get();
+
+        // Convert PotentialClient directly to Buyer
+        Buyers buyer = buyersMapper.toEntity(potentialClient);
+        buyersRepository.save(buyer);
+
+        // Delete PotentialClient
+        potentialClientRepository.deleteById(id);
     }
 
 

@@ -11,6 +11,8 @@ import java.util.List;
 
 public interface PotentialClientService extends BaseService<PotentialClientDto,String>{
 
+    void moveToBuyersAndDelete(String id) throws NotFoundException;
+
     List<PotentialClientDto> findByFarmer(String farmer ) throws NotFoundException;
 
     PotentialClientDto findByBuyersCode(String BuyersCode , String farmer ) throws NotFoundException;
