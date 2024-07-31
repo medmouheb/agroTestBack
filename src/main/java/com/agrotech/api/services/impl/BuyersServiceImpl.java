@@ -49,6 +49,8 @@ public class BuyersServiceImpl implements BuyersService {
 
         return buyersMapper.toDto(save(campanyExisting));    }
 
+
+
     @Override
     public BuyersDto findById(String id) throws NotFoundException {
         Optional<Buyers> campOptional = buyersRepository.findById(id);
@@ -57,6 +59,9 @@ public class BuyersServiceImpl implements BuyersService {
         }
         return buyersMapper.toDto(campOptional.get());
     }
+
+
+
 
 
     @Override

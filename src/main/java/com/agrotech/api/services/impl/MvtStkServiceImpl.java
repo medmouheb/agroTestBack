@@ -55,28 +55,31 @@ public class MvtStkServiceImpl implements MvtStkService {
 
     @Override
     public MvtStkDto create(MvtStkDto dto) throws DocumentException, FileNotFoundException {
-        Stock s=dto.getStock();
+        Stock s = dto.getStock();
 
-        if(dto.getTypeMvt().equals("enter")){
-            s.setQuantity(s.getQuantity() +  dto.getQuantite().floatValue());
-        }else{
-            s.setQuantity(s.getQuantity() -  dto.getQuantite().floatValue());
+        if (dto.getTypeMvt().equals("enter")) {
+            s.setQuantity(s.getQuantity() + dto.getQuantite().floatValue());
+        } else {
+            s.setQuantity(s.getQuantity() - dto.getQuantite().floatValue());
         }
         StockRepository.save(s);
-        System.out.println("ttt:::");
-        System.out.println(dto.getStock().getProduct());
 
-        Produit p =produitRepository.findByName(dto.getStock().getProduct());
-        if(s.getQuantity()<p.getStockMinimumAlert().floatValue() ){
-            System.out.println("getStockMinimumAlert");
-        }else if(s.getQuantity()>p.getMaxdepasse().floatValue()){
-            System.out.println("getMaxdepasse");
+
+        Produit p = produitRepository.findByName(dto.getStock().getProduct());
+        if (p != null) {
+            if ( p.getStockMinimumAlert()!= null && s.getQuantity() < p.getStockMinimumAlert().floatValue() ) {
+                System.out.println("getStockMinimumAlert");
+            } else if (s.getQuantity() > p.getMaxdepasse().floatValue()) {
+                System.out.println("getMaxdepasse");
+            }
+        } else {
+            System.out.println("Product not found: " + dto.getStock().getProduct());
+            // Handle the case where the product is not found
         }
 
-
         return mvtStkMapper.toDto(save(mvtStkMapper.toEntity(dto)));
-
     }
+
 
 
 

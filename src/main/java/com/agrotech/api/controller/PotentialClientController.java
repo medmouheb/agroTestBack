@@ -1,14 +1,13 @@
 package com.agrotech.api.controller;
 
 
-import com.agrotech.api.Repository.BuyersRepository;
+
 import com.agrotech.api.Repository.PotentialClientRepository;
-import com.agrotech.api.dto.BuyersDto;
+
 import com.agrotech.api.dto.PotentialClientDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Buyers;
+
 import com.agrotech.api.model.PotentialClient;
-import com.agrotech.api.services.BuyersService;
 import com.agrotech.api.services.PotentialClientService;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
@@ -176,6 +175,20 @@ public class PotentialClientController {
         potentialClientService.setNotArchive(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    @DeleteMapping("/move-and-delete/{id}")
+    public ResponseEntity<String> deleteClientAndMoveToBuyers(@PathVariable String id) {
+        try {
+            potentialClientService.moveToBuyersAndDelete(id);
+            return ResponseEntity.ok("Potential client deleted and moved to buyers.");
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+
+
 
 
 

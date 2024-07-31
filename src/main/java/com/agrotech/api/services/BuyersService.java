@@ -28,5 +28,7 @@ public interface BuyersService extends BaseService<BuyersDto,String>{
     public Page<BuyersDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
     public Page<BuyersDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 
+    Buyers save(Buyers buyer);
+
     List<BuyersDto> findAllByfarmer(String getusername);
 }
