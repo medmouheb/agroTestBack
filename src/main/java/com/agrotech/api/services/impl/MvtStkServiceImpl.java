@@ -1,20 +1,19 @@
 package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.MvtStkRepository;
-import com.agrotech.api.Repository.MvtStkRepository;
 import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.Repository.StockRepository;
-import com.agrotech.api.controller.FileController;
 import com.agrotech.api.dto.MvtStkDto;
-import com.agrotech.api.dto.MvtStkDto;
+
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.MvtStkMapper;
-import com.agrotech.api.mapper.MvtStkMapper;
+
 import com.agrotech.api.model.MvtStk;
 import com.agrotech.api.model.Produit;
 import com.agrotech.api.model.Stock;
 import com.agrotech.api.services.MvtStkService;
-import com.agrotech.api.services.MvtStkService;
+
+import com.agrotech.api.utils.EmailService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,7 +40,8 @@ public class MvtStkServiceImpl implements MvtStkService {
 
     @Autowired
     private MvtStkMapper mvtStkMapper ;
-
+    @Autowired
+    private EmailService emailService;
 
 
 
@@ -52,11 +52,13 @@ public class MvtStkServiceImpl implements MvtStkService {
 
     }
 
-
     @Override
-    public MvtStkDto create(MvtStkDto dto) throws DocumentException, FileNotFoundException {
+    public MvtStkDto createwithmail(MvtStkDto dto, String email) {
         Stock s = dto.getStock();
+        String emailMessage = "";
+        boolean emailRequired = false;
 
+        // Update stock quantity
         if (dto.getTypeMvt().equals("enter")) {
             s.setQuantity(s.getQuantity() + dto.getQuantite().floatValue());
         } else {
@@ -64,19 +66,86 @@ public class MvtStkServiceImpl implements MvtStkService {
         }
         StockRepository.save(s);
 
+        // Check conditions and prepare email message
         Produit p = produitRepository.findByName(dto.getStock().getProduct());
         if (p != null) {
-            if ( p.getStockMinimumAlert()!= null && s.getQuantity() < p.getStockMinimumAlert().floatValue() ) {
-                System.out.println("getStockMinimumAlert");
-            } else if (s.getQuantity() > p.getMaxdepasse().floatValue()) {
-                System.out.println("getMaxdepasse");
+            if (p.getStockMinimumAlert() != null && s.getQuantity() < p.getStockMinimumAlert().floatValue()) {
+
+
+                emailMessage += "Stock is below the minimum alert level.\n";
+                emailRequired = true;
+            }
+            if (s.getQuantity() > p.getMaxdepasse().floatValue()) {
+                emailMessage += "Stock exceeds the maximum allowed level.\n";
+                emailRequired = true;
             }
         } else {
-            System.out.println("Product not found: " + dto.getStock().getProduct());
+            emailMessage += "Product not found: " + dto.getStock().getProduct() + "\n";
+            emailRequired = true;
+
             // Handle the case where the product is not found
         }
 
+        // Send email if needed
+        if (emailRequired) {
+            System.out.println("Email required");
+            System.out.println(email);
+            System.out.println(emailMessage);
+            // Assume `getEmail()` returns the recipient's email
+            emailService.sendStockAlertMail(email, "Stock Alert", emailMessage);
+        }
+
         return mvtStkMapper.toDto(save(mvtStkMapper.toEntity(dto)));
+    }
+
+
+    @Override
+    public MvtStkDto create(MvtStkDto dto) throws DocumentException, FileNotFoundException {
+        Stock s = dto.getStock();
+        String emailMessage = "";
+        boolean emailRequired = false;
+
+        // Update stock quantity
+        if (dto.getTypeMvt().equals("enter")) {
+            s.setQuantity(s.getQuantity() + dto.getQuantite().floatValue());
+        } else {
+            s.setQuantity(s.getQuantity() - dto.getQuantite().floatValue());
+        }
+        StockRepository.save(s);
+
+        // Check conditions and prepare email message
+        Produit p = produitRepository.findByName(dto.getStock().getProduct());
+        if (p != null) {
+            if (p.getStockMinimumAlert() != null && s.getQuantity() < p.getStockMinimumAlert().floatValue()) {
+                emailMessage += "Stock is below the minimum alert level.\n";
+                emailRequired = true;
+            }
+            if (s.getQuantity() > p.getMaxdepasse().floatValue()) {
+                emailMessage += "Stock exceeds the maximum allowed level.\n";
+                emailRequired = true;
+
+
+
+            }
+        } else {
+            emailMessage += "Product not found: " + dto.getStock().getProduct() + "\n";
+            // Handle the case where the product is not found
+        }
+
+        // Send email if needed
+        if (emailRequired) {
+            // Assume `getEmail()` returns the recipient's email
+            String email = getEmailForAlert(); // Implement this method to get the recipient's email
+            emailService.sendStockAlertMail(email, "Stock Alert", emailMessage);
+        }
+
+        return mvtStkMapper.toDto(save(mvtStkMapper.toEntity(dto)));
+    }
+
+    // Implement this method to get the recipient's email based on your application logic
+    private String getEmailForAlert() {
+        // Logic to retrieve the email address
+        return "mohamedmouheb@gmail.com"; // Replace with actual logic
     }
 
 

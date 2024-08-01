@@ -20,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.User;
 
 @Getter
 @Setter
@@ -35,6 +36,10 @@ public class MvtStkDto extends BaseDto{
 	private Stock stock;
 
 	private String farmer;
+	private User user;
+
+	private String email;
+
 
 	private Boolean isDeleted=false;
 
