@@ -13,4 +13,5 @@ public interface TaskRepository  extends MongoRepository<Task ,String> ,  TaskRe
 
     List<Task> findByTasksOwnerContainingIgnoreCaseAndActurContainingIgnoreCaseAndIsDeleted(String owner, String actur , Boolean deleted);
     List<Task> findByTasksOwnerContainingIgnoreCaseAndIsDeleted(String owner, Boolean deleted);
+    List<Task> findByIsDeleted( Boolean deleted);
 }

@@ -66,7 +66,6 @@ public class MvtStkServiceImpl implements MvtStkService {
         }
         StockRepository.save(s);
 
-        // Check conditions and prepare email message
         Produit p = produitRepository.findByName(dto.getStock().getProduct());
         if (p != null) {
             if (p.getStockMinimumAlert() != null && s.getQuantity() < p.getStockMinimumAlert().floatValue()) {
