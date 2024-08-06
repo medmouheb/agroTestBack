@@ -23,6 +23,7 @@ public interface MvtStkService extends BaseService<MvtStkDto, String> {
     public void setNotArchive(String id) throws NotFoundException;
 
 
+    MvtStkDto createwithmail(MvtStkDto campany, String email);
 }
 
 

@@ -1,16 +1,18 @@
 package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.MvtStkRepository;
-import com.agrotech.api.Repository.MvtStkRepository;
+
+import com.agrotech.api.Repository.UserRepository;
 import com.agrotech.api.dto.MvtStkDto;
-import com.agrotech.api.dto.MvtStkDto;
+
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.MvtStk;
-import com.agrotech.api.model.MvtStk;
+
 import com.agrotech.api.model.User;
 import com.agrotech.api.services.MvtStkService;
-import com.agrotech.api.services.MvtStkService;
+
 import com.agrotech.api.services.impl.UserService;
+import com.agrotech.api.utils.EmailService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,13 @@ public class MvtStkController {
     @Autowired
     private UserService userService;
 
+
+    @Autowired
+    private EmailService emailService;
+
     private final MvtStkService mvtStkService;
     private final MvtStkRepository mvtStkRepository;
+    private final UserRepository userRepository;
 
 
     private String getusername(){
@@ -45,14 +52,35 @@ public class MvtStkController {
         return userDetails.getUsername();
 
     }
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
 
+        return role.get();
+    }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
     public ResponseEntity<?> create(@RequestBody MvtStkDto campany) throws DocumentException, FileNotFoundException {
-        MvtStkDto response = mvtStkService.create(campany);
+        String email="";
+        if(getRole().equals("farmer")){
+            email=userRepository.findByUsername(getusername()) .get().getEmail()  ;
+        }else if(getRole().equals("employee")){
+            email=userRepository.findByUsername(userRepository.findByUsername(getusername()) .get().getFarmer()) .get().getEmail() ;
+        }
+        MvtStkDto response = mvtStkService.createwithmail(campany,email);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
     public void deleteall() throws NotFoundException {
