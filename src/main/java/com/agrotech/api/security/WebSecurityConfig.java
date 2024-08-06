@@ -4,6 +4,7 @@ package com.agrotech.api.security;
 import com.agrotech.api.security.jwt.AuthEntryPointJwt;
 import com.agrotech.api.security.jwt.AuthTokenFilter;
 import com.agrotech.api.security.services.UserDetailsServiceImpl;
+import io.swagger.models.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -67,6 +68,8 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/campany/**").permitAll()
+                        .requestMatchers("/api/notifications/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll() // Permet l'accès à certaines URL sans authentification
                         .requestMatchers("/airport/**").permitAll()
                         .requestMatchers("/binDetails/**").permitAll()
                         .requestMatchers("/breedCode/**").permitAll()
@@ -152,4 +155,7 @@ public class WebSecurityConfig {
 
         return http.build();
     }
+
+
+
 }

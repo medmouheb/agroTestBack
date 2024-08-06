@@ -34,7 +34,10 @@ public class ProductionServiceImpl implements ProductionService {
     private ProductionRepository productionRepository ;
 
     @Autowired
+
     private ProductionMapper productionMapper ;
+    @Autowired
+    private final NotificationService notificationService;
 
 
     public Production save(Production dto) {
@@ -48,8 +51,9 @@ public class ProductionServiceImpl implements ProductionService {
     public ProductionDto create(ProductionDto dto) throws DocumentException, FileNotFoundException {
 
 
-        return productionMapper.toDto(save(productionMapper.toEntity(dto)));
-
+        ProductionDto createdDto = productionMapper.toDto(save(productionMapper.toEntity(dto)));
+        notificationService.addNotification("production created: " + createdDto.getName());
+        return createdDto;
     }
 
 
@@ -65,7 +69,9 @@ public class ProductionServiceImpl implements ProductionService {
         Production campanyExisting = camOptional.get();
         productionMapper.partialUpdate(campanyExisting, dto);
 
-        return productionMapper.toDto(save(campanyExisting));
+        ProductionDto updatedDto = productionMapper.toDto(save(campanyExisting));
+        notificationService.addNotification("Production updated: " + updatedDto.getName());
+        return updatedDto;
 
     }
 

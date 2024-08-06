@@ -1,16 +1,13 @@
 package com.agrotech.api.controller;
 
 
-import com.agrotech.api.Repository.FactureRepository;
 import com.agrotech.api.Repository.ProductionRepository;
-import com.agrotech.api.dto.FactureDto;
 import com.agrotech.api.dto.ProductionDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Facture;
 import com.agrotech.api.model.Production;
 import com.agrotech.api.model.User;
-import com.agrotech.api.services.FactureService;
 import com.agrotech.api.services.ProductionService;
+import com.agrotech.api.services.impl.NotificationService;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +36,15 @@ public class ProductionController {
     private UserService userService;
     private final ProductionService productionService;
     private final ProductionRepository productionRepository;
+    private final NotificationService notificationService;
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody ProductionDto campany) throws DocumentException, FileNotFoundException {
-        ProductionDto response = productionService.create(campany);
-
-
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    public ProductionDto create(@RequestBody ProductionDto campany) throws DocumentException, FileNotFoundException {
+        ProductionDto createdCompany = productionService.create(campany);
+        notificationService.addNotification("production created: " + createdCompany.getName());
+        return createdCompany;
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/deleteall")
@@ -58,9 +55,10 @@ public class ProductionController {
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody ProductionDto campany) throws NotFoundException {
-        ProductionDto response = productionService.update(id, campany);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ProductionDto update(@PathVariable String id, @RequestBody ProductionDto campany) throws NotFoundException {
+        ProductionDto updatedCompany = productionService.update(id, campany);
+        notificationService.addNotification("Production updated: " + updatedCompany.getName());
+        return updatedCompany;
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")

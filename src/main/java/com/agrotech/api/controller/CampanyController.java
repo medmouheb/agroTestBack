@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 
+import com.agrotech.api.services.impl.NotificationService;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,7 @@ public class CampanyController {
 	@Autowired
 	private UserService userService;
 	private final CampanyService campanyService;
+	private final NotificationService notificationService;
 	private final CampanyRepository campanyRepository;
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -55,9 +57,10 @@ public class CampanyController {
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@PostMapping("")
-	public ResponseEntity<?> create(@RequestBody CampanyDto campany) throws DocumentException, FileNotFoundException {
-		CampanyDto response = campanyService.create(campany);
-		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	public CampanyDto create(@RequestBody CampanyDto campany) throws DocumentException, FileNotFoundException {
+		CampanyDto createdCompany = campanyService.create(campany);
+		notificationService.addNotification("Company created: " + createdCompany.getName());
+		return createdCompany;
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -69,9 +72,10 @@ public class CampanyController {
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable String id, @RequestBody CampanyDto campany) throws NotFoundException {
-		CampanyDto response = campanyService.update(id, campany);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	public CampanyDto update(@PathVariable String id, @RequestBody CampanyDto campany) throws NotFoundException {
+		CampanyDto updatedCompany = campanyService.update(id, campany);
+		notificationService.addNotification("Company updated: " + updatedCompany.getName());
+		return updatedCompany;
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
