@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.agrotech.api.dto.CampanyDto;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.commons.csv.CSVRecord;
@@ -29,6 +30,10 @@ public class FournisseurServiceImpl implements FournisseurService {
 	@Autowired
     private final FournisseurMapper fournisseurMapper;
 
+    @Autowired
+    private final NotificationService notificationService;
+
+
     private Fournisseur save(Fournisseur entity) {
         return fournisseurRepository.save(entity);
     }
@@ -41,12 +46,12 @@ public class FournisseurServiceImpl implements FournisseurService {
     @Override
     public FournisseurDto create(FournisseurDto dto) {
 
-        return fournisseurMapper.toDto(
-                save(
-                        fournisseurMapper.toEntity(dto)
-                )
-        );
+        FournisseurDto createdDto = fournisseurMapper.toDto(save(fournisseurMapper.toEntity(dto)));
+        notificationService.addNotification("Fournisseur created: " + createdDto.getName());
+        return createdDto;
     }
+
+
 
     @Override
     @Transactional
@@ -60,6 +65,7 @@ public class FournisseurServiceImpl implements FournisseurService {
 
     @Override
     public FournisseurDto update(String id, FournisseurDto dto) throws NotFoundException {
+        // Fetch existing Fournisseur
         Optional<Fournisseur> optional = fournisseurRepository.findById(id);
         if (optional.isEmpty()) {
             throw new NotFoundException("Fournisseur not found");
@@ -67,12 +73,20 @@ public class FournisseurServiceImpl implements FournisseurService {
 
         Fournisseur existing = optional.get();
 
-
+        // Update Fournisseur with partial data
         fournisseurMapper.partialUpdate(existing, dto);
-        return fournisseurMapper.toDto(   
-                save(existing)
-        );
+
+        // Save the updated Fournisseur
+        Fournisseur updatedFournisseur = fournisseurRepository.save(existing); // Ensure this is only called once
+        FournisseurDto updatedDto = fournisseurMapper.toDto(updatedFournisseur);
+
+        // Add notification
+        notificationService.addNotification("Fournisseur updated: " + updatedDto.getName());
+
+        // Return updated Fournisseur DTO
+        return updatedDto;
     }
+
 
     @Override
     public FournisseurDto findById(String id) throws NotFoundException {

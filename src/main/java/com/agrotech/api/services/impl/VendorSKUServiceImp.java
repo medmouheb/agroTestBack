@@ -1,6 +1,7 @@
 package com.agrotech.api.services.impl;
 
 import com.agrotech.api.Repository.VendorSKURepository;
+import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.VendorSKUDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.VendorSKUMapper;
@@ -24,29 +25,58 @@ public class VendorSKUServiceImp implements VendorSKUService {
     @Autowired
     private final VendorSKUMapper vendorSKUMapper ;
 
+    @Autowired
+    private final NotificationService notificationService;
+
     public VendorSKU save(VendorSKU entity) {
         return vendorSKURepository.save(entity);
     }
 
     @Override
     public VendorSKUDto create(VendorSKUDto dto) {
-        return vendorSKUMapper.toDto(save(vendorSKUMapper.toEntity(dto)));
+        VendorSKU vendorSKU = vendorSKUMapper.toEntity(dto);
 
+        // Save once to the database
+        VendorSKU savedVendorSKU = vendorSKURepository.save(vendorSKU);
+
+        // Convert to DTO after saving
+        VendorSKUDto createdDto = vendorSKUMapper.toDto(savedVendorSKU);
+
+        // Add a notification with the saved vendor SKU's name
+        notificationService.addNotification("VendorSKU created: " + createdDto.getVendorSKUName());
+
+        return createdDto;
     }
+
+
+
+
 
     @Override
     public VendorSKUDto update(String id, VendorSKUDto dto) throws NotFoundException {
+        Optional<VendorSKU> vendorSKUOptional = vendorSKURepository.findById(id);
 
-        Optional<VendorSKU> vendorSKUOptional =  vendorSKURepository.findById(id);
-        if(vendorSKUOptional.isEmpty()) {
-            throw new NotFoundException("Currency not found ");
+        if (vendorSKUOptional.isEmpty()) {
+            throw new NotFoundException("VendorSKU not found");
         }
 
         VendorSKU vendorSKUExisting = vendorSKUOptional.get();
+
+        // Apply partial update
         vendorSKUMapper.partialUpdate(vendorSKUExisting, dto);
 
-        return vendorSKUMapper.toDto(save(vendorSKUExisting));
+        // Save the updated entity once
+        VendorSKU updatedVendorSKU = vendorSKURepository.save(vendorSKUExisting);
+
+        // Convert to DTO after saving
+        VendorSKUDto updatedDto = vendorSKUMapper.toDto(updatedVendorSKU);
+
+        // Add a notification with the updated vendor SKU's name
+        notificationService.addNotification("VendorSKU updated: " + updatedDto.getVendorSKUName());
+
+        return updatedDto;
     }
+
 
     @Override
     public VendorSKUDto findById(String id) throws NotFoundException {

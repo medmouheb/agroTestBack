@@ -2,10 +2,10 @@ package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.VendorSKURepository;
 import com.agrotech.api.dto.VendorSKUDto;
-import com.agrotech.api.dto.WillayaDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.VendorSKU;
 import com.agrotech.api.services.VendorSKUService;
+import com.agrotech.api.services.impl.NotificationService;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,7 @@ public class VendorSKUController {
 
     @Autowired
     private UserService userService;
+    private final NotificationService notificationService;
     private String getRole() {
         AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,19 +65,21 @@ public class VendorSKUController {
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody VendorSKUDto vendorSku) throws DocumentException, FileNotFoundException {
-        VendorSKUDto response = vendorSKUService.create(vendorSku);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    public VendorSKUDto create(@RequestBody VendorSKUDto vendorSku) throws DocumentException, FileNotFoundException {
+        VendorSKUDto createdCompany = vendorSKUService.create(vendorSku);
+
+        notificationService.addNotification("VendorSKU created: " + createdCompany.getName());
+        return createdCompany;
     }
 
 
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id,@RequestBody VendorSKUDto vendorSku) throws NotFoundException {
-        VendorSKUDto response = vendorSKUService.update(id, vendorSku);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+    public VendorSKUDto update(@PathVariable String id, @RequestBody VendorSKUDto vendorSku) throws NotFoundException {
+        VendorSKUDto updatedCompany  = vendorSKUService.update(id, vendorSku);
+        notificationService.addNotification("VendorSKU updated: " + updatedCompany.getName());
+        return updatedCompany;    }
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")

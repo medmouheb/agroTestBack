@@ -2,6 +2,7 @@ package com.agrotech.api.services.impl;
 
 
 import com.agrotech.api.Repository.StockRepository;
+import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.StockDTO;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.mapper.StockMapper;
@@ -26,7 +27,8 @@ public class StockServiceImpl implements StockServices {
     private StockRepository stockRepository ;
     @Autowired
     private StockMapper stockMapper ;
-
+    @Autowired
+    private final NotificationService notificationService;
 
 
     public Stock save(Stock dto) {
@@ -38,7 +40,9 @@ public class StockServiceImpl implements StockServices {
 
     @Override
     public StockDTO create(StockDTO dto) {
-        return stockMapper.toDto(save(stockMapper.toEntity(dto)));
+        StockDTO stockDTO = stockMapper.toDto(save(stockMapper.toEntity(dto)));
+        notificationService.addNotification("Stock created: " + stockDTO.getName());
+        return stockDTO;
 
     }
 
@@ -55,7 +59,10 @@ public class StockServiceImpl implements StockServices {
         Stock campanyExisting = camOptional.get();
         stockMapper.partialUpdate(campanyExisting, dto);
 
-        return stockMapper.toDto(save(campanyExisting));
+        StockDTO updatedDto = stockMapper.toDto(save(campanyExisting));
+        notificationService.addNotification("Stock updated: " + updatedDto.getName());
+
+        return updatedDto;
 
     }
 
