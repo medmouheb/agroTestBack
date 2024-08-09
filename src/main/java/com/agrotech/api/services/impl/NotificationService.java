@@ -3,6 +3,9 @@ package com.agrotech.api.services.impl;
 import com.agrotech.api.Repository.NotificationRepository;
 import com.agrotech.api.model.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,11 +39,14 @@ public class NotificationService {
         notificationRepository.save(newNotification);
     }
 
-    public List<Notification> getNotifications() {
-        logger.info("Retrieving notifications");
+    public List<Notification> getNotifications(int page, int size) {
+        logger.info("Retrieving notifications for page: " + page + ", size: " + size);
 
-        // Fetch notifications from MongoDB
-        return notificationRepository.findAll();
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Notification> notificationPage = notificationRepository.findAll(pageable);
+
+        return notificationPage.getContent();
     }
 
     @Transactional

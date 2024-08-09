@@ -2,13 +2,9 @@ package com.agrotech.api.controller;
 
 import com.agrotech.api.Repository.FournisseurRepository;
 import com.agrotech.api.Repository.VendorSKURepository;
-import com.agrotech.api.dto.CampanyDto;
-import com.agrotech.api.dto.WarehouseDto;
-import com.agrotech.api.enums.CostCenterType;
-import com.agrotech.api.model.Campany;
 import com.agrotech.api.model.Fournisseur;
 import com.agrotech.api.model.VendorSKU;
-import com.agrotech.api.model.Vendors;
+import com.agrotech.api.services.impl.NotificationService;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import com.opencsv.CSVWriter;
@@ -52,6 +48,7 @@ public class FournisseurController {
     private final FournisseurService fournisseurService;
     private final FournisseurRepository fournisseurRepository;
     private final VendorSKURepository vendorSKURepository;
+    private final NotificationService notificationService;
 
     @Autowired
     private UserService userService;
@@ -101,12 +98,13 @@ public class FournisseurController {
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody @Valid FournisseurDto fournisseur) throws DocumentException, FileNotFoundException {
+    public FournisseurDto create(@RequestBody @Valid FournisseurDto fournisseur) throws DocumentException, FileNotFoundException {
         System.out.println(fournisseur.getVendorSKUname());
         System.out.println(fournisseur.getVendorSKUcode());
 
-        FournisseurDto response = fournisseurService.create(fournisseur);
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        FournisseurDto createdCompany  = fournisseurService.create(fournisseur);
+        notificationService.addNotification("Fournisseur created: " + createdCompany.getName());
+        return createdCompany;
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("/add")
@@ -125,20 +123,25 @@ public class FournisseurController {
         return new ResponseEntity<>(true, HttpStatus.CREATED);
     }
 
+
+
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(
+    public ResponseEntity<FournisseurDto> update(
             @PathVariable String id,
             @RequestBody FournisseurDto fournisseur
     ) throws NotFoundException {
-        System.out.println(fournisseur.getVendorSKUname());
-        System.out.println(fournisseur.getVendorSKUcode());
 
-        FournisseurDto response = fournisseurService.update(id, fournisseur);
-        System.out.println(response.getVendorSKUcode());
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        FournisseurDto updatedFournisseur = fournisseurService.update(id, fournisseur);
+
+
+        notificationService.addNotification("Fournisseur updated: " + updatedFournisseur.getName());
+
+
+        return ResponseEntity.ok(updatedFournisseur);
     }
+
 
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/{id}")

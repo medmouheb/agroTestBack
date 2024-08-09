@@ -22,8 +22,10 @@ public class NotificationController {
     }
 
     @GetMapping
-    public List<Notification> getNotifications() {
-        return notificationService.getNotifications();
+    public List<Notification> getNotifications(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return notificationService.getNotifications(page, size);
     }
 
     @DeleteMapping("/{id}")

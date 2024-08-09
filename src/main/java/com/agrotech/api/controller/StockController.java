@@ -4,15 +4,11 @@ package com.agrotech.api.controller;
 import com.agrotech.api.Repository.BuyersRepository;
 import com.agrotech.api.Repository.ProduitRepository;
 import com.agrotech.api.Repository.StockRepository;
-import com.agrotech.api.Repository.TaxRepository;
 import com.agrotech.api.dto.StockDTO;
-import com.agrotech.api.dto.TaxDto;
 import com.agrotech.api.exceptions.NotFoundException;
-import com.agrotech.api.model.Buyers;
 import com.agrotech.api.model.Stock;
-import com.agrotech.api.model.Tax;
 import com.agrotech.api.services.StockServices;
-import com.agrotech.api.services.TaxService;
+import com.agrotech.api.services.impl.NotificationService;
 import com.agrotech.api.services.impl.UserService;
 import com.itextpdf.text.DocumentException;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +27,6 @@ import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 //@CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3600)
@@ -47,6 +42,8 @@ public class StockController {
     private final ProduitRepository produitRepository;
     private  final BuyersRepository buyersRepository;
     private final EmailController emailController;
+
+    private final NotificationService notificationService;
 
     private String getRole() {
 
@@ -93,26 +90,14 @@ public class StockController {
 
     //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PostMapping("")
-    public ResponseEntity<?> create(@RequestBody StockDTO campany) throws JSONException, DocumentException, FileNotFoundException {
-        StockDTO response = stockServices.create(campany);
-//        System.out.println( ":::"+ produitRepository.findById(campany.getProduct()).get().getTags()  );
-//
-//        List<Buyers> l=buyersRepository.findByTagsIn(produitRepository.findByName(campany.getProduct()).getTags());
-//
-//
-//        for(Buyers singleBuyer:l){
-//            String dto="{\n" +
-//                    "      \"email\":\""+singleBuyer.getEmail()+"\",\n" +
-//                    "      \"title\":\"NEW PRODUCTS\",\n" +
-//                    "      \"subject\":\" "+getCurrentDate()+" NEW PRODUCTS\",\n" +
-//                    "      \"paragraph\":\"we have new products you can be interested in ,\n" +
-//                    produitRepository.findById(campany.getProduct()).get().getName()+"\","+
-//                    "      \"files\":[]\n" +
-//                    "  }";
-//            emailController.sendActivateMAil(dto);
-//        }
+    public StockDTO create(@RequestBody StockDTO campany) throws JSONException, DocumentException, FileNotFoundException {
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        StockDTO createdCompany = stockServices.create(campany);
+        notificationService.addNotification("Company created: " + createdCompany.getName());
+        return createdCompany;
+
+
     }
 
     //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
@@ -124,9 +109,10 @@ public class StockController {
 
     //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody StockDTO campany) throws NotFoundException {
-        StockDTO response = stockServices.update(id, campany);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public StockDTO update(@PathVariable String id, @RequestBody StockDTO campany) throws NotFoundException {
+        StockDTO updatedCompany = stockServices.update(id, campany);
+        notificationService.addNotification("Stock updated: " + updatedCompany.getName());
+        return updatedCompany;
     }
 
     //@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")

@@ -35,6 +35,9 @@ public class SalesServiceImpl implements SalesServices {
     @Autowired
     private final ProduitRepository produitRepository;
 
+    @Autowired
+    private final NotificationService notificationService;
+
     public Sales save(Sales sales) {
         return salesRepository.save(sales);
     }
