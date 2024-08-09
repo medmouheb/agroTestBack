@@ -1,10 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8"/>
+    <title>Statistics Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        .chart-container {
+            width: 600px;
+            height: 400px;
+            margin: auto;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header, .summary, .highlights, .details {
+            padding: 20px;
+            margin: 20px 0;
+            background: #f4f4f4;
+            border: 1px solid #ccc;
+        }
+        header h1 {
+            text-align: center;
+        }
+        .section-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .chart {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-$END$
+    <div class="container">
+        <header>
+            <h1>Annual Financial Report</h1>
+        </header>
+
+        <section class="summary">
+            <h2 class="section-title">Executive Summary</h2>
+            <p>This report provides an overview of our financial performance for the fiscal year. We have experienced growth in key areas and are on track for continued success.</p>
+        </section>
+
+<!--        <section class="highlights">-->
+<!--            <h2 class="section-title">Financial Highlights</h2>-->
+<!--            <ul>-->
+<!--                <li>Total Revenue: <span th:text="${totalRevenue}"></span></li>-->
+<!--                <li>Net Profit: <span th:text="${netProfit}"></span></li>-->
+<!--                <li>Year-over-Year Growth: <span th:text="${growth}"></span></li>-->
+<!--            </ul>-->
+<!--        </section>-->
+
+        <section class="details">
+            <h2 class="section-title">Detailed Financial Statements</h2>
+            <table border="1" width="100%" cellpadding="5">
+                <thead>
+                <tr>
+                    <th >mType</th>
+                    <th>mDate</th>
+                    <th>initialQuantity</th>
+                    <th>newQuantity</th>
+                    <th>product</th>
+                    <th>warehouse</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="item : ${financialData}">
+                        <td th:text="${item.mType}"></td>
+                        <td th:text="${item.mDate}"></td>
+                        <td th:text="${item.initialQuantity}"></td>
+                        <td th:text="${item.newQuantity}"></td>
+                        <td th:text="${item.product}"></td>
+                        <td th:text="${item.warehouse}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <h1>Statistics Report</h1>
+        <p>Total Users: <span th:text="${totalUsers}"></span></p>
+        <p>Total Sales: <span th:text="${totalSales}"></span></p>
+
+        <div class="chart-container">
+            <img th:src="'data:image/png;base64,' + ${chartBase64}" alt="Sales Chart"/>
+        </div>
+    </div>
 </body>
 </html>

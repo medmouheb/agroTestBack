@@ -46,9 +46,19 @@ public class User {
     private String numeroTelephone;
 
     private String avatar;
+    private String signature;
     private String activationToken;
 
     private Boolean verified=false;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
     public User() {
     }
     public User(String username, String email, String encode) {
