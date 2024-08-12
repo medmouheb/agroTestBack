@@ -7,7 +7,7 @@ import com.agrotech.api.model.LigneCommandeFournisseur;
 import org.springframework.stereotype.Component;
 
 @Mapper()
-@Component
+
 
 public interface LigneCommandeFournisseurMapper extends BaseMapper<LigneCommandeFournisseurDto, LigneCommandeFournisseur> {
 
