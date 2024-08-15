@@ -7,5 +7,6 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 @Mapper
+@Component
 public interface BinDetailsMapper extends BaseMapper<BinDetailsDto , BinDetails>  {
 }

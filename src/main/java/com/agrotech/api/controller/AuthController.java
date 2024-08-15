@@ -312,7 +312,7 @@ public class AuthController {
             userRepository.save(user);
 
             // Créer l'URL de réinitialisation
-            String resetUrl = "http://localhost:4200/new-password?token=" + resetToken;
+            String resetUrl = "http://localhost:4200/auth/new-password?token=" + resetToken;
 
             // Envoyer un e-mail avec le lien de réinitialisation
             emailService.sendResetPasswordEmail(user.getEmail(), resetUrl);

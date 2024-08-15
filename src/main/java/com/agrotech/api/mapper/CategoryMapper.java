@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 
 @Mapper()
-@Component
+
 
 public interface CategoryMapper extends  BaseMapper<CategoryDto, Category>{
 
