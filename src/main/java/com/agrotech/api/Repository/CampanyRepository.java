@@ -20,4 +20,5 @@ public interface CampanyRepository extends MongoRepository<Campany, String> {
     Page<Campany> findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(Boolean isDeleted, String name,String farmer, Pageable pageable);
     Page<Campany> findByIsDeleted(Boolean isDeleted, Pageable pageable);
     Campany findByName(String name );
+    Optional<Campany> findByFarmerAndName(String farmer,String name );
 }

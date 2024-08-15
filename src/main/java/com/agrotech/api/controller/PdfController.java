@@ -279,27 +279,11 @@ public class PdfController {
         List<MvtStk> result=new ArrayList<>();
         List<List<Integer>> listOfLists = new ArrayList<>();
 
-        // Creating individual inner lists
-        List<Integer> list1 = new ArrayList<>();
-        list1.add(1);
-        list1.add(2);
-        list1.add(3);
 
-        List<Integer> list2 = new ArrayList<>();
-        list2.add(4);
-        list2.add(5);
-        list2.add(6);
-
-        List<Integer> list3 = new ArrayList<>();
-        list3.add(7);
-        list3.add(8);
-        list3.add(9);
-
-        // Adding the inner lists to the outer list
-        listOfLists.add(list1);
-        listOfLists.add(list2);
-        listOfLists.add(list3);
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 0; i <= 12; i++) {
+            int countEntre=0;
+            int countSort=0;
+            int countReturn=0;
             Calendar calendar = Calendar.getInstance();
 
             // Set the start date to the first day of the specified month and year
@@ -311,17 +295,32 @@ public class PdfController {
             // Set the end date to the first day of the next month
             calendar.add(Calendar.MONTH, i+1);
             Date endDate = calendar.getTime();
-            if(i==12){
-                calendar.set(Calendar.YEAR, year+1);
-                calendar.set(Calendar.MONTH, 1);
-                endDate = calendar.getTime();
-            }
+
 
 
             List<MvtStk> l= mvtStkRepository.findByFarmerAndMonthAndYear(farmer, startDate, endDate);
+            for(MvtStk l1:l){
+                if(l1.getTypeMvt().equals("enter")){
+                    countEntre+=l1.getQuantite().intValue();
+                }
+                if(l1.getTypeMvt().equals("exit")){
+                    countSort+=l1.getQuantite().intValue();
+                }
+                if(l1.getTypeMvt().equals("return")){
+                    countReturn+=l1.getQuantite().intValue();
+                }
+
+
+            }
+            List<Integer> listTest = new ArrayList<>();
+            listTest.add(countEntre);
+            listTest.add(countSort);
+            listTest.add(countReturn);
+            listOfLists.add(listTest);
             result.addAll(l);
         }
         Context context = new Context();
+        System.out.println(listOfLists);
 
         List<FinancialData1> financialData = new ArrayList<>();
 

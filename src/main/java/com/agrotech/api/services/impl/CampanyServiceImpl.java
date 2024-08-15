@@ -113,22 +113,19 @@ public class CampanyServiceImpl implements CampanyService {
 	@Override
 	public Page<Campany> getpagesarchive(int pageSize, int pageNumber, String filter) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Campany> result = campanyRepository.findByIsDeletedAndNameContainingIgnoreCase(true, filter, pageable);
-		return result;
+        return campanyRepository.findByIsDeletedAndNameContainingIgnoreCase(true, filter, pageable);
 	}
 
 	@Override
 	public Page<Campany> getpages1(int pageSize, int pageNumber, String filter, String farmername) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Campany> result = campanyRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(false, filter, farmername, pageable);
-		return result;
+        return campanyRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(false, filter, farmername, pageable);
 	}
 
 	@Override
 	public Page<Campany> getpagesarchive1(int pageSize, int pageNumber, String filter, String farmername) {
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by("name").ascending());
-		Page<Campany> result = campanyRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(true, filter, farmername, pageable);
-		return result;
+        return campanyRepository.findByIsDeletedAndNameContainingIgnoreCaseAndFarmer(true, filter, farmername, pageable);
 	}
 
 	@Override
@@ -164,8 +161,12 @@ public class CampanyServiceImpl implements CampanyService {
 	}
 
 	@Override
-	public Campany findByname(String name) throws NotFoundException {
-		return campanyRepository.findByName(name);
+	public CampanyDto findByname(String farmer,String name)  throws NotFoundException {
+		Optional<Campany> campOptional = campanyRepository.findByFarmerAndName(name, farmer);
+		if (campOptional.isEmpty()) {
+			throw new NotFoundException("Company not found");
+		}
+		return campanyMapper.toDto(campOptional.get());
 	}
 
 	@Override

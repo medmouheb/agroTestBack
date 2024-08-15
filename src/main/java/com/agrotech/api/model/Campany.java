@@ -29,23 +29,32 @@ public class Campany  extends BaseEntity{
     @NotBlank(message = ValidationMessages.NAME_REQUIRED)
     @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
     private String name="" ;
-    //optional
-    @Size(max = 500)
-    private String address ;
     @Size(max = 10)
     private String cityCode ;
+    @Size(max = 10)
+    private String country ;
     @Size(max = 100)
     private String cityName ;
     @Size(max = 3)
-    private String wilayaName ;
-    @Size(max = 3)
-    private String wilayaCode ;
-    @Size(max = 10)
-    private String zipCode ;
-    @Size(max = 12)
-    private String number ;
+    private String state ;
+
     @Size(max = 150)
     private String email ;
+
+    @Size(max = 150)
+    private String address1 ;
+
+    @Size(max = 150)
+    private String address2 ;
+    @Size(max = 150)
+    private String phone1 ;
+
+    @Size(max = 150)
+    private String phone2 ;
+
+    @Size(max = 150)
+    private String webSite ;
+
     private Boolean isDeleted=false;
 
 

@@ -22,7 +22,7 @@ public interface CampanyService extends BaseService<CampanyDto, String> {
 	// Page<CampanyDto> findPage(int pageSize, int pageNumber, String filter);
 
 	public void setNotArchive(String id) throws NotFoundException;
-	  Campany findByname(String name)throws NotFoundException;
+	CampanyDto findByname(String farmer,String name)throws NotFoundException;
 	public Page<CampanyDto> findArchivedPage1(int pageSize, int pageNumber, String filter);
 	public Page<CampanyDto> findArchivedPage(int pageSize, int pageNumber, String filter);
 

@@ -1,6 +1,7 @@
 package com.agrotech.api.controller;
 import com.agrotech.api.model.Image;
 import com.agrotech.api.services.impl.ImageServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +23,7 @@ public class ImageController {
     @PostMapping()
     public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
         String id = imageService.saveImage(file);
-        return ResponseEntity.ok(
-                String.format(id));
+        return new ResponseEntity<>(String.format(id), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

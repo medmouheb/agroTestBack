@@ -161,12 +161,16 @@ public class PdfService {
         final String usersCategory = "Enter";
         final String salesCategory = "Exit";
         final String salesCategory1 = "Return";
-
+        String[] months = {
+                "January", "February", "March", "April",
+                "May", "June", "July", "August",
+                "September", "October", "November", "December"
+        };
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        for (int i=0;i<products.size();i++) {
-            dataset.addValue(listOfLists.get(i).get(0), usersCategory, products.get(i));
-            dataset.addValue(listOfLists.get(i).get(1), salesCategory, products.get(i));
-            dataset.addValue(listOfLists.get(i).get(2), salesCategory1, products.get(i));
+        for (int i=0;i<12;i++) {
+            dataset.addValue(listOfLists.get(i).get(0), usersCategory, months[i]);
+            dataset.addValue(listOfLists.get(i).get(1), salesCategory, months[i]);
+            dataset.addValue(listOfLists.get(i).get(2), salesCategory1, months[i]);
 
 
         }

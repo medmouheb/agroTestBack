@@ -43,6 +43,9 @@ public class User {
     private String sexe;
     private String pays;
     private String region;
+    private String address1;
+    private String address2;
+    private String bio;
     private String numeroTelephone;
 
     private String avatar;
@@ -50,6 +53,30 @@ public class User {
     private String activationToken;
 
     private Boolean verified=false;
+
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public String getSignature() {
         return signature;
@@ -288,7 +315,6 @@ public class User {
         this.dateNaissance = dateNaissance;
         this.sexe = sexe;
         this.pays = pays;
-
         this.region = region;
         this.numeroTelephone = numeroTelephone;
         this.avatar = avatar;
@@ -322,6 +348,28 @@ public class User {
                 ", notifications=" + notifications +
                 ", notificationsNbr=" + notificationsNbr +
                 '}';
+    }
+
+    public User(String id, String username, String email, String nom, String prenom, Date dateNaissance, String sexe, String pays, String region, String address1, String address2, String bio, String numeroTelephone, String avatar, String signature, HashSet<String> tags, HashSet<String> modules, List<NewNotification> notifications, int notificationsNbr) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.sexe = sexe;
+        this.pays = pays;
+        this.region = region;
+        this.address1 = address1;
+        this.address2 = address2;
+        this.bio = bio;
+        this.numeroTelephone = numeroTelephone;
+        this.avatar = avatar;
+        this.signature = signature;
+        this.tags = tags;
+        this.modules = modules;
+        this.notifications = notifications;
+        this.notificationsNbr = notificationsNbr;
     }
 }
 

@@ -37,7 +37,7 @@ import com.agrotech.api.services.CampanyService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = { "http://localhost:3000" }, maxAge = 3600)
+@CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3600)
 @RestController
 @RequestMapping("/campany")
 @RequiredArgsConstructor
@@ -63,12 +63,6 @@ public class CampanyController {
 		return createdCompany;
 	}
 
-	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
-	@GetMapping("/getbyname/{name}")
-	public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException {
-		Campany response = campanyService.findByname(name);
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@PutMapping("/{id}")
@@ -199,6 +193,19 @@ public class CampanyController {
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 
+	}
+
+
+	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
+	@GetMapping("/getbyname/{name}")
+	public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException {
+		if(getRole().equals("employee")){
+			CampanyDto response = campanyService.findByname(name,userService.getFarmerByUsername(getusername()).get()  );
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			CampanyDto response = campanyService.findByname(name,getusername());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
 	}
 
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
