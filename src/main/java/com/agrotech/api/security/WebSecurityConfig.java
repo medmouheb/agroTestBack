@@ -74,6 +74,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/binDetails/**").permitAll()
                         .requestMatchers("/breedCode/**").permitAll()
                         .requestMatchers("/breedType/**").permitAll()
+                        .requestMatchers("/excel/**").permitAll()
                         .requestMatchers("/brokers/**").permitAll()
                         .requestMatchers("/buyers/**").permitAll()
                         .requestMatchers("/pdfgenerate/**").permitAll()

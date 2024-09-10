@@ -2,6 +2,7 @@ package com.agrotech.api.controller;
 
 
 import com.agrotech.api.Repository.ProductionRepository;
+import com.agrotech.api.dto.CampanyDto;
 import com.agrotech.api.dto.ProductionDto;
 import com.agrotech.api.exceptions.NotFoundException;
 import com.agrotech.api.model.Production;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
+
 
 @CrossOrigin(origins = { "http://localhost:4200" }, maxAge = 3600)
 @RestController
@@ -153,11 +155,33 @@ public class ProductionController {
         return userDetails.getUsername();
 
     }
+    private String getRole() {
+        AtomicReference<String> role = new AtomicReference<>("employee"); // default to "employee"
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        userDetails.getAuthorities().forEach(authority -> {
+            if (authority.getAuthority().equals("ROLE_FARMER")) {
+                role.set("farmer");
+            } else if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role.set("admin");
+            }
+        });
+
+        return role.get();
+    }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @GetMapping("/by-name/{name}")
     public ResponseEntity<?> findByName(@PathVariable String name) throws NotFoundException {
-        ProductionDto response = productionService.findByName(name,getusername());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+//        ProductionDto response = productionService.findByName(name,getusername());
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+        if(getRole().equals("employee")){
+            ProductionDto response = productionService.findByName(name,userService.getFarmerByUsername(getusername()).get()  );
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            ProductionDto response = productionService.findByName(name,getusername());
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
     }
     @PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")

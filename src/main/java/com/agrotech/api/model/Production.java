@@ -32,7 +32,7 @@ public class Production extends BaseEntity{
     private String project;
 
 
-    private Warehouse warehouse;
+    private String warehouse;
 
     private String numeroLot;
     private Date  expDate;

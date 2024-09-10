@@ -199,6 +199,7 @@ public class CampanyController {
 	@PreAuthorize("hasRole('EMPLOYEE') or hasRole('FARMER') or hasRole('ADMIN')")
 	@GetMapping("/getbyname/{name}")
 	public ResponseEntity<?> findbyname(@PathVariable String name) throws NotFoundException {
+		System.out.println("eeeeeeee");
 		if(getRole().equals("employee")){
 			CampanyDto response = campanyService.findByname(name,userService.getFarmerByUsername(getusername()).get()  );
 			return new ResponseEntity<>(response, HttpStatus.OK);

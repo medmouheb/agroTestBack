@@ -1,7 +1,10 @@
 package com.agrotech.api.dto;
 
+import com.agrotech.api.utils.ValidationMessages;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
 
@@ -11,29 +14,25 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WarehouseDto extends BaseDto {
-    @NotBlank(message = "Code is required")
     private String code;
-    @NotBlank(message = "Name is required")
     private String name;
     private String type;
-    private String vendor;
-    private String costCenterCode;
-    private String costCenterName;
-    private LocalDate startingDate;
     private Boolean isPrimary;
-    private String address1;
-    private String address2;
+    private Boolean isOur;
+    private String address;
     private String cityCode;
     private String cityName;
-    private String wilayaCode;
-    private String wilayaName;
-    private String zipCode;
+    private String state;
+    private String country;
+    private double latitude;
+    private double longitude;
+    private double totalCapacity;
+    private double currentUtilization;
     private String email;
     private String phoneNumber;
     private String faxNumber;
-    private double latitude;
-    private double longitude;
     private Boolean isDeleted=false;
+    private String costCenter;
+    private String vendor;
     private String farmer;
-
 }

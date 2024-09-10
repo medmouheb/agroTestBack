@@ -24,11 +24,15 @@ public class DeliveryNote extends BaseEntity {
     @Indexed(unique = true)
     private String code ;
 
-    private String farmer;
-
+    private String purchaseOrderNumber;
+    private String packagingDetails;
+    private String SignatureDelivering;
+    private String SignatureReceiving ;
+    private String modeOfTransport ;
     private String buyer;
 
     private LocalDateTime deliveryDate;
+    private LocalDateTime dateOfIssue;
 
     private String deliveryInstruction;
 
@@ -41,6 +45,8 @@ public class DeliveryNote extends BaseEntity {
     private String additionalNotes;
 
     private Boolean isDeleted=false;
+    private String farmer;
+
 
 
 

@@ -26,39 +26,40 @@ public class Warehouse extends BaseEntity {
     @Size(max = 250, message = ValidationMessages.NAME_TOO_LONG)
     private String name;
     private String type;
-    private String facilityType;
-    @Size(max = 50)
-    private LocalDate startingDate;
+
     private Boolean isPrimary;
+    private Boolean isOur;
     @Size(max = 500)
-    private String address1;
-    @Size(max = 500)
-    private String address2;
+    private String address;
     @Size(max = 10)
     private String cityCode;
     @Size(max = 100)
     private String cityName;
-    @Size(max = 3)
-    private String wilayaCode;
+
     @Size(max = 100)
-    private String wilayaName;
-    @Size(max = 10)
-    private String zipCode;
+    private String state;
+    @Size(max = 100)
+    private String country;
+    @Size(max = 250)
+    private double latitude;
+    @Size(max = 250)
+    private double longitude;
+    @Size(max = 250)
+    private double totalCapacity;
+    @Size(max = 250)
+    private double currentUtilization;
     @Size(max = 150)
     private String email;
     @Size(max = 12)
     private String phoneNumber;
     @Size(max = 12)
     private String faxNumber;
-    @Size(max = 250)
-    private double latitude;
-    @Size(max = 250)
-    private double longitude;
+
     private Boolean isDeleted=false;
 
 
-    private String costCenterName;
-    private String costCenterCode;
+    private String costCenter;
+
     private String vendor;
 
     private String farmer;

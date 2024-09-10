@@ -30,7 +30,7 @@ public class ProductionDto  extends BaseDto {
     private String project;
 
 
-    private Warehouse warehouse;
+    private String warehouse;
 
     private String numeroLot;
     private Date  expDate;

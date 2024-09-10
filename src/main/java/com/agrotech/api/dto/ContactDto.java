@@ -33,11 +33,12 @@ public class ContactDto  extends BaseDto {
     private List<String> tags;
     private String address;
     private String city;
+    private String zip;
     private String state;
     private String country;
     private String latitude;
     private String longitude;
-    private String Industry;
+    private String industry;
     private String notes;
     private String label;
     private Boolean isDeleted=false;
